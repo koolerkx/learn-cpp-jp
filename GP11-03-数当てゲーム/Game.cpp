@@ -2,7 +2,7 @@
 #include "Game.h"
 
 void Game::start() {
-	this->msg_welcome();
+	msg_welcome();
 
 	bool is_end = false;
 	// replay loop
@@ -14,7 +14,7 @@ void Game::start() {
 	} while (!is_end);
 
 	std::cout << std::endl;
-	this->msg_credit();
+	msg_credit();
 }
 
 void Game::loop() {
