@@ -3,21 +3,23 @@
 
 void Game::start() {
 	msg_welcome();
-
-	bool is_end = false;
-	// replay loop
-	do {
-		// game loop
-		loop();
-
-		is_end = !is_replay_dialog();
-	} while (!is_end);
-
+	replay_loop();
 	std::cout << std::endl;
 	msg_credit();
 }
 
-void Game::loop() {
+void Game::replay_loop() {
+	do {
+		game_loop();
+
+		bool is_end = !is_replay_dialog();
+		if (is_end) {
+			break;
+		}
+	} while (true);
+}
+
+void Game::game_loop() {
 	bool is_correct = false;
 	int ans = random_int();
 
@@ -72,23 +74,22 @@ bool Game::is_replay_dialog() {
 	char input;
 	bool is_replay = false;
 
-	bool is_exit = false;
 	do {
 		std::cout << "> ";
 		std::cin >> input;
 
 		if (input == 'Y') {
 			is_replay = true;
-			is_exit = true;
+			break;
 		}
 		else if (input == 'N') {
 			is_replay = false;
-			is_exit = true;
+			break;
 		}
 		else {
 			std::cout << "—V‚Ñ‚È‚çYA—V‚Î‚È‚¢‚È‚çN‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" << std::endl;
 		}
-	} while (is_exit);
+	} while (true);
 	return is_replay;
 }
 

@@ -12,7 +12,8 @@ private:
 
 	void hint(int input, int ans);
 
-	void loop();
+	void replay_loop();
+	void game_loop();
 	void reset();
 
 	// plain text output
