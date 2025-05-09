@@ -3,7 +3,7 @@
 #include <time.h>
 
 struct {
-	int  lower = 1;
+	int lower = 1;
 	int upper = 100;
 } hint_range, config;
 
@@ -22,9 +22,6 @@ void hint(int input, int ans) {
 		std::cout << "ヒント：数字はもっと大きいです" << std::endl;
 		hint_range.lower = input + 1;
 	}
-
-	// TODO:digit error hint
-
 }
 
 void game() {
@@ -50,6 +47,10 @@ void game() {
 	} while (!is_correct);
 }
 
+void reset() {
+	hint_range = config;
+}
+
 int main() {
 	// イントロ
 	std::cout << "=====数当てゲーム=====" << std::endl;
@@ -64,6 +65,7 @@ int main() {
 		char input;
 		std::cin >> input;
 		if (input == 'Y') {
+			reset();
 			continue;
 		}
 		else {
