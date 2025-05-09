@@ -4,10 +4,11 @@ class Game
 public:
 	void start();
 private:
-	struct {
+	struct Range {
 		int lower = 1;
 		int upper = 100;
-	} hint_range, config;
+	};
+	Range hint_range, config;
 
 	void hint(int input, int ans);
 
