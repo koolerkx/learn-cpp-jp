@@ -1,4 +1,8 @@
 #pragma once
+
+enum Hint { nothing, range, digit};
+enum Difficulty {easy, medium, hard};
+
 class Game
 {
 public:
@@ -9,13 +13,19 @@ private:
 		int upper = 100;
 	};
 	Range range_state, config;
+	Hint hint = nothing;
+	Difficulty difficulty = easy;
 
-	void hint(int input, int ans);
-	void hint_range(int input, int ans);
-	void hint_digit(int input, int ans);
+	// game control
+	void show_hint(int input, int ans);
+	void show_hint_range(int input, int ans);
+	void show_hint_digit(int input, int ans);
 
 	void replay_loop();
 	void game_loop();
+
+	void select_hint_mode();
+	void select_difficulty();
 	void reset();
 
 	// plain text output

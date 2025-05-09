@@ -10,6 +10,7 @@ void Game::start() {
 
 void Game::replay_loop() {
 	do {
+		select_hint_mode();
 		game_loop();
 
 		bool is_end = !is_replay_dialog();
@@ -43,18 +44,61 @@ void Game::game_loop() {
 		else {
 			std::cout << "残念、はずれです。もう一回当ててください！" << std::endl;
 
-			hint(input, ans);
+			show_hint(input, ans);
 		}
 		std::cout << std::endl;
 	} while (!is_correct);
 }
 
-void Game::hint(int input, int ans) {
-	hint_range(input, ans);
-	hint_digit(input, ans);
+void Game::select_hint_mode() {
+	std::cout << "ヒントモードを選択してください：\n";
+	std::cout << "1. ヒントなし\n";
+	std::cout << "2. 答えの範囲\n";
+	std::cout << "3. 間違った桁の位置\n";
+	std::cout << "\n";
+
+	int input = 0;
+	do {
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore();
+		}
+		std::cout << "選択項目の数字を入力してください：" << std::endl;
+		std::cout << "> ";
+		std::cin >> input;
+	} while (std::cin.fail() || input < 1 || input > 3);
+
+	switch (input) {
+	case 1:
+		hint = nothing;
+		break;
+	case 2:
+		hint = range;
+		break;
+	case 3:
+		hint = digit;
+		break;
+	default:
+		hint = nothing;
+		break;
+	}
 }
 
-void Game::hint_range(int input, int ans) {
+void Game::show_hint(int input, int ans) {
+	switch (hint) {
+	case digit:
+		show_hint_digit(input, ans);
+		break;
+	case range:
+		show_hint_range(input, ans);
+		break;
+	case nothing:
+	default:
+		break;
+	}
+}
+
+void Game::show_hint_range(int input, int ans) {
 	// show the answer range
 	if (input > ans) {
 		std::cout << "ヒント：数字はもっと小さいです" << std::endl;
@@ -67,7 +111,7 @@ void Game::hint_range(int input, int ans) {
 	std::cout << "答えは" << range_state.lower << "と" << range_state.upper << "の間です" << std::endl;
 }
 
-void Game::hint_digit(const int input, const int ans) {
+void Game::show_hint_digit(const int input, const int ans) {
 	// wrong digit check
 	// print ^ in digit when incorrect
 	const int ans_digit = ans == 0 ? 1 : ((int)log10(ans)) + 1;
