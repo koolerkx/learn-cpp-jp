@@ -25,7 +25,7 @@ void Game::game_loop() {
 
 	do {
 		int input = 0;
-		std::cout << "数字を入力してください(" << hint_range.lower << "-" << hint_range.upper << ")：" << std::endl;
+		std::cout << "数字を入力してください：" << std::endl;
 		std::cout << "> ";
 		std::cin >> input;
 
@@ -43,19 +43,44 @@ void Game::game_loop() {
 }
 
 void Game::hint(int input, int ans) {
-	// limit hint
+	hint_range(input, ans);
+	hint_digit(input, ans);
+}
+
+void Game::hint_range(int input, int ans) {
+	// show the answer range
 	if (input > ans) {
 		std::cout << "ヒント：数字はもっと小さいです" << std::endl;
-		hint_range.upper = input - 1;
+		range_state.upper = input - 1;
 	}
 	else {
 		std::cout << "ヒント：数字はもっと大きいです" << std::endl;
-		hint_range.lower = input + 1;
+		range_state.lower = input + 1;
 	}
+	std::cout << "答えは" << range_state.lower << "と" << range_state.upper << "の間です" << std::endl;
+}
+
+void Game::hint_digit(int input, int ans) {
+	// wrong digit check
+	// print ^ in digit when incorrect
+	int	ans_digit = ((int)log10(ans)) + 1;
+	int	input_digit = ((int)log10(input)) + 1;
+
+	std::cout << "入力\t" << input << std::endl;
+	std::cout << "間違い\t";
+	for (int i = std::max(input_digit, ans_digit) - 1; i >= 0; i--) {
+		if (nth_digit(ans, i) != nth_digit(input, i)) {
+			std::cout << "^";
+		}
+		else {
+			std::cout << " ";
+		}
+	}
+	std::cout << std::endl;
 }
 
 void Game::reset() {
-	hint_range = config;
+	range_state = config;
 }
 
 // plain text output
@@ -101,4 +126,8 @@ int Game::random_int() {
 int Game::random_int(int upper_limit) {
 	srand((unsigned)time(nullptr));
 	return rand() % config.upper + 1;
+}
+
+int Game::nth_digit(int num, int n) {
+	return (int)(num / pow(10, n)) % 10;
 }

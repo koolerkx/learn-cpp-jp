@@ -8,9 +8,11 @@ private:
 		int lower = 1;
 		int upper = 100;
 	};
-	Range hint_range, config;
+	Range range_state, config;
 
 	void hint(int input, int ans);
+	void hint_range(int input, int ans);
+	void hint_digit(int input, int ans);
 
 	void replay_loop();
 	void game_loop();
@@ -24,5 +26,6 @@ private:
 	// utility
 	int random_int();
 	int random_int(int upper_limit);
+	int nth_digit(int num, int n);
 };
 
