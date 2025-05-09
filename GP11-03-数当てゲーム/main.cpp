@@ -2,12 +2,16 @@
 #include <stdlib.h>
 #include <time.h>
 
+int random_int(int upper_limit=100) {
+	srand((unsigned)time(nullptr));
+	return rand() % 100 + 1;
+}
+
 void game() {
 	bool is_correct = true;
 
 	std::cout << "”“–‚ÄƒQ[ƒ€" << std::endl;
-	srand((unsigned)time(nullptr));
-	int ans = rand() % 100 + 1;
+	int ans = random_int();
 
 	do {
 		int user_input = 0;
