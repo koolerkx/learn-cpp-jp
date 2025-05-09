@@ -39,7 +39,7 @@ void Game::game_loop() {
 				std::cin.clear();
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
-			std::cout << "数字を入力してください：" << std::endl;
+			std::cout << "数字を当ててください：\n";
 			std::cout << "> ";
 			std::cin >> input;
 		} while (std::cin.fail());
@@ -47,23 +47,22 @@ void Game::game_loop() {
 		std::cout << "\n";
 
 		if (input == ans) {
-			std::cout << "おめでとうございます！当てました！" << std::endl;
+			std::cout << "おめでとうございます！当てました！\n";
 			return;
 		}
 		else {
 			if (i != retry_limit - 1) {
-				std::cout << "残念、はずれです。もう一回当ててください！" << std::endl;
-				std::cout << "チャンス残り" << (retry_limit - i - 1) << "回！" << std::endl;
+				std::cout << "残念、はずれです。もう一回当ててください！\n";
+				std::cout << "チャンス残り" << (retry_limit - i - 1) << "回！\n";
 
 				std::cout << "\n";
 				show_hint(input, ans);
 			}
 			else {
-				std::cout << "終わりです" << std::endl;
-				std::cout << "答えは" << ans << "です" << std::endl;
+				std::cout << "終わりです\n";
+				std::cout << "答えは" << ans << "です\n";
 			}
 		}
-		std::cout << std::endl;
 	};
 }
 
@@ -81,7 +80,7 @@ void Game::select_hint_mode() {
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
-		std::cout << "選択項目の数字を入力してください：" << std::endl;
+		std::cout << "選択項目の数字を入力してください：\n";
 		std::cout << "> ";
 		std::cin >> input;
 	} while (std::cin.fail() || input < 1 || input > 3);
@@ -105,9 +104,9 @@ void Game::select_hint_mode() {
 void Game::select_difficulty() {
 	std::cout << "=====《難易度選択》=====\n";
 	std::cout << "難易度を選択してください：\n";
-	std::cout << "1. かんたん（1-128/10回）\n";
+	std::cout << "1. かんたん（1-128/7回）\n";
 	std::cout << "2. のーまる（1-1024/10回）\n";
-	std::cout << "3. むずかしい（11111111-99999999/8回）\n";
+	std::cout << "3. むずかしい（11111111-99999999/10回）\n";
 	std::cout << "\n";
 
 	int input = 0;
@@ -116,7 +115,7 @@ void Game::select_difficulty() {
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
-		std::cout << "選択項目の数字を入力してください：" << std::endl;
+		std::cout << "選択項目の数字を入力してください：\n";
 		std::cout << "> ";
 		std::cin >> input;
 	} while (std::cin.fail() || input < 1 || input > 3);
@@ -138,7 +137,7 @@ void Game::select_difficulty() {
 		difficulty = hard;
 		config.lower = 11111111;
 		config.upper = 99999999;
-		retry_limit = 8;
+		retry_limit = 10;
 		break;
 	default:
 		difficulty = easy;
@@ -163,14 +162,14 @@ void Game::show_hint(int input, int ans) {
 void Game::show_hint_range(int input, int ans) {
 	// show the answer range
 	if (input > ans) {
-		std::cout << "ヒント：数字はもっと小さいです" << std::endl;
+		std::cout << "ヒント：数字はもっと小さいです\n";
 		hint_range_state.upper = input - 1;
 	}
 	else {
-		std::cout << "ヒント：数字はもっと大きいです" << std::endl;
+		std::cout << "ヒント：数字はもっと大きいです\n";
 		hint_range_state.lower = input + 1;
 	}
-	std::cout << "答えは" << hint_range_state.lower << "と" << hint_range_state.upper << "の間です" << std::endl;
+	std::cout << "答えは" << hint_range_state.lower << "と" << hint_range_state.upper << "の間です\n";
 }
 
 void Game::show_hint_digit(const int input, const int ans) {
@@ -179,8 +178,8 @@ void Game::show_hint_digit(const int input, const int ans) {
 	const int ans_digit = ans == 0 ? 1 : ((int)log10(ans)) + 1;
 	const int input_digit = input == 0 ? 1 : ((int)log10(input)) + 1;
 
-	std::cout << "《ヒント》"<< std::endl;
-	std::cout << "入力\t" << input << std::endl;
+	std::cout << "《ヒント》\n";
+	std::cout << "入力\t" << input << "\n";
 	std::cout << "間違い\t";
 	for (int i = std::max(input_digit, ans_digit) - 1; i >= 0; i--) {
 		if (nth_digit(ans, i) != nth_digit(input, i)) {
@@ -190,7 +189,7 @@ void Game::show_hint_digit(const int input, const int ans) {
 			std::cout << " ";
 		}
 	}
-	std::cout << std::endl;
+	std::cout << "\n";
 }
 
 void Game::reset() {
@@ -199,16 +198,16 @@ void Game::reset() {
 
 // plain text output
 void Game::msg_welcome() {
-	std::cout << "=====数当てゲーム=====" << std::endl;
+	std::cout << "=====数当てゲーム=====\n";
 }
 
 void Game::msg_credit() {
-	std::cout << "ありがとうございました。また遊びましょう！" << std::endl;
-	std::cout << "作者：KOOLER FAN" << std::endl;
+	std::cout << "ありがとうございました。また遊びましょう！\n";
+	std::cout << "作者：KOOLER FAN\n";
 }
 
 bool Game::is_replay_dialog() {
-	std::cout << "もう一回遊びますか。(Y/N)" << std::endl;
+	std::cout << "もう一回遊びますか。(Y/N)\n";
 
 	char input;
 	bool is_replay = false;
@@ -216,6 +215,7 @@ bool Game::is_replay_dialog() {
 	do {
 		std::cout << "> ";
 		std::cin >> input;
+		std::cout << "\n";
 
 		if (input == 'Y') {
 			is_replay = true;
@@ -226,7 +226,7 @@ bool Game::is_replay_dialog() {
 			break;
 		}
 		else {
-			std::cout << "遊びならY、遊ばないならNを入力してください。" << std::endl;
+			std::cout << "遊びならY、遊ばないならNを入力してください。\n";
 		}
 	} while (true);
 	return is_replay;
@@ -240,7 +240,10 @@ int Game::random_int() {
 int Game::random_int(int lower_limit, int upper_limit) {
 	// include lower_limit and upper_limit
 	srand((unsigned)time(nullptr));
-	return rand() % ((upper_limit + 1) - lower_limit) + lower_limit;
+
+	float random_num = rand() / (float)RAND_MAX;
+	
+	return (int)(random_num * (upper_limit - lower_limit) + lower_limit);
 }
 
 int Game::nth_digit(int num, int n) {
