@@ -4,13 +4,11 @@
 
 int random_int(int upper_limit=100) {
 	srand((unsigned)time(nullptr));
-	return rand() % 100 + 1;
+	return rand() % upper_limit + 1;
 }
 
 void game() {
-	bool is_correct = true;
-
-	std::cout << "数当てゲーム" << std::endl;
+	bool is_correct = false;
 	int ans = random_int();
 
 	do {
@@ -20,7 +18,7 @@ void game() {
 
 		if (user_input == ans) {
 			std::cout << "おめでとうございます！当てました！" << std::endl;
-			is_correct = false;
+			is_correct = true;
 		}
 		else {
 			std::cout << "残念、もう一回当ててください！" << std::endl;
@@ -32,11 +30,35 @@ void game() {
 				std::cout << "ヒント：数字はもっと大きいです" << std::endl;
 			}
 		}
-	} while (is_correct);
+	} while (!is_correct);
 }
 
 int main() {
-	game();
+	// イントロ
+	std::cout << "=====数当てゲーム=====" << std::endl;
+
+	// ゲームループ
+	bool is_continue = true;
+	do {
+		game();
+
+		std::cout << "もう一回遊びますか。遊ぶなら「Y」を入力してください。" << std::endl;
+		char input;
+		std::cin >> input;
+		if (input == 'Y') {
+			continue;
+		}
+		else {
+			is_continue = false;
+		}
+	} while (is_continue);
+
+	// アウトロ
+	std::cout << "ありがとうございました" << std::endl;
+	std::cout << "作者：KOOLER FAN" << std::endl;
+
+	std::cin.ignore();
+	std::cin.get();
 
 	return 0;
 }
