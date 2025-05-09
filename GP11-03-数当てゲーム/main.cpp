@@ -2,9 +2,29 @@
 #include <stdlib.h>
 #include <time.h>
 
-int random_int(int upper_limit=100) {
+struct {
+	int  lower = 1;
+	int upper = 100;
+} hint_range, config;
+
+int random_int(int upper_limit = config.upper) {
 	srand((unsigned)time(nullptr));
-	return rand() % upper_limit + 1;
+	return rand() % config.upper + 1;
+}
+
+void hint(int input, int ans) {
+	// limit hint
+	if (input > ans) {
+		std::cout << "ヒント：数字はもっと小さいです" << std::endl;
+		hint_range.upper = input - 1;
+	}
+	else {
+		std::cout << "ヒント：数字はもっと大きいです" << std::endl;
+		hint_range.lower = input + 1;
+	}
+
+	// TODO:digit error hint
+
 }
 
 void game() {
@@ -12,24 +32,21 @@ void game() {
 	int ans = random_int();
 
 	do {
-		int user_input = 0;
-		std::cout << "数字を入力してください：";
-		std::cin >> user_input;
+		int input = 0;
+		std::cout << "数字を入力してください(" << hint_range.lower << "-" << hint_range.upper << ")：" << std::endl;
+		std::cout << "> ";
+		std::cin >> input;
 
-		if (user_input == ans) {
+		if (input == ans) {
 			std::cout << "おめでとうございます！当てました！" << std::endl;
 			is_correct = true;
 		}
 		else {
-			std::cout << "残念、もう一回当ててください！" << std::endl;
+			std::cout << "残念、はずれです。もう一回当ててください！" << std::endl;
 
-			if (user_input > ans) {
-				std::cout << "ヒント：数字はもっと小さいです" << std::endl;
-			}
-			else {
-				std::cout << "ヒント：数字はもっと大きいです" << std::endl;
-			}
+			hint(input, ans);
 		}
+		std::cout << std::endl;
 	} while (!is_correct);
 }
 
@@ -43,6 +60,7 @@ int main() {
 		game();
 
 		std::cout << "もう一回遊びますか。遊ぶなら「Y」を入力してください。" << std::endl;
+		std::cout << "> ";
 		char input;
 		std::cin >> input;
 		if (input == 'Y') {
@@ -54,6 +72,7 @@ int main() {
 	} while (is_continue);
 
 	// アウトロ
+	std::cout << std::endl;
 	std::cout << "ありがとうございました" << std::endl;
 	std::cout << "作者：KOOLER FAN" << std::endl;
 
