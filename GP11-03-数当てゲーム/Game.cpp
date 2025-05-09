@@ -25,9 +25,16 @@ void Game::game_loop() {
 
 	do {
 		int input = 0;
-		std::cout << "数字を入力してください：" << std::endl;
-		std::cout << "> ";
-		std::cin >> input;
+
+		do {
+			if (std::cin.fail()) {
+				std::cin.clear();
+				std::cin.ignore();
+			}
+			std::cout << "数字を入力してください：" << std::endl;
+			std::cout << "> ";
+			std::cin >> input;
+		} while (std::cin.fail());
 
 		if (input == ans) {
 			std::cout << "おめでとうございます！当てました！" << std::endl;
@@ -60,11 +67,13 @@ void Game::hint_range(int input, int ans) {
 	std::cout << "答えは" << range_state.lower << "と" << range_state.upper << "の間です" << std::endl;
 }
 
-void Game::hint_digit(int input, int ans) {
+void Game::hint_digit(const int input, const int ans) {
 	// wrong digit check
 	// print ^ in digit when incorrect
-	int	ans_digit = ((int)log10(ans)) + 1;
-	int	input_digit = ((int)log10(input)) + 1;
+	const int ans_digit = ans == 0 ? 1 : ((int)log10(ans)) + 1;
+	const int input_digit = input == 0 ? 1 : ((int)log10(input)) + 1;
+
+	std::cout << ans_digit << "===" << input_digit << std::endl;
 
 	std::cout << "入力\t" << input << std::endl;
 	std::cout << "間違い\t";
