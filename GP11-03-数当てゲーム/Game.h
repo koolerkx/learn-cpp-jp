@@ -1,7 +1,7 @@
 #pragma once
 
 enum Hint { nothing, range, digit};
-enum Difficulty {easy, medium, hard};
+enum Difficulty {easy, normal, hard};
 
 class Game
 {
@@ -12,7 +12,8 @@ private:
 		int lower = 1;
 		int upper = 100;
 	};
-	Range range_state, config;
+	int retry_limit = 10;
+	Range hint_range_state, config;
 	Hint hint = nothing;
 	Difficulty difficulty = easy;
 
@@ -35,7 +36,7 @@ private:
 
 	// utility
 	int random_int();
-	int random_int(int upper_limit);
+	int random_int(int lower_limit, int upper_limit);
 	int nth_digit(int num, int n);
 };
 
