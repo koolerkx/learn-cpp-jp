@@ -55,7 +55,7 @@ int main() {
 	std::cout << "=====数当てゲーム=====" << std::endl;
 
 	// ゲームループ
-	bool is_continue = true;
+	bool is_end = false;
 	do {
 		game();
 
@@ -67,9 +67,9 @@ int main() {
 			continue;
 		}
 		else {
-			is_continue = false;
+			is_end = true;
 		}
-	} while (is_continue);
+	} while (!is_end);
 
 	// アウトロ
 	std::cout << std::endl;
