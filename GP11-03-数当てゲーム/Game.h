@@ -17,6 +17,7 @@ private:
 	// plain text output
 	void msg_welcome();
 	void msg_credit();
+	bool is_replay_dialog();
 
 	// utility
 	int random_int();

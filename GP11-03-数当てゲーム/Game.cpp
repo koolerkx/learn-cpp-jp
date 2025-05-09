@@ -5,20 +5,12 @@ void Game::start() {
 	this->msg_welcome();
 
 	bool is_end = false;
+	// replay loop
 	do {
+		// game loop
 		loop();
 
-		std::cout << "‚à‚¤ˆê‰ñ—V‚Ñ‚Ü‚·‚©B—V‚Ô‚È‚çuYv‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" << std::endl;
-		std::cout << "> ";
-		char input;
-		std::cin >> input;
-		if (input == 'Y') {
-			reset();
-			continue;
-		}
-		else {
-			is_end = true;
-		}
+		is_end = !is_replay_dialog();
 	} while (!is_end);
 
 	std::cout << std::endl;
@@ -72,6 +64,32 @@ void Game::msg_welcome() {
 void Game::msg_credit() {
 	std::cout << "‚ ‚è‚ª‚Æ‚¤‚²‚´‚¢‚Ü‚µ‚½" << std::endl;
 	std::cout << "ìŽÒFKOOLER FAN" << std::endl;
+}
+
+bool Game::is_replay_dialog() {
+	std::cout << "‚à‚¤ˆê‰ñ—V‚Ñ‚Ü‚·‚©B(Y/N)" << std::endl;
+
+	char input;
+	bool is_replay = false;
+
+	bool is_exit = false;
+	do {
+		std::cout << "> ";
+		std::cin >> input;
+
+		if (input == 'Y') {
+			is_replay = true;
+			is_exit = true;
+		}
+		else if (input == 'N') {
+			is_replay = false;
+			is_exit = true;
+		}
+		else {
+			std::cout << "—V‚Ñ‚È‚çYA—V‚Î‚È‚¢‚È‚çN‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" << std::endl;
+		}
+	} while (is_exit);
+	return is_replay;
 }
 
 // utility 
