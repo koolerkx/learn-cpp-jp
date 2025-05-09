@@ -3,8 +3,9 @@
 
 void Game::start() {
 	msg_welcome();
+	std::cout << "\n";
 	replay_loop();
-	std::cout << std::endl;
+	std::cout << "\n";
 	msg_credit();
 }
 
@@ -18,6 +19,7 @@ void Game::replay_loop() {
 		reset();
 		game_loop();
 
+		std::cout << "\n";
 		bool is_end = !is_replay_dialog();
 		if (is_end) {
 			break;
@@ -29,30 +31,40 @@ void Game::game_loop() {
 	bool is_correct = false;
 	int ans = random_int();
 
-	do {
+	for(int i=0; i<retry_limit; i++) {
 		int input = 0;
 
 		do {
 			if (std::cin.fail()) {
 				std::cin.clear();
-				std::cin.ignore();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
 			std::cout << "数字を入力してください：" << std::endl;
 			std::cout << "> ";
 			std::cin >> input;
 		} while (std::cin.fail());
 
+		std::cout << "\n";
+
 		if (input == ans) {
 			std::cout << "おめでとうございます！当てました！" << std::endl;
-			is_correct = true;
+			return;
 		}
 		else {
-			std::cout << "残念、はずれです。もう一回当ててください！" << std::endl;
+			if (i != retry_limit - 1) {
+				std::cout << "残念、はずれです。もう一回当ててください！" << std::endl;
+				std::cout << "チャンス残り" << (retry_limit - i - 1) << "回！" << std::endl;
 
-			show_hint(input, ans);
+				std::cout << "\n";
+				show_hint(input, ans);
+			}
+			else {
+				std::cout << "終わりです" << std::endl;
+				std::cout << "答えは" << ans << "です" << std::endl;
+			}
 		}
 		std::cout << std::endl;
-	} while (!is_correct);
+	};
 }
 
 void Game::select_hint_mode() {
@@ -67,7 +79,7 @@ void Game::select_hint_mode() {
 	do {
 		if (std::cin.fail()) {
 			std::cin.clear();
-			std::cin.ignore();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 		std::cout << "選択項目の数字を入力してください：" << std::endl;
 		std::cout << "> ";
@@ -102,7 +114,7 @@ void Game::select_difficulty() {
 	do {
 		if (std::cin.fail()) {
 			std::cin.clear();
-			std::cin.ignore();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 		std::cout << "選択項目の数字を入力してください：" << std::endl;
 		std::cout << "> ";
@@ -191,7 +203,7 @@ void Game::msg_welcome() {
 }
 
 void Game::msg_credit() {
-	std::cout << "ありがとうございました" << std::endl;
+	std::cout << "ありがとうございました。また遊びましょう！" << std::endl;
 	std::cout << "作者：KOOLER FAN" << std::endl;
 }
 
