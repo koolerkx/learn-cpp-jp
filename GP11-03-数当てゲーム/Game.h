@@ -1,7 +1,6 @@
 #pragma once
 
 enum Hint { nothing, range, digit};
-enum Difficulty {easy, normal, hard};
 
 class Game
 {
@@ -15,7 +14,6 @@ private:
 	int retry_limit = 10;
 	Range hint_range_state, config;
 	Hint hint = nothing;
-	Difficulty difficulty = easy;
 
 	// game control
 	void show_hint(int input, int ans);

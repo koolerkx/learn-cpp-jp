@@ -121,26 +121,21 @@ void Game::select_difficulty() {
 	} while (std::cin.fail() || input < 1 || input > 3);
 
 	switch (input) {
-	case 1:
-		difficulty = easy;
-		config.lower = 1;
-		config.upper = 128;
-		retry_limit = 7;
-		break;
 	case 2:
-		difficulty = normal;
 		config.lower = 1;
 		config.upper = 1024;
 		retry_limit = 10;
 		break;
 	case 3:
-		difficulty = hard;
 		config.lower = 11111111;
 		config.upper = 99999999;
 		retry_limit = 10;
 		break;
+	case 1:
 	default:
-		difficulty = easy;
+		config.lower = 1;
+		config.upper = 128;
+		retry_limit = 7;
 		break;
 	}
 }
