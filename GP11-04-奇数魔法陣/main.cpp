@@ -5,7 +5,7 @@ constexpr int SIZE = 5; // SIZE‚Ì’l‚ÍŠï”‚Ì‚İ
 constexpr int START_ROW = 0;
 constexpr int START_COL = SIZE/2;
 
-void display_matrix(int matrix[SIZE][SIZE])
+void display_matrix(const int (&matrix)[SIZE][SIZE])
 {
     std::cout << "„¡„Ÿ„Ÿ";
     for (int x = 1; x < SIZE; x++) {
