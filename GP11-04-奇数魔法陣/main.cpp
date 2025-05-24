@@ -5,7 +5,7 @@ constexpr int SIZE = 3;
 constexpr int START_ROW = 0;
 constexpr int START_COL = SIZE/2;
 
-void display_matrix(int mahhoujin[SIZE][SIZE])
+void display_matrix(int matrix[SIZE][SIZE])
 {
     std::cout << "„¡„Ÿ„Ÿ";
     for (int x = 1; x < SIZE; x++) {
@@ -17,8 +17,8 @@ void display_matrix(int mahhoujin[SIZE][SIZE])
         std::cout << "„ ";
         for (int x = 0; x < SIZE; x++) {
             std::cout << std::setw(2);
-            if (mahhoujin[y][x]) {
-                std::cout << mahhoujin[y][x];
+            if (matrix[y][x]) {
+                std::cout << matrix[y][x];
             }
             else {
                 std::cout << " ";
