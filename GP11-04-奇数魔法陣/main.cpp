@@ -66,11 +66,14 @@ int main(int argc, char* argv[])
     {
         matrix[row][col] = i;
 
-        if (is_empty(wrap_index(row-1), wrap_index(col+1), matrix))
+        int row_upper = wrap_index(row-1);
+        int col_right = wrap_index(col+1);
+        
+        if (is_empty(row_upper, col_right, matrix))
         {
-            row = wrap_index(row-1);
-            col = wrap_index(col+1);
-        } else if (is_empty(wrap_index(row+1), col, matrix))
+            row = row_upper;
+            col = col_right;
+        } else
         {
             row = wrap_index(row+1);
         }
