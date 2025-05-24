@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
 
-constexpr int SIZE = 3;
+constexpr int SIZE = 5; // SIZE‚Ì’l‚ÍŠï”‚Ì‚İ
 constexpr int START_ROW = 0;
 constexpr int START_COL = SIZE/2;
 
