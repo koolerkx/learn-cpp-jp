@@ -48,7 +48,7 @@ bool is_empty(int i, int j, const int (&matrix)[SIZE][SIZE])
     return matrix[i][j] == 0;
 }
 
-int abs_size(int num)
+int wrap_index(int num)
 {
     return (num + SIZE) % SIZE;
 }
@@ -66,13 +66,13 @@ int main(int argc, char* argv[])
     {
         matrix[row][col] = i;
 
-        if (is_empty(abs_size(row-1), abs_size(col+1), matrix))
+        if (is_empty(wrap_index(row-1), wrap_index(col+1), matrix))
         {
-            row = abs_size(row-1);
-            col = abs_size(col+1);
-        } else if (is_empty(abs_size(row+1), col, matrix))
+            row = wrap_index(row-1);
+            col = wrap_index(col+1);
+        } else if (is_empty(wrap_index(row+1), col, matrix))
         {
-            row = abs_size(row+1);
+            row = wrap_index(row+1);
         }
 
         std::cin.get();
