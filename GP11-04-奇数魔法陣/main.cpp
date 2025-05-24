@@ -1,9 +1,9 @@
 #include <iostream>
 #include <iomanip>
 
-const int SIZE = 3;
-const int START_ROW = 0;
-const int START_COL = SIZE/2;
+constexpr int SIZE = 3;
+constexpr int START_ROW = 0;
+constexpr int START_COL = SIZE/2;
 
 void display_matrix(int mahhoujin[SIZE][SIZE])
 {
@@ -43,7 +43,7 @@ void display_matrix(int mahhoujin[SIZE][SIZE])
     std::cout << "„£" << std::endl;
 }
 
-bool is_empty(int i, int j, int (&matrix)[SIZE][SIZE])
+bool is_empty(int i, int j, const int (&matrix)[SIZE][SIZE])
 {
     return matrix[i][j] == 0;
 }
