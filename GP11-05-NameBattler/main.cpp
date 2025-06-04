@@ -3,9 +3,7 @@
 
 int main()
 {
-    Game game = Game::get_instance();
+    Game::start();
 
-    game.execute();
-    
     return 0;
 }
