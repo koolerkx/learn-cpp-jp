@@ -4,8 +4,11 @@ class Game {
 private:
     Game() = default;
 
-    // display
+    // menu
     void show_menu();
+
+    void summon_character();
+    void show_summon_character_menu();
 
 public:
     static Game& get_instance();
