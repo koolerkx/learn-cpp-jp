@@ -17,12 +17,11 @@ public:
     const char* get_name() const;
     Ability get_ability() const;
 
-    void show_profile() const;
-    
-    static constexpr int NAME_MAX_LENGTH = 256;  
+    static constexpr int NAME_MAX_LENGTH = 256;
+    static constexpr int ABILITY_MAX_VALUE = 256;
 private:
     char name_[NAME_MAX_LENGTH];
+    unsigned int seed_;
+    
     Ability ability_;
-
-    Ability generate_ability(char* chars);
 };

@@ -1,10 +1,22 @@
-#include "Character.h"
+#include <cstdlib>
 #include "cstring"
+#include "Character.h"
+#include "utils.h"
 
 Character::Character(char* name)
 {
     strncpy_s(name_, name, sizeof(name_));
-    ability_ = generate_ability(name);
+    
+    seed_ = utils::hash_chars(name_);
+
+    srand(seed_);
+    
+    ability_ = {
+        rand() % ABILITY_MAX_VALUE,
+        rand() % ABILITY_MAX_VALUE,
+        rand() % ABILITY_MAX_VALUE,
+        rand() % ABILITY_MAX_VALUE,
+    };
 }
 
 const char* Character::get_name() const
@@ -15,19 +27,6 @@ const char* Character::get_name() const
 Ability Character::get_ability() const
 {
     return ability_;
-}
-
-
-Ability Character::generate_ability(char* chars)
-{
-    int seed = (int)(char)chars[0];
-    
-    return {
-        1,
-        2,
-        3,
-        4,
-    };
 }
 
 int Character::get_score() const
