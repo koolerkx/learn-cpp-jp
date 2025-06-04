@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GP11-03-数当てゲーム"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GP11-04-奇数魔法陣", "GP11-04-奇数魔法陣\GP11-04-奇数魔法陣.vcxproj", "{BAE13544-5005-4C80-87E5-4F992427E81A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GP11-05-NameBattler", "GP11-05-NameBattler\GP11-05-NameBattler.vcxproj", "{EECA5761-DD6E-4470-83F7-3DBE0C47E1C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{BAE13544-5005-4C80-87E5-4F992427E81A}.Release|x64.Build.0 = Release|x64
 		{BAE13544-5005-4C80-87E5-4F992427E81A}.Release|x86.ActiveCfg = Release|Win32
 		{BAE13544-5005-4C80-87E5-4F992427E81A}.Release|x86.Build.0 = Release|Win32
+		{EECA5761-DD6E-4470-83F7-3DBE0C47E1C6}.Debug|x64.ActiveCfg = Debug|x64
+		{EECA5761-DD6E-4470-83F7-3DBE0C47E1C6}.Debug|x64.Build.0 = Debug|x64
+		{EECA5761-DD6E-4470-83F7-3DBE0C47E1C6}.Debug|x86.ActiveCfg = Debug|Win32
+		{EECA5761-DD6E-4470-83F7-3DBE0C47E1C6}.Debug|x86.Build.0 = Debug|Win32
+		{EECA5761-DD6E-4470-83F7-3DBE0C47E1C6}.Release|x64.ActiveCfg = Release|x64
+		{EECA5761-DD6E-4470-83F7-3DBE0C47E1C6}.Release|x64.Build.0 = Release|x64
+		{EECA5761-DD6E-4470-83F7-3DBE0C47E1C6}.Release|x86.ActiveCfg = Release|Win32
+		{EECA5761-DD6E-4470-83F7-3DBE0C47E1C6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
