@@ -40,7 +40,7 @@ namespace view
                 std::cout << "選択してください（1/2/3/9）: ";
             }
 
-            void end_message()
+            void game_end_message()
             {
                 std::cout << "Game End" << "\n";
             }
@@ -75,7 +75,7 @@ namespace view
                 std::cout << "選択してください（1/2）: ";
             }
             
-            void result_message(const char& name)
+            void result_message(const char* name)
             {
                 std::cout << "\n結果：『" << name << "』が成功に召喚された！\n\n";
             }
@@ -107,7 +107,7 @@ namespace view
 
     namespace message
     {
-        void key_back_to_menu_message()
+        void press_any_key()
         {
             std::cout << "何かキーを押すとメニューに戻ります…\n";
         }

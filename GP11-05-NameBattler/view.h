@@ -14,7 +14,7 @@ namespace view
         namespace menu
         {
             void show_main_menu();
-            void end_message();
+            void game_end_message();
         }
         namespace summon
         {
@@ -22,7 +22,7 @@ namespace view
             void profile_title();
             void name_input_message();
             void saving_menu();
-            void result_message(const char& name);
+            void result_message(const char* name);
         }
         namespace initialize_save
         {
@@ -35,7 +35,7 @@ namespace view
     // text output for info user
     namespace message
     {
-        void key_back_to_menu_message();
+        void press_any_key();
     }
 
     namespace format_line

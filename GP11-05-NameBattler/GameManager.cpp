@@ -37,7 +37,7 @@ void GameManager::start()
                 Character character = start_summon_flow();
                 add_character_to_session_flow(character);
             
-                view::message::key_back_to_menu_message();
+                view::message::press_any_key();
                 std::cin.ignore();
                 std::cin.get();
                 break;
@@ -54,7 +54,7 @@ void GameManager::start()
         view::format_line::show_block_separator();
     }
 
-    view::flow::menu::end_message();
+    view::flow::menu::game_end_message();
     std::cin.get();
 }
 
@@ -65,11 +65,12 @@ Character GameManager::start_summon_flow()
 
     view::flow::summon::title();
 
-    // TODO: clear buffer
     view::flow::summon::name_input_message();
-    std::cin >> name;
+    // std::cin >> name;
+    std::cin.ignore();
+    std::cin.getline(name, Character::NAME_MAX_LENGTH);
     
-    view::flow::summon::result_message(*name);
+    view::flow::summon::result_message(name);
     
     view::flow::summon::profile_title();
     const Character summoned_character(name);
