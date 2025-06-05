@@ -4,6 +4,7 @@
 #include "view.h"
 #include "Session.h"
 #include "Exception.h"
+#include "utils.h"
 
 void GameManager::start()
 {
@@ -24,13 +25,15 @@ void GameManager::start()
     while (is_continue)
     {
         view::flow::menu::show_main_menu();
+        constexpr int valid_options[] = {1, 2, 3, 9};
         
-        int user_input = -1;
-        //TODO: input validation
-        std::cin >> user_input;
+        int selected = utils::input::validated_input(
+            utils::input::validator::is_in_list(valid_options, std::size(valid_options)),
+            view::flow::menu::option_message
+        );
         view::format_line::show_block_separator();
         
-        switch (user_input)
+        switch (selected)
         {
         case 1:
             {
@@ -38,7 +41,6 @@ void GameManager::start()
                 add_character_to_session_flow(character);
             
                 view::message::press_any_key();
-                std::cin.ignore();
                 std::cin.get();
                 break;
             }
@@ -66,8 +68,7 @@ Character GameManager::start_summon_flow()
     view::flow::summon::title();
 
     view::flow::summon::name_input_message();
-    // std::cin >> name;
-    std::cin.ignore();
+    // FIXME
     std::cin.getline(name, Character::NAME_MAX_LENGTH);
     
     view::flow::summon::result_message(name);
@@ -83,10 +84,14 @@ void GameManager::add_character_to_session_flow(const Character& character)
 {
     view::flow::summon::saving_menu();
     
-    int saving_option = 0;
-    std::cin >> saving_option;
+    constexpr int valid_options[] = {1, 2};
+        
+    int selected = utils::input::validated_input(
+        utils::input::validator::is_in_list(valid_options, std::size(valid_options)),
+        view::flow::summon::saving_menu_option_message
+    );
     
-    switch (saving_option)
+    switch (selected)
     {
     case 1:
         Session::get_instance().add_character(character);

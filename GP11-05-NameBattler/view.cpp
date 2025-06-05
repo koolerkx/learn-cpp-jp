@@ -37,6 +37,10 @@ namespace view
                 std::cout << " 9. ゲーム終了\n";
                 std::cout << "\n";
                 std::cout << "==============================\n";
+            }
+
+            void option_message()
+            {
                 std::cout << "選択してください（1/2/3/9）: ";
             }
 
@@ -72,6 +76,10 @@ namespace view
                 std::cout << "保存しますか？ \n";
                 std::cout << "1. はい \n";
                 std::cout << "2. いいえ \n\n";
+            }
+
+            void saving_menu_option_message()
+            {
                 std::cout << "選択してください（1/2）: ";
             }
             
@@ -110,6 +118,14 @@ namespace view
         void press_any_key()
         {
             std::cout << "何かキーを押すとメニューに戻ります…\n";
+        }
+
+        namespace input
+        {
+            void retry()
+            {
+                std::cout << "無効な入力です。もう一度入力してください。\n\n";
+            }
         }
     }
 
