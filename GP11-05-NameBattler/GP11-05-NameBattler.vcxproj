@@ -162,7 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
-    <ClInclude Include="Exception.h" />
+    <ClInclude Include="exception.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="utils.h" />

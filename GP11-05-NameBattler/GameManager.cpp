@@ -3,7 +3,7 @@
 #include "Character.h"
 #include "view.h"
 #include "Session.h"
-#include "Exception.h"
+#include "exception.h"
 #include "utils.h"
 
 void GameManager::start()
