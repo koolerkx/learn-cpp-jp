@@ -10,7 +10,7 @@ public:
     static Session& get_instance();
     
     void save() const;
-    // void load();
+    void load();
     // void initialize_save();
 
     void add_character(const Character& character);

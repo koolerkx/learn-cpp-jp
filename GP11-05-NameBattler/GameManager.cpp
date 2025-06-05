@@ -9,6 +9,7 @@ void Game::start()
     bool is_continue = true;
 
     // TODO: if no save
+    Session::get_instance().load();
     initialize_save_flow();
 
     while (is_continue)
