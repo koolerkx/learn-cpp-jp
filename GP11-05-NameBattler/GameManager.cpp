@@ -75,6 +75,7 @@ void Game::initialize_save_flow()
 
     Character character = Game::start_summon_flow();
     Session::get_instance().add_character(character);
+    Session::get_instance().save();
     
     view::menu::show_initialize_departure_message();
 }

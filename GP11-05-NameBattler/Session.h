@@ -9,7 +9,7 @@ class Session
 public:
     static Session& get_instance();
     
-    // void save();
+    void save() const;
     // void load();
     // void initialize_save();
 
