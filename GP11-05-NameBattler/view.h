@@ -6,6 +6,7 @@ namespace view
     namespace hero
     {
         void show_profile(const Hero& hero);
+        void show_list(const Hero* hero, int count);
     }
 
     // text output for main flow
@@ -31,6 +32,23 @@ namespace view
             void welcome_message();
             void end_message();
             void save_data_not_found_message();
+        }
+
+        namespace hero
+        {
+            void hero_management_menu();
+            void hero_menu_option_message();
+            
+            void hero_list_title();
+            
+            void hero_detail_title();
+            void hero_detail_option_message();
+            
+            void hero_delete_title();
+            void hero_delete_option_message();
+            void hero_delete_result_message(const char* name);
+            
+            void hero_not_found_message();
         }
     }
 
