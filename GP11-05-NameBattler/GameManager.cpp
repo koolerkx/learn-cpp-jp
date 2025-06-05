@@ -17,9 +17,6 @@ void GameManager::start()
     {
         view::flow::initialize_save::save_data_not_found_message();
         initialize_save_flow();
-    } catch (const std::exception&)
-    {
-        throw;
     }
 
     while (is_continue)
