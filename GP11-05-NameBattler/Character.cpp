@@ -5,7 +5,7 @@
 
 Character::Character(char* name)
 {
-    strncpy_s(name_, name, sizeof(name_));
+    strncpy_s(name_, name, Character::NAME_MAX_LENGTH);
     
     seed_ = utils::hash_chars(name_);
 
