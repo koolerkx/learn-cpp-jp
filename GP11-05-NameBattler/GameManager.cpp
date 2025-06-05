@@ -4,7 +4,6 @@
 #include "view.h"
 #include "Session.h"
 
-
 void Game::start()
 {
     bool is_continue = true;
@@ -24,14 +23,15 @@ void Game::start()
         switch (user_input)
         {
         case 1:
-            // TODO: New Character
-            start_summon_flow();
-            view::menu::hint_back_to_menu();
-            std::cin.ignore();
-            std::cin.get();
-
-            // TODO: Save Option
-            break;
+            {
+                Character character = start_summon_flow();
+                add_character_to_session_flow(character);
+            
+                view::menu::hint_back_to_menu();
+                std::cin.ignore();
+                std::cin.get();
+                break;
+            }
         case 2:
             // TODO: 2 Player Battle
             break;    
@@ -67,6 +67,27 @@ Character Game::start_summon_flow()
     view::character::show_profile(summoned_character);
 
     return summoned_character;
+}
+
+void Game::add_character_to_session_flow(const Character& character)
+{
+    std::cout << "保存しますか？ ";
+    std::cout << "1. はい ";
+    std::cout << "2. いいえ ";
+    std::cout << "選択してください（1/2）: ";
+    int saving_option = 0;
+    std::cin >> saving_option;
+    
+    switch (saving_option)
+    {
+    case 1:
+        Session::get_instance().add_character(character);
+        Session::get_instance().save();
+        break;
+    case 2:
+    default:
+        break;
+    }
 }
 
 void Game::initialize_save_flow()
