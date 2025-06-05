@@ -13,7 +13,7 @@ class Character
 public:
     Character(char* name);
 
-    int get_score() const;
+    int get_rate() const;
     const char* get_name() const;
     Ability get_ability() const;
 

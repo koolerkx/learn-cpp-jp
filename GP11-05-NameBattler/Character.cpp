@@ -29,7 +29,7 @@ Ability Character::get_ability() const
     return ability_;
 }
 
-int Character::get_score() const
+int Character::get_rate() const
 {
-    return ability_.attack + ability_.defense + ability_.speed + ability_.defense;
+    return ability_.attack + ability_.defense + ability_.speed + ability_.hp;
 }
