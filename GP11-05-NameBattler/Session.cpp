@@ -9,7 +9,7 @@
 
 struct SaveData
 {
-    char characters_names[Character::NAME_MAX_LENGTH][Session::MAX_CHARACTER];
+    char characters_names[Session::MAX_CHARACTER][Character::NAME_MAX_LENGTH];
     int characters_count;
 };
 
