@@ -21,55 +21,103 @@ namespace view
         }
     }
 
-    namespace menu
+    namespace flow
     {
-        void show_session_separator()
+        namespace menu
         {
-            std::cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n\n";
+            void show_main_menu()
+            {
+                std::cout << "==============================\n";
+                std::cout << "        ネームバトラー        \n";
+                std::cout << "==============================\n";
+                std::cout << "\n";
+                std::cout << " 1. キャラ召喚\n";
+                std::cout << " 2. 二人で遊ぶ\n";
+                std::cout << " 3. AI対戦\n";
+                std::cout << " 9. ゲーム終了\n";
+                std::cout << "\n";
+                std::cout << "==============================\n";
+                std::cout << "選択してください（1/2/3/9）: ";
+            }
+
+            void end_message()
+            {
+                std::cout << "Game End" << "\n";
+            }
         }
         
-        void show_main_menu()
+        namespace summon
         {
-            std::cout << "==============================\n";
-            std::cout << "        ネームバトラー        \n";
-            std::cout << "==============================\n";
-            std::cout << "\n";
-            std::cout << " 1. キャラ召喚\n";
-            std::cout << " 2. 二人で遊ぶ\n";
-            std::cout << " 3. AI対戦\n";
-            std::cout << " 9. ゲーム終了\n";
-            std::cout << "\n";
-            std::cout << "==============================\n";
-            std::cout << "選択してください（1/2/3/9）: ";
+            void title()
+            {
+                std::cout << "------------------------------\n";
+                std::cout << "          キャラ召喚          \n";
+                std::cout << "------------------------------\n";
+            }
+            
+            void profile_title()
+            {
+                std::cout << "==============================\n";
+                std::cout << "        キャラプロフィール     \n";
+                std::cout << "==============================\n";
+            }
+
+            void name_input_message()
+            {
+                std::cout << "キャラの名前を呼んでください：";
+            }
+            
+            void saving_menu()
+            {
+                std::cout << "保存しますか？ \n";
+                std::cout << "1. はい \n";
+                std::cout << "2. いいえ \n\n";
+                std::cout << "選択してください（1/2）: ";
+            }
+            
+            void result_message(const char& name)
+            {
+                std::cout << "\n結果：『" << name << "』が成功に召喚された！\n\n";
+            }
+
         }
-        void hint_back_to_menu()
+
+        namespace initialize_save
+        {
+            void welcome_message()
+            {
+                std::cout << "==============================\n";
+                std::cout << "ようこそ、ネームバトラーの世界へ！\n";
+                std::cout << "==============================\n\n";
+            }
+            
+            void end_message()
+            {
+                std::cout << "では、ネームバトラーマスターを目指して、頑張りましょう！\n";
+            }
+            
+            void save_data_not_found_message()
+            {
+                std::cout << "セーブデータは見つからなかった\n";
+                std::cout << "新しいデータを作る\n";
+                std::cout << "\n";
+            }
+        }
+    }
+
+    namespace message
+    {
+        void key_back_to_menu_message()
         {
             std::cout << "何かキーを押すとメニューに戻ります…\n";
         }
-        
-        void show_summon_title()
-        {
-            std::cout << "------------------------------\n";
-            std::cout << "          キャラ召喚          \n";
-            std::cout << "------------------------------\n";
-        }
-        void show_summon_profile_title()
-        {
-            std::cout << "==============================\n";
-            std::cout << "        キャラプロフィール     \n";
-            std::cout << "==============================\n";
-        }
+    }
 
-        void show_initialize_welcome_message()
+    namespace format_line
+    {
+        void show_block_separator()
         {
-            std::cout << "==============================\n";
-            std::cout << "ようこそ、ネームバトラーの世界へ！\n";
-            std::cout << "==============================\n\n";
+            std::cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n\n";
         }
-        void show_initialize_departure_message()
-        {
-            std::cout << "では、ネームバトラーマスターを目指して、頑張りましょう！\n";
-        }
-
     }
 }

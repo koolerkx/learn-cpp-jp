@@ -2,10 +2,10 @@
 #include <iostream>
 
 #include <fstream>
-#include <exception>
 #include "cstring"
 #include "Character.h"
 #include "utils.h"
+#include "Exception.h"
 
 struct SaveData
 {
@@ -23,7 +23,7 @@ void Session::add_character(const Character& character)
 {
     if (characters_.size() >= Session::MAX_CHARACTER)
     {
-        throw std::exception(SESSION_CHARACTERS_MAX_LIMIT_EXCEEDED_EXCEPTION);
+        throw exception::character::CharacterLimitExceedException();
     }
 
     characters_.emplace_back(character);
@@ -66,7 +66,7 @@ void Session::save() const
     std::ofstream ofs("save.dat", std::ios::binary);
     if (!ofs.is_open())
     {
-        throw std::exception("ファイルの書き出しに失敗しました");
+        throw exception::io::FileOutputFailedException();
     }
     ofs.write(reinterpret_cast<const char*>(&save_data), sizeof(SaveData));
     ofs.close();
@@ -77,7 +77,7 @@ void Session::load()
     std::ifstream ifs("save.dat", std::ios::binary);
     if (!ifs.is_open())
     {
-        throw std::runtime_error("ファイルの読み込みに失敗しました");
+        throw exception::io::FileInputFailedException();
     }
 
     SaveData save_data{};
