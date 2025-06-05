@@ -8,10 +8,10 @@ struct Ability
     int speed;
 };
 
-class Character
+class Hero
 {
 public:
-    Character(char* name);
+    Hero(char* name);
 
     int get_rate() const;
     const char* get_name() const;

@@ -1,17 +1,17 @@
 #include <iostream>
 #include "view.h"
 
-#include "Character.h"
+#include "Hero.h"
 
 namespace view
 {
-    namespace character
+    namespace hero
     {
-        void show_profile(const Character& character)
+        void show_profile(const Hero& hero)
         {
-            Ability ability =  character.get_ability();
+            Ability ability =  hero.get_ability();
             
-            std::cout << " 名前 ： " << character.get_name() << "\n";
+            std::cout << " 名前 ： " << hero.get_name() << "\n";
             std::cout << "\n [ 能力値 ]\n";
             std::cout << "  体力　： " << ability.hp << "\n";
             std::cout << "  攻撃　： " << ability.attack << "\n";
@@ -31,7 +31,7 @@ namespace view
                 std::cout << "        ネームバトラー        \n";
                 std::cout << "==============================\n";
                 std::cout << "\n";
-                std::cout << " 1. キャラ召喚\n";
+                std::cout << " 1. 英雄召喚\n";
                 std::cout << " 2. 二人で遊ぶ\n";
                 std::cout << " 3. AI対戦\n";
                 std::cout << " 9. ゲーム終了\n";
@@ -55,20 +55,20 @@ namespace view
             void title()
             {
                 std::cout << "------------------------------\n";
-                std::cout << "          キャラ召喚          \n";
+                std::cout << "             英雄召喚          \n";
                 std::cout << "------------------------------\n";
             }
             
             void profile_title()
             {
                 std::cout << "==============================\n";
-                std::cout << "        キャラプロフィール     \n";
+                std::cout << "        英雄プロフィール        \n";
                 std::cout << "==============================\n";
             }
 
             void name_input_message()
             {
-                std::cout << "キャラの名前を呼んでください：";
+                std::cout << "英雄の名前を呼んでください：";
             }
             
             void saving_menu()

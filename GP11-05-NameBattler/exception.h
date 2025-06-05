@@ -9,9 +9,9 @@ constexpr const char* FILE_OUTPUT_FAILED_EXCEPTION = "ファイルの書き出しに失敗し
 constexpr const char* FILE_INPUT_FAILED_EXCEPTION = "ファイルの読み込みに失敗しました";
 
 namespace exception {
-    namespace character
+    namespace hero
     {
-        class CharacterLimitExceedException : public Exception {
+        class HeroLimitExceedException : public Exception {
         public:
             const char* what() const override
             {

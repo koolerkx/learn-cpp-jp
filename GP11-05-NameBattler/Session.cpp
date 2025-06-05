@@ -3,14 +3,14 @@
 
 #include <fstream>
 #include "cstring"
-#include "Character.h"
+#include "Hero.h"
 #include "utils.h"
 #include "Exception.h"
 
 struct SaveData
 {
-    char characters_names[Session::MAX_CHARACTER][Character::NAME_MAX_LENGTH];
-    int characters_count;
+    char hero_names[Session::MAX_HERO][Hero::NAME_MAX_LENGTH];
+    int hero_count;
 };
 
 Session& Session::get_instance()
@@ -19,47 +19,47 @@ Session& Session::get_instance()
     return instance;
 }
 
-void Session::add_character(const Character& character)
+void Session::add_hero(const Hero& hero)
 {
-    if (characters_.size() >= Session::MAX_CHARACTER)
+    if (hero_.size() >= Session::MAX_HERO)
     {
-        throw exception::character::CharacterLimitExceedException();
+        throw exception::hero::HeroLimitExceedException();
     }
 
-    characters_.emplace_back(character);
+    hero_.emplace_back(hero);
 }
 
-void Session::delete_character(const unsigned int index)
+void Session::delete_hero(const unsigned int index)
 {
-    if (index >= characters_.size())
+    if (index >= hero_.size())
     {
         return;
     }
-    characters_.erase(characters_.begin() + index);
+    hero_.erase(hero_.begin() + index);
 }
 
-const Character* Session::get_characters() const
+const Hero* Session::get_heroes() const
 {
-    return characters_.data();
+    return hero_.data();
 }
 
 // fixme: handle overflow
-int Session::get_characters_count() const
+int Session::get_heroes_count() const
 {
-    return static_cast<int>(characters_.size());
+    return static_cast<int>(hero_.size());
 }
 
 void Session::save() const
 {
     SaveData save_data{
         {},
-        get_characters_count(),
+        get_heroes_count(),
     };
 
-    const Character* characters = get_characters();
-    for (uint i = 0; i < characters_.size(); i++)
+    const Hero* heroes = get_heroes();
+    for (uint i = 0; i < hero_.size(); i++)
     {
-        strncpy_s(save_data.characters_names[i], Character::NAME_MAX_LENGTH, characters[i].get_name(), Character::NAME_MAX_LENGTH);
+        strncpy_s(save_data.hero_names[i], Hero::NAME_MAX_LENGTH, heroes[i].get_name(), Hero::NAME_MAX_LENGTH);
     }
 
     // TODO: Failed to open save
@@ -82,9 +82,9 @@ void Session::load()
 
     SaveData save_data{};
     ifs.read(reinterpret_cast<char*>(&save_data), sizeof(SaveData));
-    for (int i = 0; i < save_data.characters_count; i++)
+    for (int i = 0; i < save_data.hero_count; i++)
     {
-        characters_.emplace_back(save_data.characters_names[i]);
+        hero_.emplace_back(save_data.hero_names[i]);
     }
 
     ifs.close();

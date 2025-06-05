@@ -1,11 +1,11 @@
 #include <cstdlib>
 #include "cstring"
-#include "Character.h"
+#include "Hero.h"
 #include "utils.h"
 
-Character::Character(char* name)
+Hero::Hero(char* name)
 {
-    strncpy_s(name_, name, Character::NAME_MAX_LENGTH);
+    strncpy_s(name_, name, Hero::NAME_MAX_LENGTH);
     
     seed_ = utils::hash_chars(name_);
 
@@ -19,17 +19,17 @@ Character::Character(char* name)
     };
 }
 
-const char* Character::get_name() const
+const char* Hero::get_name() const
 {
     return name_;
 }
 
-Ability Character::get_ability() const
+Ability Hero::get_ability() const
 {
     return ability_;
 }
 
-int Character::get_rate() const
+int Hero::get_rate() const
 {
     return ability_.attack + ability_.defense + ability_.speed + ability_.hp;
 }

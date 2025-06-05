@@ -1,11 +1,11 @@
 #pragma once
-#include "Character.h"
+#include "Hero.h"
 
 namespace view
 {
-    namespace character
+    namespace hero
     {
-        void show_profile(const Character& character);
+        void show_profile(const Hero& hero);
     }
 
     // text output for main flow

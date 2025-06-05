@@ -1,6 +1,6 @@
 #include <iostream>
 #include "GameManager.h"
-#include "Character.h"
+#include "Hero.h"
 #include "view.h"
 #include "Session.h"
 #include "exception.h"
@@ -35,8 +35,8 @@ void GameManager::start()
         {
         case 1:
             {
-                Character character = start_summon_flow();
-                add_character_to_session_flow(character);
+                Hero hero = start_summon_flow();
+                add_hero_to_session_flow(hero);
 
                 view::message::press_any_key();
                 std::cin.get();
@@ -59,26 +59,26 @@ void GameManager::start()
 }
 
 // flow control
-Character GameManager::start_summon_flow()
+Hero GameManager::start_summon_flow()
 {
-    char name[Character::NAME_MAX_LENGTH];
+    char name[Hero::NAME_MAX_LENGTH];
 
     view::flow::summon::title();
 
     view::flow::summon::name_input_message();
 
-    std::cin.getline(name, Character::NAME_MAX_LENGTH);
+    std::cin.getline(name, Hero::NAME_MAX_LENGTH);
 
     view::flow::summon::result_message(name);
 
     view::flow::summon::profile_title();
-    const Character summoned_character(name);
-    view::character::show_profile(summoned_character);
+    const Hero summoned_hero(name);
+    view::hero::show_profile(summoned_hero);
 
-    return summoned_character;
+    return summoned_hero;
 }
 
-void GameManager::add_character_to_session_flow(const Character& character)
+void GameManager::add_hero_to_session_flow(const Hero& hero)
 {
     view::flow::summon::saving_menu();
 
@@ -92,7 +92,7 @@ void GameManager::add_character_to_session_flow(const Character& character)
     switch (selected)
     {
     case 1:
-        Session::get_instance().add_character(character);
+        Session::get_instance().add_hero(hero);
         Session::get_instance().save();
         break;
     case 2:
@@ -105,8 +105,8 @@ void GameManager::initialize_save_flow()
 {
     view::flow::initialize_save::welcome_message();
 
-    Character character = GameManager::start_summon_flow();
-    Session::get_instance().add_character(character);
+    Hero hero = GameManager::start_summon_flow();
+    Session::get_instance().add_hero(hero);
     Session::get_instance().save();
 
     view::flow::initialize_save::end_message();
