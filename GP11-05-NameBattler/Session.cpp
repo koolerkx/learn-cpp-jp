@@ -62,7 +62,6 @@ void Session::save() const
         strncpy_s(save_data.hero_names[i], Hero::NAME_MAX_LENGTH, heroes[i].get_name(), Hero::NAME_MAX_LENGTH);
     }
 
-    // TODO: Failed to open save
     std::ofstream ofs("save.dat", std::ios::binary);
     if (!ofs.is_open())
     {

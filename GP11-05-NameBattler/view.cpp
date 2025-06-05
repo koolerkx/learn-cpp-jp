@@ -55,7 +55,8 @@ namespace view
 
             void game_end_message()
             {
-                std::cout << "Game End" << "\n";
+                std::cout << "‚Ü‚½‚¢‚Á‚µ‚å‚É—V‚Ú‚¤I\n";
+                std::cout << "ìŽÒF\n";
             }
         }
 
