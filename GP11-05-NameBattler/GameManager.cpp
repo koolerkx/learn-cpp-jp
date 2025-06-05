@@ -13,7 +13,8 @@ void GameManager::start()
     try
     {
         Session::get_instance().load();
-    } catch (const exception::io::FileInputFailedException&)
+    }
+    catch (const exception::io::FileInputFailedException&)
     {
         view::flow::initialize_save::save_data_not_found_message();
         initialize_save_flow();
@@ -23,27 +24,27 @@ void GameManager::start()
     {
         view::flow::menu::show_main_menu();
         constexpr int valid_options[] = {1, 2, 3, 9};
-        
+
         int selected = utils::input::validated_input(
             utils::input::validator::is_in_list(valid_options, std::size(valid_options)),
             view::flow::menu::option_message
         );
         view::format_line::show_block_separator();
-        
+
         switch (selected)
         {
         case 1:
             {
                 Character character = start_summon_flow();
                 add_character_to_session_flow(character);
-            
+
                 view::message::press_any_key();
                 std::cin.get();
                 break;
             }
         case 2:
             // TODO: 2 Player Battle
-            break;    
+            break;
         case 9:
             is_continue = false;
             break;
@@ -65,11 +66,11 @@ Character GameManager::start_summon_flow()
     view::flow::summon::title();
 
     view::flow::summon::name_input_message();
-    // FIXME
+
     std::cin.getline(name, Character::NAME_MAX_LENGTH);
-    
+
     view::flow::summon::result_message(name);
-    
+
     view::flow::summon::profile_title();
     const Character summoned_character(name);
     view::character::show_profile(summoned_character);
@@ -80,14 +81,14 @@ Character GameManager::start_summon_flow()
 void GameManager::add_character_to_session_flow(const Character& character)
 {
     view::flow::summon::saving_menu();
-    
+
     constexpr int valid_options[] = {1, 2};
-        
+
     int selected = utils::input::validated_input(
         utils::input::validator::is_in_list(valid_options, std::size(valid_options)),
         view::flow::summon::saving_menu_option_message
     );
-    
+
     switch (selected)
     {
     case 1:
@@ -107,7 +108,6 @@ void GameManager::initialize_save_flow()
     Character character = GameManager::start_summon_flow();
     Session::get_instance().add_character(character);
     Session::get_instance().save();
-    
+
     view::flow::initialize_save::end_message();
 }
-
