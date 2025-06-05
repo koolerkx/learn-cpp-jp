@@ -23,6 +23,11 @@ namespace view
 
     namespace menu
     {
+        void show_session_separator()
+        {
+            std::cout << "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n\n";
+        }
+        
         void show_main_menu()
         {
             std::cout << "==============================\n";
@@ -54,5 +59,17 @@ namespace view
             std::cout << "        キャラプロフィール     \n";
             std::cout << "==============================\n";
         }
+
+        void show_initialize_welcome_message()
+        {
+            std::cout << "==============================\n";
+            std::cout << "ようこそ、ネームバトラーの世界へ！\n";
+            std::cout << "==============================\n\n";
+        }
+        void show_initialize_departure_message()
+        {
+            std::cout << "では、ネームバトラーマスターを目指して、頑張りましょう！\n";
+        }
+
     }
 }
