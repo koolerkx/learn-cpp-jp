@@ -1,4 +1,8 @@
 #pragma once
+#include <vector>
+
+#include "Battle.h"
+#include "Card.h"
 #include "Hero.h"
 
 namespace view
@@ -18,6 +22,7 @@ namespace view
             void option_message();
             void game_end_message();
         }
+
         namespace summon
         {
             void title();
@@ -27,6 +32,7 @@ namespace view
             void saving_menu_option_message();
             void result_message(const char* name);
         }
+
         namespace initialize_save
         {
             void welcome_message();
@@ -38,17 +44,37 @@ namespace view
         {
             void hero_management_menu();
             void hero_menu_option_message();
-            
+
             void hero_list_title();
-            
+
             void hero_detail_title();
             void hero_detail_option_message();
-            
+
             void hero_delete_title();
             void hero_delete_option_message();
             void hero_delete_result_message(const char* name);
-            
+
             void hero_not_found_message();
+        }
+
+        namespace battle
+        {
+            void battle_title();
+            void battle_round(int round);
+            void battle_round_hero_list(const PlayerHero* heroes, const int size);
+            void battle_round_hero(PlayerHero player_round);
+
+            void battle_round_option_message();
+            
+            void battle_round_attack_option_list(const Card* cards, const int size);
+
+            void attack_action_description(const PlayerHero& from, const PlayerHero& to);
+
+            void attack_damage_result(const char hero_name[Hero::NAME_MAX_LENGTH], int damage, int remaining_hp);
+            
+            void defender_dead_message(const PlayerHero& hero);
+
+            void end_message();
         }
     }
 

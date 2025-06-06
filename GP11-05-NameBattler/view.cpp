@@ -1,7 +1,12 @@
 #include <iostream>
 #include "view.h"
 
+#include <vector>
+
+#include "Battle.h"
+#include "Card.h"
 #include "Hero.h"
+#include "utils.h"
 
 namespace view
 {
@@ -174,6 +179,79 @@ namespace view
             void hero_delete_result_message(const char* name)
             {
                 std::cout << "あなたの手を離れ、『" << name << "』は旅立ちました。\n\n";
+            }
+        }
+
+        namespace battle
+        {
+            void battle_title()
+            {
+                std::cout << "------------------------------" << "\n";
+                std::cout << "バトル開始！" << "\n";
+                std::cout << "------------------------------" << "\n\n";
+            }
+
+            void battle_round(const int round)
+            {
+                std::cout << "【ラウンド " << round << "】";
+            }
+
+            void battle_round_hero_list(const PlayerHero* heroes, const int size)
+            {
+                std::cout << "行動順：\n";
+                for (int i = 0; i < size; i++)
+                {
+                    std::cout << i + 1 << " : (" << heroes[i].get_player_label() << ") ";
+                    std::cout << heroes[i].get_name();
+                    std::cout << "(" << heroes[i].get_hp() << "/" << heroes[i].get_max_hp() << ")";
+                }
+            }
+
+            void battle_round_hero(PlayerHero player_round)
+            {
+                std::cout << "> 現在のターン：";
+                std::cout << "(" << player_round.get_player_label() << ")";
+                std::cout << player_round.get_name();
+                std::cout << "\n\n";
+            }
+
+            void battle_round_attack_option_list(const Card* cards, const int size)
+            {
+                std::cout << "ーー アクションカードを選んでください ーー\n";
+
+                for (int i = 0; i < size; i++)
+                {
+                    std::cout << i << ". " << cards[i].get_label() << "\n";
+                }
+
+                std::cout << "\n";
+            }
+
+            void battle_round_option_message()
+            {
+                std::cout << "選択：";
+            }
+
+            void attack_action_description(const PlayerHero& from, const PlayerHero& to)
+            {
+                std::cout << "\n> " << from.get_name() << "の攻撃！\n";
+                std::cout << to.get_name() << "に一撃を与えた！\n";
+            }
+
+            void attack_damage_result(const char hero_name[Hero::NAME_MAX_LENGTH], const int damage, const int remaining_hp)
+            {
+                std::cout << "> " << hero_name << " は " << damage << " のダメージを受けた（残り HP：" << remaining_hp << "）\n\n";
+            }
+
+            void defender_dead_message(const PlayerHero& hero)
+            {
+                std::cout << "> " << hero.get_name() << " は 戦いの場に倒れた...\n\n";
+            }
+
+            void end_message()
+            {
+                std::cout << "対戦終了\n";
+                std::cout << "メニューに戻る\n";
             }
         }
     }

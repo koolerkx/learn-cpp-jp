@@ -6,17 +6,18 @@
 Hero::Hero(char* name)
 {
     strncpy_s(name_, name, Hero::NAME_MAX_LENGTH);
-    
+
     seed_ = utils::hash_chars(name_);
 
     srand(seed_);
-    
+
     ability_ = {
         rand() % ABILITY_MAX_VALUE,
         rand() % ABILITY_MAX_VALUE,
         rand() % ABILITY_MAX_VALUE,
         rand() % ABILITY_MAX_VALUE,
     };
+    
 }
 
 const char* Hero::get_name() const
@@ -27,6 +28,10 @@ const char* Hero::get_name() const
 Ability Hero::get_ability() const
 {
     return ability_;
+}
+
+Card* Hero::get_cards() const
+{
 }
 
 int Hero::get_rate() const
