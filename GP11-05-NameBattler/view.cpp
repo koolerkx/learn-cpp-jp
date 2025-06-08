@@ -184,6 +184,16 @@ namespace view
 
         namespace battle
         {
+            void player_select_hero(const char* label)
+            {
+                std::cout << label <<  "‚Ì‘I‘ð\n";
+            }
+            
+            void select_hero_options()
+            {
+                std::cout << "‰p—Y‚Ì”Ô†‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢F";
+            }
+
             void battle_title()
             {
                 std::cout << "------------------------------" << "\n";

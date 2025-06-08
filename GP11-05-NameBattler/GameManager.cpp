@@ -42,8 +42,33 @@ void GameManager::start()
                 break;
             }
         case 2:
-            // TODO: 2 Player Battle
-            break;
+            {
+                constexpr const char* PLAYER_1_LABEL = "P1";
+                constexpr const char* PLAYER_2_LABEL = "P1";
+                
+                Session session = Session::get_instance();
+                view::hero::show_list(session.get_heroes(), session.get_heroes_count());
+                
+                view::flow::battle::player_select_hero(PLAYER_1_LABEL);
+                int p1_selected = utils::input::validated_input(
+                    utils::input::validator::is_in_range(1, session.get_heroes_count()),
+                    view::flow::battle::select_hero_options
+                );
+                const Hero* p1_hero = &session.get_heroes()[p1_selected - 1];
+                Player p1(PLAYER_1_LABEL, p1_hero);
+
+                view::flow::battle::player_select_hero(PLAYER_2_LABEL);
+                int p2_selected = utils::input::validated_input(
+                    utils::input::validator::is_in_range(1, session.get_heroes_count()),
+                    view::flow::battle::select_hero_options
+                );
+                const Hero* p2_hero = &session.get_heroes()[p2_selected - 1];
+                Player p2(PLAYER_2_LABEL, p2_hero);
+
+                Battle battle(&p1, &p2);
+                battle.start();
+                break;
+            }
         case 4:
             hero_menu_flow();
             break;

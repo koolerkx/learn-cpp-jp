@@ -6,7 +6,7 @@
 
 #include "Battle.h"
 
-PlayerHero::PlayerHero(Player* player, Hero* hero)
+PlayerHero::PlayerHero(Player* player, const Hero* hero)
 {
     player_ = player;
     hero_ = hero;

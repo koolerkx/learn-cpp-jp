@@ -6,10 +6,10 @@ constexpr int PLAYER_LABEL_NAME_MAX_LENGTH = 5;
 class Player
 {
 public:
-    Player(const char* label, Hero* hero);
+    Player(const char* label, const Hero* hero);
 
-    Hero* get_hero();
+    const Hero* get_hero() const;
     char label[PLAYER_LABEL_NAME_MAX_LENGTH];
 private:
-    Hero* hero_;
+    const Hero* hero_;
 };

@@ -59,6 +59,9 @@ namespace view
 
         namespace battle
         {
+            void player_select_hero(const char* label);
+            void select_hero_options();
+            
             void battle_title();
             void battle_round(int round);
             void battle_round_hero_list(PlayerHero* const* heroes, const int size);

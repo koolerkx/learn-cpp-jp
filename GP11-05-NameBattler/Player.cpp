@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-Player::Player(const char* label, Hero* hero)
+Player::Player(const char* label, const Hero* hero)
 {
     strncpy_s(
         this->label, PLAYER_LABEL_NAME_MAX_LENGTH,
@@ -12,7 +12,7 @@ Player::Player(const char* label, Hero* hero)
     hero_ = hero;
 }
 
-Hero* Player::get_hero()
+const Hero* Player::get_hero() const
 {
     return hero_;
 }

@@ -6,7 +6,7 @@
 class PlayerHero
 {
 public:
-    PlayerHero(Player* player, Hero* hero);
+    PlayerHero(Player* player, const Hero* hero);
     ~PlayerHero();
     
     PlayerHero(const PlayerHero& other);
@@ -30,7 +30,7 @@ public:
     
 private:
     Player* player_;
-    Hero* hero_;
+    const Hero* hero_;
     
     Card** available_cards_;
     int available_cards_size;
