@@ -1,15 +1,15 @@
 #pragma once
 
-#include <deque>
-
 #include "Player.h"
 #include "PlayerHero.h"
-#include "utils.h"
 
 class Battle
 {
 public:
     Battle(Player* p1, Player* p2);
+    ~Battle();
+    
+    void start();
     
     Player* p1;
     Player* p2;
@@ -19,9 +19,8 @@ public:
     static constexpr int DICE_BASE = (DICE_LOWER + DICE_UPPER) / 2;
     static float offset_dice_multiplier(int dice_value);
 private:
-    void start();
-
     PlayerHero* hero_order;
+
     int hero_order_size;
     int current_order = 0;
 };

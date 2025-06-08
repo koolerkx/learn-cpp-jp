@@ -62,12 +62,12 @@ namespace view
             void battle_title();
             void battle_round(int round);
             void battle_round_hero_list(const PlayerHero* heroes, const int size);
-            void battle_round_hero(PlayerHero player_round);
+            void battle_round_hero(const PlayerHero& player_round);
 
             void battle_round_option_message();
             
-            void battle_round_attack_option_list(const Card* cards, const int size);
-
+            void battle_round_attack_option_list(const Card* const* cards, const int size);
+            
             void attack_action_description(const PlayerHero& from, const PlayerHero& to);
 
             void attack_damage_result(const char hero_name[Hero::NAME_MAX_LENGTH], int damage, int remaining_hp);

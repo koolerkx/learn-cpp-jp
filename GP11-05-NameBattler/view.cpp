@@ -205,9 +205,10 @@ namespace view
                     std::cout << heroes[i].get_name();
                     std::cout << "(" << heroes[i].get_hp() << "/" << heroes[i].get_max_hp() << ")";
                 }
+                std::cout << "\n";
             }
 
-            void battle_round_hero(PlayerHero player_round)
+            void battle_round_hero(const PlayerHero& player_round)
             {
                 std::cout << "> 現在のターン：";
                 std::cout << "(" << player_round.get_player_label() << ")";
@@ -215,13 +216,13 @@ namespace view
                 std::cout << "\n\n";
             }
 
-            void battle_round_attack_option_list(const Card* cards, const int size)
+            void battle_round_attack_option_list(const Card* const* cards, const int size)
             {
                 std::cout << "ーー アクションカードを選んでください ーー\n";
 
                 for (int i = 0; i < size; i++)
                 {
-                    std::cout << i << ". " << cards[i].get_label() << "\n";
+                    std::cout << i + 1 << ". " << cards[i]->get_label() << " (効果：" << cards[i]->get_power() << ")\n";
                 }
 
                 std::cout << "\n";

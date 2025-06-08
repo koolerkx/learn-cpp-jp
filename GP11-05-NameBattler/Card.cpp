@@ -7,21 +7,21 @@ Card::Card(const char* label, const int power)
     power_ = power;
 }
 
-void AttackCard::apply_card(PlayerHero& user, PlayerHero& target, float multiply)
+void AttackCard::apply_card(PlayerHero& user, PlayerHero& target, float multiply) const
 {
-    int damage = user.get_damage(multiply);
+    // FIXME the damage
+    int damage = power_ * user.get_damage(multiply);
     target.take_damage(damage);
 }
 
-void HealCard::apply_card(PlayerHero&, PlayerHero& target, float multiply)
+void HealCard::apply_card(PlayerHero& user, PlayerHero& target, float multiply) const
 {
-    int power = static_cast<int>(power_ * multiply);
-    target.take_heal(power);
+    int power = static_cast<int>(static_cast<float>(power_) * multiply);
+    user.take_heal(power);
 }
 
-
-void DefenseCard::apply_card(PlayerHero&, PlayerHero& target, float multiply)
+void DefenseCard::apply_card(PlayerHero& user, PlayerHero& target, float multiply) const
 {
-    int power = static_cast<int>(power_ * multiply);
-    target.take_shield(power);
+    int power = static_cast<int>(static_cast<float>(power_) * multiply);
+    user.take_shield(power);
 }

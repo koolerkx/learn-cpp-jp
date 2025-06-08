@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 
 class PlayerHero;
 
@@ -17,11 +18,17 @@ public:
     const char* get_label() const { return label_; }
     int get_power() const { return power_; }
 
-    virtual void apply_card(PlayerHero& user, PlayerHero& target, float multiply) = 0;
+    virtual void apply_card(PlayerHero& user, PlayerHero& target, float multiply) const = 0;
     
 protected:
     int power_;
     const char* label_;
+};
+
+enum CARD_TYPE : std::uint8_t {
+    ATTACK = 0,
+    HEAL = 1,
+    DEFENSE = 2
 };
 
 constexpr const char* ATTACK_CARD_LABEL = "çUåÇçsìÆ";
@@ -33,7 +40,7 @@ public:
     {
     }
 
-    void apply_card(PlayerHero& user, PlayerHero& target, float multiply) override;
+    void apply_card(PlayerHero& user, PlayerHero& target, float multiply) const override;
 };
 
 constexpr const char* HEAL_CARD_LABEL = "é°ñ¸çsìÆ";
@@ -45,7 +52,7 @@ public:
     {
     }
 
-    void apply_card(PlayerHero& user, PlayerHero& target, float multiply) override;
+    void apply_card(PlayerHero& user, PlayerHero& target, float multiply) const override;
 };
 
 constexpr const char* DEFENSE_CARD_LABEL = "ñhå‰çsìÆ";
@@ -57,5 +64,5 @@ public:
     {
     }
 
-    void apply_card(PlayerHero& user, PlayerHero& target, float multiply) override;
+    void apply_card(PlayerHero& user, PlayerHero& target, float multiply) const override;
 };

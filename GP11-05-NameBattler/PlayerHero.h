@@ -7,6 +7,9 @@ class PlayerHero
 {
 public:
     PlayerHero(Player* player, Hero* hero);
+    ~PlayerHero();
+    
+    PlayerHero(const PlayerHero& other);
     
     const char* get_player_label() const { return player_->label; }
     
@@ -16,9 +19,9 @@ public:
 
     void set_hp(const int hp) { hp_ = hp; }
 
-    Card* get_available_cards();
-    int available_cards_size = -1;
-    Card* get_card(const int index);
+    Card* const* get_available_cards() const;
+    int get_available_cards_size() const { return available_cards_size; } 
+    const Card* get_card(const int index) const;
 
     int get_damage(float multiply) const;
     
@@ -29,9 +32,12 @@ public:
 private:
     Player* player_;
     Hero* hero_;
-    Card* available_cards_;
+    
+    Card** available_cards_;
+    int available_cards_size;
     
     int hp_;
     int shield_ = 0;
+    
+    void initialize_cards();
 };
-
