@@ -47,7 +47,7 @@ void PlayerHero::take_damage(const int power)
     const int applied_damage = std::max(0, power - shield_);
     shield_ = std::max(0, shield_ - power);
 
-    hp_ = hp_ - applied_damage;
+    hp_ = std::max(0, hp_ - applied_damage);
 }
 
 void PlayerHero::take_heal(const int power)

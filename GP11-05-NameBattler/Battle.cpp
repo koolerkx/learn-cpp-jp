@@ -19,7 +19,8 @@ Battle::Battle(Player* p1, Player* p2)
 
 Battle::~Battle()
 {
-    for (int i = 0; i < hero_order_size; i++) {
+    for (int i = 0; i < hero_order_size; i++)
+    {
         delete hero_order[i];
     }
     delete[] hero_order;
@@ -53,8 +54,12 @@ void Battle::start()
         int dice = utils::random(Battle::DICE_LOWER, Battle::DICE_UPPER);
         float multiply = Battle::offset_dice_multiplier(dice);
 
-        attacker_selected_card->apply_card(attacker, defender, multiply);
+        const int power = attacker_selected_card->apply_card(attacker, defender, multiply);
 
+        view::flow::battle::action_description(attacker, attacker_selected_card);
+        view::flow::battle::dice_result(dice);
+
+        attacker_selected_card->result_message(attacker, defender, power);
         // const int defender_hp_before = defender.get_hp();
         // view::flow::battle::attack_action_description(attacker, defender);
         // view::flow::battle::attack_damage_result(defender.get_name(), defender_hp_before - defender.get_hp(), defender.get_hp());
@@ -64,11 +69,14 @@ void Battle::start()
             view::flow::battle::defender_dead_message(defender);
             break;
         }
-
+        
+        view::message::press_any_key_continue();
+        std::cin.get();
+        view::format_line::show_double_line();
     }
-    
+
     view::flow::battle::end_message();
-    view::message::press_any_key();
+    view::message::press_any_key_menu();
     std::cin.get();
 }
 

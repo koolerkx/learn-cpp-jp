@@ -72,10 +72,15 @@ namespace view
 
             void battle_round_attack_option_list(const std::vector<const Card*>& cards);
 
+            void dice_result(const int dice);
+            
+            void action_description(const PlayerHero& ph, const Card* card);
             void attack_action_description(const PlayerHero& from, const PlayerHero& to);
 
-            void attack_damage_result(const char hero_name[Hero::NAME_MAX_LENGTH], int damage, int remaining_hp);
-
+            void attack_result(const PlayerHero& to, const int power);
+            void heal_result(const PlayerHero& to, const int power);
+            void defense_result(const PlayerHero& to, const int power);
+            
             void defender_dead_message(const PlayerHero& hero);
 
             void end_message();
@@ -85,7 +90,8 @@ namespace view
     // text output for info user
     namespace message
     {
-        void press_any_key();
+        void press_any_key_menu();
+        void press_any_key_continue();
 
         namespace input
         {
@@ -96,5 +102,6 @@ namespace view
     namespace format_line
     {
         void show_block_separator();
+        void show_double_line();
     }
 }

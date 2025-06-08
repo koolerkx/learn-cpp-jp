@@ -22,9 +22,7 @@ namespace utils
     {
         srand(static_cast<unsigned>(time(nullptr)));
 
-        const float random_num = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-	
-        return static_cast<int>(random_num * static_cast<float>(upper_limit - lower_limit) + static_cast<float>(lower_limit));
+        return rand() % (upper_limit - lower_limit + 1) + lower_limit;
     }
 
     namespace input
@@ -46,7 +44,8 @@ namespace utils
                 input_message();
                 std::cin >> input;
 
-                if (std::cin.fail()) {
+                if (std::cin.fail())
+                {
                     std::cin.clear();
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
@@ -55,8 +54,8 @@ namespace utils
                 }
 
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                
-                if(validator(input))
+
+                if (validator(input))
                 {
                     return input;
                 }

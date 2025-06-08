@@ -37,7 +37,7 @@ void GameManager::start()
                 Hero hero = start_summon_flow();
                 add_hero_to_session_flow(std::move(hero));
 
-                view::message::press_any_key();
+                view::message::press_any_key_menu();
                 std::cin.get();
                 break;
             }
@@ -166,7 +166,7 @@ void GameManager::hero_menu_flow()
             view::flow::summon::profile_title();
             view::hero::show_profile(session.get_heroes()[selected_hero - 1]);
 
-            view::message::press_any_key();
+            view::message::press_any_key_menu();
             std::cin.get();
             break;
         }
@@ -185,7 +185,7 @@ void GameManager::hero_menu_flow()
             session.save();
             view::flow::hero::hero_delete_result_message(hero_to_delete_name);
 
-            view::message::press_any_key();
+            view::message::press_any_key_menu();
             std::cin.get();
             break;
         }
@@ -194,13 +194,13 @@ void GameManager::hero_menu_flow()
             view::flow::hero::hero_list_title();
             view::hero::show_list(session.get_heroes(), session.get_heroes_count());
 
-            view::message::press_any_key();
+            view::message::press_any_key_menu();
             std::cin.get();
             break;
         }
     default:
     case 9:
-        view::message::press_any_key();
+        view::message::press_any_key_menu();
         std::cin.get();
         break;
     }

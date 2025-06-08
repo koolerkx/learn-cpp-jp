@@ -199,7 +199,7 @@ namespace view
         {
             void player_select_hero(const char* label)
             {
-                std::cout << label << "の選択\n";
+                std::cout << "\n" << label << "の選択\n";
             }
 
             void select_hero_options()
@@ -210,7 +210,7 @@ namespace view
             void battle_title()
             {
                 std::cout << "------------------------------" << "\n";
-                std::cout << "バトル開始！" << "\n";
+                std::cout << "         バトル開始！" << "\n";
                 std::cout << "------------------------------" << "\n\n";
             }
 
@@ -226,7 +226,8 @@ namespace view
                 {
                     std::cout << i + 1 << " : (" << heroes[i]->get_player_label() << ") ";
                     std::cout << heroes[i]->get_name();
-                    std::cout << "(" << heroes[i]->get_hp() << "/" << heroes[i]->get_max_hp() << ")";
+                    std::cout << " (HP: " << heroes[i]->get_hp() << "/" << heroes[i]->get_max_hp() << ", 防御値: " <<
+                        heroes[i]->get_shield() << ")\n";
                 }
                 std::cout << "\n";
             }
@@ -234,7 +235,7 @@ namespace view
             void battle_round_hero(const PlayerHero& player_round)
             {
                 std::cout << "> 現在のターン：";
-                std::cout << "(" << player_round.get_player_label() << ")";
+                std::cout << "(" << player_round.get_player_label() << ")　";
                 std::cout << player_round.get_name();
                 std::cout << "\n\n";
             }
@@ -256,16 +257,29 @@ namespace view
                 std::cout << "選択：";
             }
 
-            void attack_action_description(const PlayerHero& from, const PlayerHero& to)
+            void dice_result(const int dice)
             {
-                std::cout << "\n> " << from.get_name() << "の攻撃！\n";
-                std::cout << to.get_name() << "に一撃を与えた！\n";
+                std::cout << "> " << " サイコロ結果 (1d" << Battle::DICE_UPPER << ")：" << dice << "\n";
             }
 
-            void attack_damage_result(const char hero_name[Hero::NAME_MAX_LENGTH], const int damage,
-                                      const int remaining_hp)
+            void action_description(const PlayerHero& ph, const Card* card)
             {
-                std::cout << "> " << hero_name << " は " << damage << " のダメージを受けた（残り HP：" << remaining_hp << "）\n\n";
+                std::cout << "> " << ph.get_name() << " は　" << card->get_label() << "を使いました\n\n";
+            }
+
+            void attack_result(const PlayerHero& to, const int power)
+            {
+                std::cout << "> " << to.get_name() << " は " << power << " ダメージを受けた（残り HP：" << to.get_hp() << "）\n\n";
+            }
+
+            void heal_result(const PlayerHero& to, const int power)
+            {
+                std::cout << "> " << to.get_name() << " は " << power << " HP回復した（残り HP：" << to.get_hp() << "）\n\n";
+            }
+
+            void defense_result(const PlayerHero& to, const int power)
+            {
+                std::cout << "> " << to.get_name() << " は " << power << " のシールドを得た（防御：" << to.get_shield() << "）\n\n";
             }
 
             void defender_dead_message(const PlayerHero& hero)
@@ -283,9 +297,14 @@ namespace view
 
     namespace message
     {
-        void press_any_key()
+        void press_any_key_menu()
         {
             std::cout << "何かキーを押すとメニューに戻ります…\n";
+        }
+
+        void press_any_key_continue()
+        {
+            std::cout << "何かキーを押すと続く…\n";
         }
 
         namespace input
@@ -302,6 +321,11 @@ namespace view
         void show_block_separator()
         {
             std::cout << "\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n";
+        }
+
+        void show_double_line()
+        {
+            std::cout << "\n==============================\n";
         }
     }
 }

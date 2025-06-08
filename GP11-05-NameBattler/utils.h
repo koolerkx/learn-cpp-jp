@@ -1,7 +1,6 @@
 #pragma once
 #include <functional>
 
-
 using uint = unsigned int;
 
 namespace utils

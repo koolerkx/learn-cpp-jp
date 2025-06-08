@@ -20,6 +20,7 @@ public:
     const char* get_name() const { return hero_->get_name(); }
     int get_hp() const { return hp_; }
     int get_max_hp() const { return hero_->get_ability().hp; }
+    int get_shield() const { return shield_; }
 
     const std::vector<const Card*>& get_available_cards() const;
     const Card* get_card(const int index) const;
