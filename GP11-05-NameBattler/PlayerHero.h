@@ -21,7 +21,8 @@ public:
     int get_available_cards_size() const { return available_cards_size; } 
     const Card* get_card(const int index) const;
 
-    int get_damage(float multiply) const;
+    int get_attack() const { return  (hero_->get_ability().attack); }
+    int get_defense() const { return (hero_->get_ability().defense); }
     
     void take_damage(int power);
     void take_heal(int power);

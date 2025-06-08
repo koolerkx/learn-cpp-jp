@@ -67,11 +67,6 @@ const Card* PlayerHero::get_card(const int index) const
     return nullptr;
 }
 
-int PlayerHero::get_damage(const float multiply) const
-{
-    return static_cast<int>(static_cast<float>(hero_->get_ability().attack) * multiply);
-}
-
 void PlayerHero::take_damage(const int power)
 {
     const int applied_damage = std::max(0, power - shield_);
