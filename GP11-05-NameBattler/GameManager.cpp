@@ -35,7 +35,7 @@ void GameManager::start()
         case 1:
             {
                 Hero hero = start_summon_flow();
-                add_hero_to_session_flow(hero);
+                add_hero_to_session_flow(std::move(hero));
 
                 view::message::press_any_key();
                 std::cin.get();
@@ -44,9 +44,9 @@ void GameManager::start()
         case 2:
             {
                 constexpr const char* PLAYER_1_LABEL = "P1";
-                constexpr const char* PLAYER_2_LABEL = "P1";
+                constexpr const char* PLAYER_2_LABEL = "P2";
 
-                Session session = Session::get_instance();
+                Session& session = Session::get_instance();
                 view::hero::show_list(session.get_heroes(), session.get_heroes_count());
 
                 view::flow::battle::player_select_hero(PLAYER_1_LABEL);
@@ -99,13 +99,13 @@ Hero GameManager::start_summon_flow()
     view::flow::summon::result_message(name);
 
     view::flow::summon::profile_title();
-    const Hero summoned_hero(name);
+    Hero summoned_hero(name);
     view::hero::show_profile(summoned_hero);
 
     return summoned_hero;
 }
 
-void GameManager::add_hero_to_session_flow(const Hero& hero)
+void GameManager::add_hero_to_session_flow(Hero&& hero)
 {
     view::flow::summon::saving_menu();
 
@@ -119,7 +119,7 @@ void GameManager::add_hero_to_session_flow(const Hero& hero)
     switch (selected)
     {
     case 1:
-        Session::get_instance().add_hero(hero);
+        Session::get_instance().add_hero(std::move(hero));
         Session::get_instance().save();
         break;
     case 2:
@@ -133,7 +133,7 @@ void GameManager::initialize_save_flow()
     view::flow::initialize_save::welcome_message();
 
     Hero hero = GameManager::start_summon_flow();
-    Session::get_instance().add_hero(hero);
+    Session::get_instance().add_hero(std::move(hero));
     Session::get_instance().save();
 
     view::flow::initialize_save::end_message();
@@ -149,7 +149,7 @@ void GameManager::hero_menu_flow()
         view::flow::hero::hero_menu_option_message
     );
 
-    Session session = Session::get_instance();
+    Session& session = Session::get_instance();
 
     switch (selected)
     {
@@ -180,8 +180,8 @@ void GameManager::hero_menu_flow()
                 view::flow::hero::hero_delete_option_message
             );
 
-            session.delete_hero(selected_hero - 1);
             const char* hero_to_delete_name = session.get_heroes()[selected_hero - 1].get_name();
+            session.delete_hero(selected_hero - 1);
             session.save();
             view::flow::hero::hero_delete_result_message(hero_to_delete_name);
 

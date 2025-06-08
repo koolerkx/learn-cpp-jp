@@ -19,14 +19,14 @@ Session& Session::get_instance()
     return instance;
 }
 
-void Session::add_hero(const Hero& hero)
+void Session::add_hero(Hero&& hero)  // Accept by move
 {
     if (hero_.size() >= Session::MAX_HERO)
     {
         throw exception::hero::HeroLimitExceedException();
     }
 
-    hero_.emplace_back(hero);
+    hero_.emplace_back(std::move(hero));  // Move into vector
 }
 
 void Session::delete_hero(const unsigned int index)
@@ -52,9 +52,9 @@ int Session::get_heroes_count() const
 void Session::save() const
 {
     SaveData save_data{
-        {},
-        get_heroes_count(),
-    };
+            {},
+            get_heroes_count(),
+        };
 
     const Hero* heroes = get_heroes();
     for (uint i = 0; i < hero_.size(); i++)
@@ -83,7 +83,7 @@ void Session::load()
     ifs.read(reinterpret_cast<char*>(&save_data), sizeof(SaveData));
     for (int i = 0; i < save_data.hero_count; i++)
     {
-        hero_.emplace_back(save_data.hero_names[i]);
+        hero_.emplace_back(save_data.hero_names[i]);  // Direct construction in vector
     }
 
     ifs.close();
