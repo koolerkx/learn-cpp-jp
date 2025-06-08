@@ -45,10 +45,10 @@ void GameManager::start()
             {
                 constexpr const char* PLAYER_1_LABEL = "P1";
                 constexpr const char* PLAYER_2_LABEL = "P1";
-                
+
                 Session session = Session::get_instance();
                 view::hero::show_list(session.get_heroes(), session.get_heroes_count());
-                
+
                 view::flow::battle::player_select_hero(PLAYER_1_LABEL);
                 int p1_selected = utils::input::validated_input(
                     utils::input::validator::is_in_range(1, session.get_heroes_count()),
@@ -190,7 +190,6 @@ void GameManager::hero_menu_flow()
             break;
         }
     case 1:
-    default:
         {
             view::flow::hero::hero_list_title();
             view::hero::show_list(session.get_heroes(), session.get_heroes_count());
@@ -199,5 +198,10 @@ void GameManager::hero_menu_flow()
             std::cin.get();
             break;
         }
+    default:
+    case 9:
+        view::message::press_any_key();
+        std::cin.get();
+        break;
     }
 }
