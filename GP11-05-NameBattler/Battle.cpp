@@ -8,16 +8,20 @@ Battle::Battle(Player* p1, Player* p2)
 {
     this->p1 = p1;
     this->p2 = p2;
-    
+
+    // HACK: 2 Player
     hero_order_size = 2;
-    hero_order = new PlayerHero[hero_order_size]{
-        PlayerHero(p1, p1->get_hero()),
-        PlayerHero(p2, p2->get_hero())
+    hero_order = new PlayerHero*[hero_order_size]{
+        new PlayerHero(p1, p1->get_hero()),
+        new PlayerHero(p2, p2->get_hero())
     };
 }
 
 Battle::~Battle()
 {
+    for (int i = 0; i < hero_order_size; i++) {
+        delete hero_order[i];
+    }
     delete[] hero_order;
 }
 
@@ -32,9 +36,9 @@ void Battle::start()
         view::flow::battle::battle_round(round++);
         view::flow::battle::battle_round_hero_list(hero_order, hero_order_size);
 
-        PlayerHero& attacker = hero_order[current_order];
+        PlayerHero& attacker = *hero_order[current_order];
         current_order = (current_order + 1) % hero_order_size;
-        PlayerHero& defender = hero_order[current_order];
+        PlayerHero& defender = *hero_order[current_order];
 
         view::flow::battle::battle_round_hero(attacker);
 

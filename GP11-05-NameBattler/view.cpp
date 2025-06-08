@@ -196,14 +196,14 @@ namespace view
                 std::cout << "yƒ‰ƒEƒ“ƒh " << round << "z";
             }
 
-            void battle_round_hero_list(const PlayerHero* heroes, const int size)
+            void battle_round_hero_list(PlayerHero* const* heroes, const int size)
             {
                 std::cout << "s“®‡F\n";
                 for (int i = 0; i < size; i++)
                 {
-                    std::cout << i + 1 << " : (" << heroes[i].get_player_label() << ") ";
-                    std::cout << heroes[i].get_name();
-                    std::cout << "(" << heroes[i].get_hp() << "/" << heroes[i].get_max_hp() << ")";
+                    std::cout << i + 1 << " : (" << heroes[i]->get_player_label() << ") ";
+                    std::cout << heroes[i]->get_name();
+                    std::cout << "(" << heroes[i]->get_hp() << "/" << heroes[i]->get_max_hp() << ")";
                 }
                 std::cout << "\n";
             }

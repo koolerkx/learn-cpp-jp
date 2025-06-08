@@ -19,8 +19,8 @@ public:
     static constexpr int DICE_BASE = (DICE_LOWER + DICE_UPPER) / 2;
     static float offset_dice_multiplier(int dice_value);
 private:
-    PlayerHero* hero_order;
-
+    PlayerHero** hero_order;
+    
     int hero_order_size;
     int current_order = 0;
 };
