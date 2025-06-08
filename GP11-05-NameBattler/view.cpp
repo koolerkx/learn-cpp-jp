@@ -21,8 +21,9 @@ namespace view
             std::cout << "  体力　： " << ability.hp << "\n";
             std::cout << "  攻撃　： " << ability.attack << "\n";
             std::cout << "  防御　： " << ability.defense << "\n";
-            std::cout << "  速度　： " << ability.speed << "\n";
-            std::cout << "==============================\n";
+            std::cout << "  速度　： " << ability.speed << "\n\n";
+
+            show_cards(hero.get_cards());
         }
 
         void show_list(const Hero* heroes, int count)
@@ -31,6 +32,18 @@ namespace view
             {
                 std::cout << i + 1 << ": " << heroes[i].get_name() << " (" << heroes[i].get_rate() << ")\n";
             }
+        }
+
+        void show_cards(const std::vector<std::unique_ptr<Card>>& cards)
+        {
+            std::cout << "［　所持カード　］\n";
+
+            for (int i = 0; i < static_cast<int>(cards.size()); i++)
+            {
+                std::cout << i + 1 << ". " << cards[i]->get_label() << " (効果：" << cards[i]->get_power() << ")\n";
+            }
+
+            std::cout << "==============================\n";
         }
     }
 
@@ -186,9 +199,9 @@ namespace view
         {
             void player_select_hero(const char* label)
             {
-                std::cout << label <<  "の選択\n";
+                std::cout << label << "の選択\n";
             }
-            
+
             void select_hero_options()
             {
                 std::cout << "英雄の番号を入力してください：";
@@ -249,7 +262,8 @@ namespace view
                 std::cout << to.get_name() << "に一撃を与えた！\n";
             }
 
-            void attack_damage_result(const char hero_name[Hero::NAME_MAX_LENGTH], const int damage, const int remaining_hp)
+            void attack_damage_result(const char hero_name[Hero::NAME_MAX_LENGTH], const int damage,
+                                      const int remaining_hp)
             {
                 std::cout << "> " << hero_name << " は " << damage << " のダメージを受けた（残り HP：" << remaining_hp << "）\n\n";
             }

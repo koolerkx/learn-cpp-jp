@@ -11,6 +11,7 @@ namespace view
     {
         void show_profile(const Hero& hero);
         void show_list(const Hero* hero, int count);
+        void show_cards(const std::vector<std::unique_ptr<Card>>& cards);
     }
 
     // text output for main flow
