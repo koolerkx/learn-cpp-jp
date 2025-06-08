@@ -17,8 +17,6 @@ public:
     int get_hp() const { return hp_; }
     int get_max_hp() const { return hero_->get_ability().hp; }
 
-    void set_hp(const int hp) { hp_ = hp; }
-
     Card* const* get_available_cards() const;
     int get_available_cards_size() const { return available_cards_size; } 
     const Card* get_card(const int index) const;
