@@ -1,5 +1,7 @@
 #pragma once
 #include "Card.h"
+#include <vector>
+#include <memory>
 
 struct Ability
 {
@@ -13,13 +15,19 @@ class Hero
 {
 public:
     Hero(const char* name);
-    ~Hero();
+    ~Hero() = default;
+
+    // only allow to move to prevent memory leak
+    Hero(const Hero&) = delete;
+    Hero& operator=(const Hero&) = delete;
+    Hero(Hero&&) noexcept = default;
+    Hero& operator=(Hero&&) noexcept = default;
 
     int get_rate() const;
     const char* get_name() const;
     Ability get_ability() const;
 
-    Card** get_cards() const;
+    const std::vector<std::unique_ptr<Card>>& get_cards() const;
     int get_cards_size() const;
 
     static constexpr int NAME_MAX_LENGTH = 256;
@@ -29,8 +37,7 @@ public:
 private:
     char name_[NAME_MAX_LENGTH];
     unsigned int seed_;
-    Card** cards_;
-    int cards_count_;
+    std::vector<std::unique_ptr<Card>> cards_;
     
     Ability ability_;
     

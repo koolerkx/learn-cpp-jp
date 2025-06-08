@@ -226,11 +226,11 @@ namespace view
                 std::cout << "\n\n";
             }
 
-            void battle_round_attack_option_list(const Card* const* cards, const int size)
+            void battle_round_attack_option_list(const std::vector<const Card*>& cards)
             {
                 std::cout << "ーー アクションカードを選んでください ーー\n";
 
-                for (int i = 0; i < size; i++)
+                for (int i = 0; i < static_cast<int>(cards.size()); i++)
                 {
                     std::cout << i + 1 << ". " << cards[i]->get_label() << " (効果：" << cards[i]->get_power() << ")\n";
                 }

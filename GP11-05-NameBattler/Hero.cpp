@@ -2,6 +2,7 @@
 #include "cstring"
 #include "Hero.h"
 #include "utils.h"
+#include <memory>
 
 Hero::Hero(const char* name)
 {
@@ -18,19 +19,9 @@ Hero::Hero(const char* name)
         rand() % ABILITY_MAX_VALUE,
     };
     
-    cards_ = new Card*[MAX_CARDS];
-    cards_count_ = 0;
+    cards_.reserve(MAX_CARDS);
     
     generate_cards();
-}
-
-Hero::~Hero()
-{
-    for (int i = 0; i < cards_count_; i++)
-    {
-        delete cards_[i];
-    }
-    delete[] cards_;
 }
 
 const char* Hero::get_name() const
@@ -43,14 +34,14 @@ Ability Hero::get_ability() const
     return ability_;
 }
 
-Card** Hero::get_cards() const
+const std::vector<std::unique_ptr<Card>>& Hero::get_cards() const
 {
     return cards_;
 }
 
 int Hero::get_cards_size() const
 {
-    return cards_count_;
+    return static_cast<int>(cards_.size());
 }
 
 int Hero::get_rate() const
@@ -64,35 +55,32 @@ void Hero::generate_cards()
     
     constexpr int num_cards = MAX_CARDS;
     
-    for (int i = 0; i < num_cards && cards_count_ < MAX_CARDS; i++)
+    for (int i = 0; i < num_cards && cards_.size() < MAX_CARDS; i++)
     {
         int card_type = rand() % 3;
         
         switch (card_type)
         {
-            case ATTACK:
+        case ATTACK:
             {
                 int power = (ability_.attack / 4) + (rand() % 20) + 5;
-                cards_[cards_count_] = new AttackCard(power);
-                cards_count_++;
+                cards_.emplace_back(std::make_unique<AttackCard>(power));
                 break;
             }
-            case HEAL:
+        case HEAL:
             {
                 int power = (ability_.hp / 8) + (rand() % 15) + 3;
-                cards_[cards_count_] = new HealCard(power);
-                cards_count_++;
+                cards_.emplace_back(std::make_unique<HealCard>(power));
                 break;
             }
-            case DEFENSE:
+        case DEFENSE:
             {
                 int power = (ability_.defense / 6) + (rand() % 12) + 2;
-                cards_[cards_count_] = new DefenseCard(power);
-                cards_count_++;
+                cards_.emplace_back(std::make_unique<DefenseCard>(power));
                 break;
             }
-            default:
-                break;
+        default:
+            break;
         }
     }
 }

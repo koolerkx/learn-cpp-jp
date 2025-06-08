@@ -42,11 +42,10 @@ void Battle::start()
 
         view::flow::battle::battle_round_hero(attacker);
 
-        view::flow::battle::battle_round_attack_option_list(attacker.get_available_cards(),
-                                                            attacker.get_available_cards_size());
+        view::flow::battle::battle_round_attack_option_list(attacker.get_available_cards());
 
         int attacker_selected = utils::input::validated_input(
-            utils::input::validator::is_in_range(1, attacker.get_available_cards_size()),
+            utils::input::validator::is_in_range(1, static_cast<int>(attacker.get_available_cards().size())),
             view::flow::battle::battle_round_option_message
         );
         const Card* attacker_selected_card = attacker.get_card(attacker_selected - 1);

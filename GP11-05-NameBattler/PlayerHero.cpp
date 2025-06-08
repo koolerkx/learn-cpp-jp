@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include <cstring>
+#include <algorithm>
 
 #include "Battle.h"
 
@@ -16,51 +17,25 @@ PlayerHero::PlayerHero(Player* player, const Hero* hero)
     initialize_cards();
 }
 
-PlayerHero::~PlayerHero()
-{
-    // it is shallow copy from hero
-    delete[] available_cards_;
-    available_cards_ = nullptr;
-}
-
-PlayerHero::PlayerHero(const PlayerHero& other)
-{
-    player_ = other.player_;
-    hero_ = other.hero_;
-    hp_ = other.hp_;
-    shield_ = other.shield_;
-    available_cards_size = other.available_cards_size;
-    
-    available_cards_ = new Card*[available_cards_size];
-    for (int i = 0; i < available_cards_size; i++)
-    {
-        available_cards_[i] = other.available_cards_[i];
-    }
-}
-
-
 void PlayerHero::initialize_cards()
 {
-    Card** hero_cards = hero_->get_cards();
-    available_cards_size = hero_->get_cards_size();
+    const std::vector<std::unique_ptr<Card>>& hero_cards = hero_->get_cards();
+    available_cards_.reserve(hero_cards.size());
     
-    available_cards_ = new Card*[available_cards_size];
-
-    // shallow copy
-    for (int i = 0; i < available_cards_size; i++)
+    for (const std::unique_ptr<Card>& card : hero_cards)
     {
-        available_cards_[i] = hero_cards[i];
+        available_cards_.push_back(card.get());
     }
 }
 
-Card* const* PlayerHero::get_available_cards() const
+const std::vector<const Card*>& PlayerHero::get_available_cards() const
 {
     return available_cards_;
 }
 
 const Card* PlayerHero::get_card(const int index) const
 {
-    if (index >= 0 && index < available_cards_size)
+    if (index >= 0 && index < static_cast<int>(available_cards_.size()))
     {
         return available_cards_[index];
     }
