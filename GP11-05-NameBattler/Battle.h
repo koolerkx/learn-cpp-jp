@@ -10,8 +10,8 @@ public:
     
     void start();
     
-    static constexpr int DICE_LOWER = 0;
-    static constexpr int DICE_UPPER = 10;
+    static constexpr int DICE_LOWER = 1;
+    static constexpr int DICE_UPPER = 6;
     static constexpr int DICE_BASE = (DICE_LOWER + DICE_UPPER) / 2;
     static float offset_dice_multiplier(int dice_value);
 private:

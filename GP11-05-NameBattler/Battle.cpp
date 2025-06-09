@@ -41,7 +41,7 @@ void Battle::start()
         const int power = selected_card->apply_card(attacker, defender, multiply);
 
         view::flow::battle::action_description(attacker, selected_card);
-        view::flow::battle::dice_result(dice);
+        view::flow::battle::dice_result(dice, multiply);
 
         selected_card->result_message(attacker, defender, power);
 

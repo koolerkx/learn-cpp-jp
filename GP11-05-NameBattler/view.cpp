@@ -262,9 +262,9 @@ namespace view
                 std::cout << "選択：";
             }
 
-            void dice_result(const int dice)
+            void dice_result(int dice, const float multiply)
             {
-                std::cout << "> " << " サイコロ結果 (1d" << Battle::DICE_UPPER << ")：" << dice << "\n";
+                std::cout << "> " << " サイコロ結果 (1d" << Battle::DICE_UPPER << ")：" << dice << " (補正倍率：" << multiply << ")\n";
             }
 
             void action_description(const PlayerHero& ph, const Card* card)
