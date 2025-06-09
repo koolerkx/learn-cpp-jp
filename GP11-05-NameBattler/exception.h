@@ -26,14 +26,14 @@ namespace exception {
         public:
             const char* what() const override
             {
-                return CHARACTER_LIMIT_EXCEED_EXCEPTION;
+                return FILE_OUTPUT_FAILED_EXCEPTION;
             }
         };
         class FileInputFailedException : public Exception {
         public:
             const char* what() const override
             {
-                return CHARACTER_LIMIT_EXCEED_EXCEPTION;
+                return FILE_INPUT_FAILED_EXCEPTION;
             }
         };
     }
