@@ -245,7 +245,7 @@ namespace view
                 std::cout << "\n\n";
             }
 
-            void battle_round_attack_option_list(const std::vector<const Card*>& cards)
+            void battle_card_list(const std::vector<const Card*>& cards)
             {
                 std::cout << "ーー アクションカードを選んでください ーー\n";
 

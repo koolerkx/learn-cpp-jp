@@ -26,31 +26,25 @@ void Battle::start()
         PlayerHero& defender = *hero_order_[current_order];
 
         view::flow::battle::battle_round_hero(attacker);
-
-        view::flow::battle::battle_round_attack_option_list(attacker.get_available_cards());
-
-        int attacker_selected = utils::input::validated_input(
-            utils::input::validator::is_in_range(1, static_cast<int>(attacker.get_available_cards().size())),
-            view::flow::battle::battle_round_option_message
-        );
-        const Card* attacker_selected_card = attacker.get_card(attacker_selected - 1);
-
+        
+        const Card* selected_card = handle_card_select(attacker);
+        
         int dice = utils::random(Battle::DICE_LOWER, Battle::DICE_UPPER);
         float multiply = Battle::offset_dice_multiplier(dice);
+    
+        const int power = selected_card->apply_card(attacker, defender, multiply);
 
-        const int power = attacker_selected_card->apply_card(attacker, defender, multiply);
-
-        view::flow::battle::action_description(attacker, attacker_selected_card);
+        view::flow::battle::action_description(attacker, selected_card);
         view::flow::battle::dice_result(dice);
 
-        attacker_selected_card->result_message(attacker, defender, power);
+        selected_card->result_message(attacker, defender, power);
 
         if (defender.get_hp() <= 0)
         {
             view::flow::battle::defender_dead_message(defender);
             break;
         }
-        
+
         view::message::press_any_key_continue();
         std::cin.get();
         view::format_line::double_line();
@@ -66,3 +60,17 @@ float Battle::offset_dice_multiplier(int dice_value)
     return (static_cast<float>(dice_value) - static_cast<float>(Battle::DICE_BASE)) / static_cast<float>(
         Battle::DICE_BASE);
 }
+
+const Card* Battle::handle_card_select(const PlayerHero& ph)
+{
+    view::flow::battle::battle_card_list(ph.get_available_cards());
+
+    int selected = utils::input::validated_input(
+        utils::input::validator::is_in_range(1, static_cast<int>(ph.get_available_cards().size())),
+        view::flow::battle::battle_round_option_message
+    );
+    view::format_line::blank();
+    
+    return ph.get_card(selected - 1);
+}
+

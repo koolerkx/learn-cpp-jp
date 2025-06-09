@@ -72,7 +72,7 @@ namespace view
 
             void battle_round_option_message();
 
-            void battle_round_attack_option_list(const std::vector<const Card*>& cards);
+            void battle_card_list(const std::vector<const Card*>& cards);
 
             void dice_result(const int dice);
             
