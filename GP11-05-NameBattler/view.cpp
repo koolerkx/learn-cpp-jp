@@ -62,8 +62,7 @@ namespace view
                 std::cout << " 3. AI‘Îí\n";
                 std::cout << " 4. ‰p—YŠÇ—\n";
                 std::cout << " 9. ƒQ[ƒ€I—¹\n";
-                std::cout << "\n";
-                std::cout << "==============================\n";
+                format_line::blank();
             }
 
             void option_message()
@@ -82,14 +81,14 @@ namespace view
         {
             void title()
             {
-                std::cout << "\n------------------------------\n";
+                std::cout << "------------------------------\n";
                 std::cout << "             ‰p—Y¢Š«          \n";
                 std::cout << "------------------------------\n";
             }
 
             void profile_title()
             {
-                std::cout << "\n==============================\n";
+                std::cout << "==============================\n";
                 std::cout << "        ‰p—YƒvƒƒtƒB[ƒ‹        \n";
                 std::cout << "==============================\n";
             }
@@ -113,7 +112,7 @@ namespace view
 
             void result_message(const char* name)
             {
-                std::cout << "\nŒ‹‰ÊFw" << name << "x‚ª¬Œ÷‚É¢Š«‚³‚ê‚½I\n";
+                std::cout << "Œ‹‰ÊFw" << name << "x‚ª¬Œ÷‚É¢Š«‚³‚ê‚½I\n";
             }
         }
 
@@ -143,14 +142,14 @@ namespace view
         {
             void hero_management_menu()
             {
-                std::cout << "\n==============================\n";
+                std::cout << "==============================\n";
                 std::cout << "       ŠŽ‰p—YŠÇ—ƒƒjƒ…[\n";
                 std::cout << "==============================\n\n";
                 std::cout << " 1. ˆê——i–¼‘O‚Æ•]‰¿j\n";
                 std::cout << " 2. Ú×‚ðŒ©‚é\n";
                 std::cout << " 3. ‰p—Y‚ðíœ\n";
-                std::cout << " 9. ƒƒCƒ“ƒƒjƒ…[‚É–ß‚é\n\n";
-                std::cout << "==============================\n";
+                std::cout << " 9. ƒƒCƒ“ƒƒjƒ…[‚É–ß‚é\n";
+                format_line::blank();
             }
 
             void hero_menu_option_message()
@@ -160,14 +159,14 @@ namespace view
 
             void hero_list_title()
             {
-                std::cout << "\n------------------------------\n";
+                std::cout << "------------------------------\n";
                 std::cout << "          ŠŽ‰p—Yˆê——          \n";
                 std::cout << "------------------------------\n";
             }
 
             void hero_detail_title()
             {
-                std::cout << "\n==============================\n";
+                std::cout << "==============================\n";
                 std::cout << "         ‰p—Y‚ÌÚ×î•ñ         \n";
                 std::cout << "==============================\n";
             }
@@ -179,7 +178,7 @@ namespace view
 
             void hero_delete_title()
             {
-                std::cout << "\n------------------------------\n";
+                std::cout << "------------------------------\n";
                 std::cout << "           ‚¨•Ê‚ê             \n";
                 std::cout << "------------------------------\n";
             }
@@ -197,6 +196,12 @@ namespace view
 
         namespace battle
         {
+            void battle_title()
+            {
+                std::cout << "==============================\n";
+                std::cout << "         “ñl‘Îíƒ‚[ƒh         \n";
+                std::cout << "==============================\n";
+            }
             void player_select_hero(const char* label)
             {
                 std::cout << "\n" << label << "‚Ì‘I‘ð\n";
@@ -207,7 +212,7 @@ namespace view
                 std::cout << "‰p—Y‚Ì”Ô†‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢F";
             }
 
-            void battle_title()
+            void battle_start_title()
             {
                 std::cout << "------------------------------" << "\n";
                 std::cout << "         ƒoƒgƒ‹ŠJŽnI" << "\n";
@@ -318,12 +323,19 @@ namespace view
 
     namespace format_line
     {
-        void show_block_separator()
+        void blank()
+        {
+            std::cout << "\n";
+        }
+        void block()
         {
             std::cout << "\n¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡\n";
         }
-
-        void show_double_line()
+        void single_line()
+        {
+            std::cout << "\n------------------------------\n";
+        }
+        void double_line()
         {
             std::cout << "\n==============================\n";
         }

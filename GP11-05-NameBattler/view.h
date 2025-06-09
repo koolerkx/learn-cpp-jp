@@ -60,10 +60,12 @@ namespace view
 
         namespace battle
         {
+            void battle_title();
+            
             void player_select_hero(const char* label);
             void select_hero_options();
 
-            void battle_title();
+            void battle_start_title();
             void battle_round(int round);
             void battle_round_hero_list(const std::vector<std::unique_ptr<PlayerHero>>& heroes);
             void battle_round_hero(const PlayerHero& player_round);
@@ -101,7 +103,9 @@ namespace view
 
     namespace format_line
     {
-        void show_block_separator();
-        void show_double_line();
+        void blank();
+        void block();
+        void single_line();
+        void double_line();
     }
 }

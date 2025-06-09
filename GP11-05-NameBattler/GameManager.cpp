@@ -6,7 +6,7 @@
 #include "exception.h"
 #include "utils.h"
 
-void GameManager::start()
+void GameManager::start_loop()
 {
     bool is_continue = true;
 
@@ -29,48 +29,18 @@ void GameManager::start()
             utils::input::validator::is_in_list(valid_options, std::size(valid_options)),
             view::flow::menu::option_message
         );
+        view::format_line::blank();
 
         switch (selected)
         {
         case 1:
-            {
-                Hero hero = start_summon_flow();
-                add_hero_to_session_flow(std::move(hero));
-
-                view::message::press_any_key_menu();
-                std::cin.get();
-                break;
-            }
+            handle_hero_summon();
+            break;
         case 2:
-            {
-                constexpr const char* PLAYER_1_LABEL = "P1";
-                constexpr const char* PLAYER_2_LABEL = "P2";
-
-                Session& session = Session::get_instance();
-                view::hero::show_list(session.get_heroes(), session.get_heroes_count());
-
-                view::flow::battle::player_select_hero(PLAYER_1_LABEL);
-                int p1_selected = utils::input::validated_input(
-                    utils::input::validator::is_in_range(1, session.get_heroes_count()),
-                    view::flow::battle::select_hero_options
-                );
-                const Hero* p1_hero = &session.get_heroes()[p1_selected - 1];
-                Player p1(PLAYER_1_LABEL, p1_hero);
-
-                view::flow::battle::player_select_hero(PLAYER_2_LABEL);
-                int p2_selected = utils::input::validated_input(
-                    utils::input::validator::is_in_range(1, session.get_heroes_count()),
-                    view::flow::battle::select_hero_options
-                );
-                const Hero* p2_hero = &session.get_heroes()[p2_selected - 1];
-                Player p2(PLAYER_2_LABEL, p2_hero);
-
-                Battle battle(&p1, &p2);
-                battle.start();
-                break;
-            }
+            handle_battle();
+            break;
         case 4:
-            hero_menu_flow();
+            handle_hero_management();
             break;
         case 9:
             is_continue = false;
@@ -78,34 +48,14 @@ void GameManager::start()
         default:
             break;
         }
-        view::format_line::show_block_separator();
+        view::format_line::block();
     }
 
     view::flow::menu::game_end_message();
     std::cin.get();
 }
 
-// flow control
-Hero GameManager::start_summon_flow()
-{
-    char name[Hero::NAME_MAX_LENGTH];
-
-    view::flow::summon::title();
-
-    view::flow::summon::name_input_message();
-
-    std::cin.getline(name, Hero::NAME_MAX_LENGTH);
-
-    view::flow::summon::result_message(name);
-
-    view::flow::summon::profile_title();
-    Hero summoned_hero(name);
-    view::hero::show_profile(summoned_hero);
-
-    return summoned_hero;
-}
-
-void GameManager::add_hero_to_session_flow(Hero&& hero)
+void GameManager::save_hero(Hero&& hero)
 {
     view::flow::summon::saving_menu();
 
@@ -128,18 +78,17 @@ void GameManager::add_hero_to_session_flow(Hero&& hero)
     }
 }
 
-void GameManager::initialize_save_flow()
+void GameManager::handle_hero_summon()
 {
-    view::flow::initialize_save::welcome_message();
+    Hero hero = make_hero();
+    save_hero(std::move(hero));
 
-    Hero hero = GameManager::start_summon_flow();
-    Session::get_instance().add_hero(std::move(hero));
-    Session::get_instance().save();
-
-    view::flow::initialize_save::end_message();
+    view::format_line::blank();
+    view::message::press_any_key_menu();
+    std::cin.get();
 }
 
-void GameManager::hero_menu_flow()
+void GameManager::handle_hero_management()
 {
     view::flow::hero::hero_management_menu();
 
@@ -148,60 +97,136 @@ void GameManager::hero_menu_flow()
         utils::input::validator::is_in_list(valid_options, std::size(valid_options)),
         view::flow::hero::hero_menu_option_message
     );
-
-    Session& session = Session::get_instance();
+    view::format_line::blank();
 
     switch (selected)
     {
-    case 2:
-        {
-            view::flow::hero::hero_detail_title();
-            view::hero::show_list(session.get_heroes(), session.get_heroes_count());
-
-            int selected_hero = utils::input::validated_input(
-                utils::input::validator::is_in_range(1, session.get_heroes_count()),
-                view::flow::hero::hero_detail_option_message
-            );
-
-            view::flow::summon::profile_title();
-            view::hero::show_profile(session.get_heroes()[selected_hero - 1]);
-
-            view::message::press_any_key_menu();
-            std::cin.get();
-            break;
-        }
-    case 3:
-        {
-            view::flow::hero::hero_delete_title();
-            view::hero::show_list(session.get_heroes(), session.get_heroes_count());
-
-            int selected_hero = utils::input::validated_input(
-                utils::input::validator::is_in_range(1, session.get_heroes_count()),
-                view::flow::hero::hero_delete_option_message
-            );
-
-            const char* hero_to_delete_name = session.get_heroes()[selected_hero - 1].get_name();
-            session.delete_hero(selected_hero - 1);
-            session.save();
-            view::flow::hero::hero_delete_result_message(hero_to_delete_name);
-
-            view::message::press_any_key_menu();
-            std::cin.get();
-            break;
-        }
     case 1:
-        {
-            view::flow::hero::hero_list_title();
-            view::hero::show_list(session.get_heroes(), session.get_heroes_count());
-
-            view::message::press_any_key_menu();
-            std::cin.get();
-            break;
-        }
-    default:
-    case 9:
-        view::message::press_any_key_menu();
-        std::cin.get();
+        handle_hero_list();
+        break;
+    case 2:
+        handle_hero_detail();
+        break;
+    case 3:
+        handle_hero_delete();
+        break;
+    case 9: default:
         break;
     }
+
+    view::format_line::blank();
+    view::message::press_any_key_menu();
+    std::cin.get();
+}
+
+void GameManager::handle_battle()
+{
+    constexpr const char* PLAYER_1_LABEL = "P1";
+    constexpr const char* PLAYER_2_LABEL = "P2";
+
+    Session& session = Session::get_instance();
+
+    view::flow::battle::battle_title();
+    view::hero::show_list(session.get_heroes(), session.get_heroes_count());
+
+    view::flow::battle::player_select_hero(PLAYER_1_LABEL);
+    int p1_selected = utils::input::validated_input(
+        utils::input::validator::is_in_range(1, session.get_heroes_count()),
+        view::flow::battle::select_hero_options
+    );
+    view::format_line::blank();
+
+    view::flow::battle::player_select_hero(PLAYER_2_LABEL);
+    int p2_selected = utils::input::validated_input(
+        utils::input::validator::is_in_range(1, session.get_heroes_count()),
+        view::flow::battle::select_hero_options
+    );
+    view::format_line::blank();
+    
+    const Hero* p1_hero = &session.get_heroes()[p1_selected - 1];
+    Player p1(PLAYER_1_LABEL, p1_hero);
+    
+    const Hero* p2_hero = &session.get_heroes()[p2_selected - 1];
+    Player p2(PLAYER_2_LABEL, p2_hero);
+
+    Battle battle(&p1, &p2);
+    battle.start();
+}
+
+void GameManager::handle_hero_list()
+{
+    Session& session = Session::get_instance();
+
+    view::flow::hero::hero_list_title();
+    view::hero::show_list(session.get_heroes(), session.get_heroes_count());
+}
+
+void GameManager::handle_hero_detail()
+{
+    Session& session = Session::get_instance();
+
+    view::flow::hero::hero_detail_title();
+    view::hero::show_list(session.get_heroes(), session.get_heroes_count());
+
+    view::format_line::blank();
+    int selected_hero = utils::input::validated_input(
+        utils::input::validator::is_in_range(1, session.get_heroes_count()),
+        view::flow::hero::hero_detail_option_message
+    );
+    view::format_line::blank();
+
+    view::flow::summon::profile_title();
+    view::hero::show_profile(session.get_heroes()[selected_hero - 1]);
+}
+
+void GameManager::handle_hero_delete()
+{
+    Session& session = Session::get_instance();
+
+    view::flow::hero::hero_delete_title();
+    view::hero::show_list(session.get_heroes(), session.get_heroes_count());
+
+    int selected_hero = utils::input::validated_input(
+        utils::input::validator::is_in_range(1, session.get_heroes_count()),
+        view::flow::hero::hero_delete_option_message
+    );
+    view::format_line::blank();
+
+    const char* hero_to_delete_name = session.get_heroes()[selected_hero - 1].get_name();
+    session.delete_hero(selected_hero - 1);
+    session.save();
+    view::flow::hero::hero_delete_result_message(hero_to_delete_name);
+}
+
+Hero GameManager::make_hero()
+{
+    char name[Hero::NAME_MAX_LENGTH];
+
+    view::flow::summon::title();
+    view::flow::summon::name_input_message();
+
+    std::cin.getline(name, Hero::NAME_MAX_LENGTH);
+    view::format_line::blank();
+
+    view::flow::summon::result_message(name);
+
+    view::format_line::blank();
+    view::flow::summon::profile_title();
+
+    Hero summoned_hero(name);
+    view::hero::show_profile(summoned_hero);
+
+    return summoned_hero;
+}
+
+void GameManager::initialize_save_flow()
+{
+    view::flow::initialize_save::welcome_message();
+    view::format_line::blank();
+
+    Hero hero = GameManager::make_hero();
+    Session::get_instance().add_hero(std::move(hero));
+    Session::get_instance().save();
+
+    view::flow::initialize_save::end_message();
 }

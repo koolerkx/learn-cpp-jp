@@ -3,7 +3,7 @@
 
 int main()
 {
-    GameManager::start();
+    GameManager::start_loop();
     
     return 0;
 }

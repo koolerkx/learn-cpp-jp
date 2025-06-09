@@ -12,7 +12,7 @@ Battle::Battle(Player* p1, Player* p2)
 
 void Battle::start()
 {
-    view::flow::battle::battle_title();
+    view::flow::battle::battle_start_title();
 
     int round = 1;
 
@@ -53,7 +53,7 @@ void Battle::start()
         
         view::message::press_any_key_continue();
         std::cin.get();
-        view::format_line::show_double_line();
+        view::format_line::double_line();
     }
 
     view::flow::battle::end_message();

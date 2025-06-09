@@ -4,11 +4,22 @@
 class GameManager
 {
 public:
-    static void start();
+    static void start_loop();
 
 private:
-    static Hero start_summon_flow();
-    static void add_hero_to_session_flow(Hero&& hero);  // Accept by move
+    static void save_hero(Hero&& hero);  // Accept by move
     static void initialize_save_flow();
-    static void hero_menu_flow();
+
+    // menu behaviour
+    static void handle_hero_summon();
+    static void handle_hero_management();
+    static void handle_battle();
+
+    // Hero management
+    static void handle_hero_list();
+    static void handle_hero_detail();
+    static void handle_hero_delete();
+    
+    // Hero state
+    static Hero make_hero();
 };
