@@ -3,7 +3,7 @@
 
 class PlayerHero;
 
-enum CARD_TYPE : std::uint8_t {
+enum class CARD_TYPE : std::uint8_t {
     ATTACK = 0,
     HEAL = 1,
     DEFENSE = 2
