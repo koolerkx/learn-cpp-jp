@@ -60,7 +60,6 @@ void PlayerHero::take_heal(const int power)
 
 void PlayerHero::take_shield(const int power)
 {
-    constexpr int MAX_SHIELD = 256;
     const int applied_shield = shield_ + std::max(0, power);
-    shield_ = std::min(applied_shield, MAX_SHIELD);
+    shield_ = std::min(applied_shield, PlayerHero::MAX_SHIELD);
 }

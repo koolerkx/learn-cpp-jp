@@ -31,6 +31,8 @@ public:
     void take_damage(int power);
     void take_heal(int power);
     void take_shield(int power);
+
+    constexpr static int MAX_SHIELD = 256;
     
 private:
     Player* player_;
