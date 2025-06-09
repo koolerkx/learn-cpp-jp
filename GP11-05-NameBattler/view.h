@@ -65,7 +65,7 @@ namespace view
 
             void battle_title();
             void battle_round(int round);
-            void battle_round_hero_list(PlayerHero* const* heroes, const int size);
+            void battle_round_hero_list(const std::vector<std::unique_ptr<PlayerHero>>& heroes, const int size);
             void battle_round_hero(const PlayerHero& player_round);
 
             void battle_round_option_message();

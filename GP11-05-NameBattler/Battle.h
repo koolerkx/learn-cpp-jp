@@ -7,7 +7,6 @@ class Battle
 {
 public:
     Battle(Player* p1, Player* p2);
-    ~Battle();
     
     void start();
     
@@ -19,7 +18,7 @@ public:
     static constexpr int DICE_BASE = (DICE_LOWER + DICE_UPPER) / 2;
     static float offset_dice_multiplier(int dice_value);
 private:
-    PlayerHero** hero_order;
+    std::vector<std::unique_ptr<PlayerHero>> hero_order_;
     
     int hero_order_size;
     int current_order = 0;

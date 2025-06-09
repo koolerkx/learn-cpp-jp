@@ -219,7 +219,7 @@ namespace view
                 std::cout << "yƒ‰ƒEƒ“ƒh " << round << "z";
             }
 
-            void battle_round_hero_list(PlayerHero* const* heroes, const int size)
+            void battle_round_hero_list(const std::vector<std::unique_ptr<PlayerHero>>& heroes, const int size)
             {
                 std::cout << "s“®‡F\n";
                 for (int i = 0; i < size; i++)

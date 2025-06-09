@@ -6,24 +6,8 @@
 
 Battle::Battle(Player* p1, Player* p2)
 {
-    this->p1 = p1;
-    this->p2 = p2;
-
-    // HACK: 2 Player
-    hero_order_size = 2;
-    hero_order = new PlayerHero*[hero_order_size]{
-        new PlayerHero(p1, p1->get_hero()),
-        new PlayerHero(p2, p2->get_hero())
-    };
-}
-
-Battle::~Battle()
-{
-    for (int i = 0; i < hero_order_size; i++)
-    {
-        delete hero_order[i];
-    }
-    delete[] hero_order;
+    hero_order_.emplace_back(std::make_unique<PlayerHero>(p1, p1->get_hero()));
+    hero_order_.emplace_back(std::make_unique<PlayerHero>(p2, p2->get_hero()));
 }
 
 void Battle::start()
@@ -35,11 +19,11 @@ void Battle::start()
     while (true)
     {
         view::flow::battle::battle_round(round++);
-        view::flow::battle::battle_round_hero_list(hero_order, hero_order_size);
+        view::flow::battle::battle_round_hero_list(hero_order_, hero_order_size);
 
-        PlayerHero& attacker = *hero_order[current_order];
+        PlayerHero& attacker = *hero_order_[current_order];
         current_order = (current_order + 1) % hero_order_size;
-        PlayerHero& defender = *hero_order[current_order];
+        PlayerHero& defender = *hero_order_[current_order];
 
         view::flow::battle::battle_round_hero(attacker);
 
@@ -60,9 +44,6 @@ void Battle::start()
         view::flow::battle::dice_result(dice);
 
         attacker_selected_card->result_message(attacker, defender, power);
-        // const int defender_hp_before = defender.get_hp();
-        // view::flow::battle::attack_action_description(attacker, defender);
-        // view::flow::battle::attack_damage_result(defender.get_name(), defender_hp_before - defender.get_hp(), defender.get_hp());
 
         if (defender.get_hp() <= 0)
         {
