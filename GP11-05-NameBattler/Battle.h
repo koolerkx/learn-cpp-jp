@@ -20,6 +20,5 @@ public:
 private:
     std::vector<std::unique_ptr<PlayerHero>> hero_order_;
     
-    int hero_order_size;
     int current_order = 0;
 };

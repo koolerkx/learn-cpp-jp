@@ -19,10 +19,10 @@ void Battle::start()
     while (true)
     {
         view::flow::battle::battle_round(round++);
-        view::flow::battle::battle_round_hero_list(hero_order_, hero_order_size);
+        view::flow::battle::battle_round_hero_list(hero_order_);
 
         PlayerHero& attacker = *hero_order_[current_order];
-        current_order = (current_order + 1) % hero_order_size;
+        current_order = (current_order + 1) % hero_order_.size();
         PlayerHero& defender = *hero_order_[current_order];
 
         view::flow::battle::battle_round_hero(attacker);
