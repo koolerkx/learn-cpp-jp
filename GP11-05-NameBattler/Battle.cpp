@@ -6,8 +6,14 @@
 
 Battle::Battle(Player* p1, Player* p2)
 {
-    hero_order_.emplace_back(std::make_unique<PlayerHero>(p1, p1->get_hero()));
-    hero_order_.emplace_back(std::make_unique<PlayerHero>(p2, p2->get_hero()));
+    const std::function<std::unique_ptr<PlayerHero>(Player*)> make_hero = [](Player* player) {
+        return player->is_ai() ? 
+            std::make_unique<PlayerHeroAI>(player, player->get_hero()) :
+            std::make_unique<PlayerHero>(player, player->get_hero());
+    };
+    
+    hero_order_.emplace_back(make_hero(p1));
+    hero_order_.emplace_back(make_hero(p2));
 }
 
 void Battle::start()
@@ -64,13 +70,7 @@ float Battle::offset_dice_multiplier(int dice_value)
 const Card* Battle::handle_card_select(const PlayerHero& ph)
 {
     view::flow::battle::battle_card_list(ph.get_available_cards());
-
-    int selected = utils::input::validated_input(
-        utils::input::validator::is_in_range(1, static_cast<int>(ph.get_available_cards().size())),
-        view::flow::battle::battle_round_option_message
-    );
-    view::format_line::blank();
     
-    return ph.get_card(selected - 1);
+    return ph.select_card();
 }
 

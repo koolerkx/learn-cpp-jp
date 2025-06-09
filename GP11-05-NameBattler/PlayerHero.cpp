@@ -6,6 +6,8 @@
 #include <algorithm>
 
 #include "Battle.h"
+#include "utils.h"
+#include "view.h"
 
 PlayerHero::PlayerHero(Player* player, const Hero* hero)
 {
@@ -13,7 +15,7 @@ PlayerHero::PlayerHero(Player* player, const Hero* hero)
     hero_ = hero;
 
     hp_ = hero->get_ability().hp;
-    
+
     initialize_cards();
 }
 
@@ -21,7 +23,7 @@ void PlayerHero::initialize_cards()
 {
     const std::vector<std::unique_ptr<Card>>& hero_cards = hero_->get_cards();
     available_cards_.reserve(hero_cards.size());
-    
+
     for (const std::unique_ptr<Card>& card : hero_cards)
     {
         available_cards_.push_back(card.get());
@@ -62,4 +64,59 @@ void PlayerHero::take_shield(const int power)
 {
     const int applied_shield = shield_ + std::max(0, power);
     shield_ = std::min(applied_shield, PlayerHero::MAX_SHIELD);
+}
+
+const Card* PlayerHero::select_card() const
+{
+    int selected = utils::input::validated_input(
+        utils::input::validator::is_in_range(1, static_cast<int>(get_available_cards().size())),
+        view::flow::battle::battle_round_option_message
+    );
+    view::format_line::blank();
+
+    return get_card(selected - 1);
+}
+
+const Card* PlayerHeroAI::select_card() const
+{
+    view::format_line::blank();
+
+    std::vector<float> cards_score;
+    float hp_percentage = static_cast<float>(get_hp()) / static_cast<float>(get_max_hp());
+
+    for (const Card* card : get_available_cards())
+    {
+        CARD_TYPE card_type = card->get_type();
+        float power = static_cast<float>(card->get_power());
+        float score = 0;
+
+        switch (card_type)
+        {
+        case CARD_TYPE::ATTACK:
+            score = 100 * hp_percentage * power;
+            break;
+        case CARD_TYPE::DEFENSE:
+        case CARD_TYPE::HEAL:
+            score = 100 * (1 - hp_percentage) * power;
+            break;
+        }
+
+        // random factor from -30% to +30%
+        score *= (1.0f + static_cast<float>(utils::random(0, 60) - 20) / 100.0f);
+
+        cards_score.push_back(score);
+    }
+
+    int selected = 0;
+    float selected_score = cards_score[0];
+    for (int i = 1; i < static_cast<int>(cards_score.size()); i++)
+    {
+        if (cards_score[i] > selected_score)
+        {
+            selected = i;
+            selected_score = cards_score[i];
+        }
+    }
+    
+    return get_card(selected);
 }

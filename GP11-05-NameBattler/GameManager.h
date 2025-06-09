@@ -1,6 +1,10 @@
 #pragma once
 #include "Hero.h"
 
+constexpr const char* PLAYER_1_LABEL = "P1";
+constexpr const char* PLAYER_2_LABEL = "P2";
+constexpr const char* PLAYER_COM_LABEL = "COM";
+
 class GameManager
 {
 public:
@@ -14,6 +18,7 @@ private:
     static void handle_hero_summon();
     static void handle_hero_management();
     static void handle_battle();
+    static void handle_ai_battle();
 
     // Hero management
     static void handle_hero_list();
@@ -22,4 +27,7 @@ private:
     
     // Hero state
     static Hero make_hero();
+
+    // Battle
+    const static Hero* select_hero(const char* player_label);
 };

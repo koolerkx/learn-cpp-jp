@@ -39,6 +39,9 @@ void GameManager::start_loop()
         case 2:
             handle_battle();
             break;
+        case 3:
+            handle_ai_battle();
+            break;
         case 4:
             handle_hero_management();
             break;
@@ -92,7 +95,7 @@ void GameManager::handle_hero_management()
 {
     view::flow::hero::hero_management_menu();
 
-    int valid_options[] = {1, 2, 3, 9};
+    constexpr int valid_options[] = {1, 2, 3, 9};
     int selected = utils::input::validated_input(
         utils::input::validator::is_in_list(valid_options, std::size(valid_options)),
         view::flow::hero::hero_menu_option_message
@@ -121,41 +124,43 @@ void GameManager::handle_hero_management()
 
 void GameManager::handle_battle()
 {
-    constexpr const char* PLAYER_1_LABEL = "P1";
-    constexpr const char* PLAYER_2_LABEL = "P2";
-
-    Session& session = Session::get_instance();
+    const Session& session = Session::get_instance();
 
     view::flow::battle::battle_title();
     view::hero::show_list(session.get_heroes(), session.get_heroes_count());
 
-    view::flow::battle::player_select_hero(PLAYER_1_LABEL);
-    int p1_selected = utils::input::validated_input(
-        utils::input::validator::is_in_range(1, session.get_heroes_count()),
-        view::flow::battle::select_hero_options
-    );
-    view::format_line::blank();
-
-    view::flow::battle::player_select_hero(PLAYER_2_LABEL);
-    int p2_selected = utils::input::validated_input(
-        utils::input::validator::is_in_range(1, session.get_heroes_count()),
-        view::flow::battle::select_hero_options
-    );
-    view::format_line::blank();
-    
-    const Hero* p1_hero = &session.get_heroes()[p1_selected - 1];
+    const Hero* p1_hero = select_hero(PLAYER_1_LABEL);
     Player p1(PLAYER_1_LABEL, p1_hero);
-    
-    const Hero* p2_hero = &session.get_heroes()[p2_selected - 1];
+
+    const Hero* p2_hero = select_hero(PLAYER_2_LABEL);
     Player p2(PLAYER_2_LABEL, p2_hero);
 
     Battle battle(&p1, &p2);
     battle.start();
 }
 
+void GameManager::handle_ai_battle()
+{
+    const Session& session = Session::get_instance();
+
+    view::flow::battle::battle_title();
+    view::hero::show_list(session.get_heroes(), session.get_heroes_count());
+
+    const Hero* p1_hero = select_hero(PLAYER_1_LABEL);
+    Player p1(PLAYER_1_LABEL, p1_hero);
+
+    int com_selected = utils::random(1, session.get_heroes_count());
+
+    const Hero* com_hero = &session.get_heroes()[com_selected - 1];
+    PlayerAI com(PLAYER_COM_LABEL, com_hero);
+
+    Battle battle(&p1, &com);
+    battle.start();
+}
+
 void GameManager::handle_hero_list()
 {
-    Session& session = Session::get_instance();
+    const Session& session = Session::get_instance();
 
     view::flow::hero::hero_list_title();
     view::hero::show_list(session.get_heroes(), session.get_heroes_count());
@@ -163,7 +168,7 @@ void GameManager::handle_hero_list()
 
 void GameManager::handle_hero_detail()
 {
-    Session& session = Session::get_instance();
+    const Session& session = Session::get_instance();
 
     view::flow::hero::hero_detail_title();
     view::hero::show_list(session.get_heroes(), session.get_heroes_count());
@@ -229,4 +234,19 @@ void GameManager::initialize_save_flow()
     Session::get_instance().save();
 
     view::flow::initialize_save::end_message();
+}
+
+const Hero* GameManager::select_hero(const char* player_label)
+{
+    const Session& session = Session::get_instance();
+
+    view::flow::battle::player_select_hero(player_label);
+    const int selected = utils::input::validated_input(
+        utils::input::validator::is_in_range(1, session.get_heroes_count()),
+        view::flow::battle::select_hero_options
+    );
+    view::format_line::blank();
+    view::flow::battle::player_select_hero(PLAYER_COM_LABEL);
+
+    return &session.get_heroes()[selected - 1];
 }
