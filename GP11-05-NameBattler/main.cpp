@@ -3,7 +3,8 @@
 
 int main()
 {
-    GameManager::start_loop();
-    
+    GameManager& gm = GameManager::get_instance();
+
+    gm.start_loop();
     return 0;
 }

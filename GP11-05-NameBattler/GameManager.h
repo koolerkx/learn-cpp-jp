@@ -8,26 +8,43 @@ constexpr const char* PLAYER_COM_LABEL = "COM";
 class GameManager
 {
 public:
-    static void start_loop();
+    static GameManager& get_instance();
+
+    void start_loop();
+
+    static constexpr int MAX_HERO = 5;
 
 private:
-    static void save_hero(Hero&& hero);  // Accept by move
-    static void initialize_save_flow();
+    GameManager() = default;
+
+    void initialize_save();
+    void save_hero(Hero&& hero); // Accept by move
 
     // menu behaviour
-    static void handle_hero_summon();
-    static void handle_hero_management();
-    static void handle_battle();
-    static void handle_ai_battle();
+    void handle_hero_summon();
+    void handle_hero_management();
+    void handle_battle();
+    void handle_ai_battle();
 
     // Hero management
-    static void handle_hero_list();
-    static void handle_hero_detail();
-    static void handle_hero_delete();
-    
+    void handle_hero_list() const;
+    void handle_hero_detail() const;
+    void handle_hero_delete();
+
     // Hero state
-    static Hero make_hero();
+    Hero make_hero() const;
+    std::vector<Hero> hero_;
+
+    void add_hero(Hero&& hero); // Accept by move
+    void delete_hero(int index);
+
+    const Hero* get_heroes() const;
+    int get_heroes_count() const;
 
     // Battle
-    const static Hero* select_hero(const char* player_label);
+    const Hero* select_hero(const char* player_label) const;
+
+    // File SL
+    void save() const;
+    void load();
 };
