@@ -9,6 +9,14 @@ Card::Card(const char* label, const int power, const CARD_TYPE type)
     type_ = type;
 }
 
+float AttackCard::calculate_score(const PlayerHeroAI& ph) const
+{
+    float hp_percentage = static_cast<float>(ph.get_hp()) / static_cast<float>(ph.get_max_hp());
+    float power = static_cast<float>(ph.get_attack()) / 4 + static_cast<float>(power_);
+    
+    return 100 * hp_percentage * power;
+}
+
 int AttackCard::apply_card(PlayerHero& user, PlayerHero& target, float multiply) const
 {
     // based on multiply(0-2), attack bias from 100% to 200%
@@ -27,6 +35,14 @@ void AttackCard::result_message(PlayerHero&, PlayerHero& target, int power) cons
 }
 
 
+float HealCard::calculate_score(const PlayerHeroAI& ph) const
+{
+    float hp_percentage = static_cast<float>(ph.get_hp()) / static_cast<float>(ph.get_max_hp());
+    float power = static_cast<float>(ph.get_max_hp()) / 4 + static_cast<float>(power_);
+    
+    return 100 * (1 - hp_percentage) * power;
+}
+
 int HealCard::apply_card(PlayerHero& user, PlayerHero&, float multiply) const
 {
     // based on multiply(0-2), healing offset from HP 15% to 45% 
@@ -42,6 +58,14 @@ int HealCard::apply_card(PlayerHero& user, PlayerHero&, float multiply) const
 void HealCard::result_message(PlayerHero& user, PlayerHero&, int power) const
 {
     view::flow::battle::heal_result(user, power);
+}
+
+float DefenseCard::calculate_score(const PlayerHeroAI& ph) const
+{
+    float hp_percentage = static_cast<float>(ph.get_hp()) / static_cast<float>(ph.get_max_hp());
+    float power = static_cast<float>(ph.get_defense()) / 4 + static_cast<float>(power_);
+    
+    return 100 * (1 - hp_percentage) * power;
 }
 
 int DefenseCard::apply_card(PlayerHero& user, PlayerHero&, float multiply) const

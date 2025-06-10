@@ -14,7 +14,7 @@ public:
     PlayerHero& operator=(const PlayerHero&) = delete;
     PlayerHero(PlayerHero&&) noexcept = default;
     PlayerHero& operator=(PlayerHero&&) noexcept = default;
-    virtual ~PlayerHero() = default;
+    virtual ~PlayerHero() = default;    
 
     const char* get_player_label() const { return player_->label; }
 
@@ -37,7 +37,7 @@ public:
 
     virtual const Card* select_card() const;
 
-private:
+protected:
     Player* player_;
     const Hero* hero_;
 
