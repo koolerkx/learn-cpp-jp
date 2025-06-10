@@ -159,7 +159,6 @@
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerHero.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="view.cpp" />
@@ -170,7 +169,6 @@
     <ClInclude Include="Hero.h" />
     <ClInclude Include="exception.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerHero.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="view.h" />

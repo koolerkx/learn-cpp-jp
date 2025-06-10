@@ -4,16 +4,10 @@
 #include "view.h"
 #include "utils.h"
 
-Battle::Battle(Player* p1, Player* p2)
+Battle::Battle(std::unique_ptr<PlayerHero> p1, std::unique_ptr<PlayerHero> p2)
 {
-    const std::function<std::unique_ptr<PlayerHero>(Player*)> make_hero = [](Player* player) {
-        return player->is_ai() ? 
-            std::make_unique<PlayerHeroAI>(player, player->get_hero()) :
-            std::make_unique<PlayerHero>(player, player->get_hero());
-    };
-    
-    hero_order_.emplace_back(make_hero(p1));
-    hero_order_.emplace_back(make_hero(p2));
+    hero_order_.emplace_back(std::move(p1));
+    hero_order_.emplace_back(std::move(p2));
 }
 
 void Battle::start()

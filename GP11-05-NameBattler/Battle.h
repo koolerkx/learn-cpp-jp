@@ -1,12 +1,11 @@
 #pragma once
 
-#include "Player.h"
 #include "PlayerHero.h"
 
 class Battle
 {
 public:
-    Battle(Player* p1, Player* p2);
+    Battle(std::unique_ptr<PlayerHero> p1, std::unique_ptr<PlayerHero> p2);
     
     void start();
     

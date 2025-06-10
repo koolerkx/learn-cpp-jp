@@ -3,14 +3,17 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
+#include <cstring>
 
-#include "Battle.h"
 #include "utils.h"
 #include "view.h"
 
-PlayerHero::PlayerHero(Player* player, const Hero* hero)
+PlayerHero::PlayerHero(const char* player_label, const Hero* hero)
 {
-    player_ = player;
+    strncpy_s(
+        player_label_, PLAYER_LABEL_NAME_MAX_LENGTH,
+        player_label, PLAYER_LABEL_NAME_MAX_LENGTH
+    );
     hero_ = hero;
 
     hp_ = hero->get_ability().hp;

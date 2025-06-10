@@ -1,13 +1,14 @@
 #pragma once
 #include "Card.h"
-#include "Player.h"
 #include "Hero.h"
 #include <vector>
+
+constexpr int PLAYER_LABEL_NAME_MAX_LENGTH = 5;
 
 class PlayerHero
 {
 public:
-    PlayerHero(Player* player, const Hero* hero);
+    PlayerHero(const char* player_label, const Hero* hero);
 
     // prevent memory leak
     PlayerHero(const PlayerHero&) = delete;
@@ -16,7 +17,7 @@ public:
     PlayerHero& operator=(PlayerHero&&) noexcept = default;
     virtual ~PlayerHero() = default;    
 
-    const char* get_player_label() const { return player_->label; }
+    const char* get_player_label() const { return player_label_; }
 
     const char* get_name() const { return hero_->get_name(); }
     int get_hp() const { return hp_; }
@@ -38,7 +39,7 @@ public:
     virtual const Card* select_card() const;
 
 protected:
-    Player* player_;
+    char player_label_[PLAYER_LABEL_NAME_MAX_LENGTH];
     const Hero* hero_;
 
     std::vector<const Card*> available_cards_;
@@ -52,7 +53,7 @@ protected:
 class PlayerHeroAI : public PlayerHero
 {
 public:
-    PlayerHeroAI(Player* player, const Hero* hero): PlayerHero(player, hero)
+    PlayerHeroAI(const char* player_label, const Hero* hero): PlayerHero(player_label, hero)
     {
     }
 
