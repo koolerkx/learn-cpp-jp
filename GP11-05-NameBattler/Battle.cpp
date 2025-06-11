@@ -97,8 +97,12 @@ void Battle::end()
 
 float Battle::offset_dice_multiplier(int dice_value)
 {
-    return (static_cast<float>(dice_value) - static_cast<float>(Battle::DICE_BASE)) / static_cast<float>(
-        Battle::DICE_BASE);
+    static constexpr float MULTIPLIER_LOWER = 0.9f;
+    static constexpr float MULTIPLIER_UPPER = 1.3f;
+
+    return MULTIPLIER_LOWER +
+    (static_cast<float>(dice_value - DICE_LOWER) *
+        (MULTIPLIER_UPPER - MULTIPLIER_LOWER)) / static_cast<float>(DICE_UPPER - DICE_LOWER);
 }
 
 const Card* Battle::handle_card_select(const PlayerHero& ph)
