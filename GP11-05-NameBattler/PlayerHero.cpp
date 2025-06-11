@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
+#include <ctime>
 
 #include "utils.h"
 #include "view.h"
@@ -95,6 +96,7 @@ const Card* PlayerHeroAI::select_card() const
         float score = card->calculate_score(*this);
 
         // random factor from -30% to +30%
+        srand(static_cast<unsigned>(time(nullptr)));
         score *= (1.0f + static_cast<float>(utils::random(0, 60) - 20) / 100.0f);
 
         cards_score.push_back(score);

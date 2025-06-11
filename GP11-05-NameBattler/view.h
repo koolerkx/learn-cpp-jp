@@ -76,7 +76,7 @@ namespace view
 
             void battle_card_list(const std::vector<const Card*>& cards);
 
-            void dice_result(int dice, const float multiply);
+            void dice_result(dice::DiceResult dice, dice::DiceYakuResult yaku);
 
             void action_description(const PlayerHero& ph, const Card* card);
             void attack_action_description(const PlayerHero& from, const PlayerHero& to);

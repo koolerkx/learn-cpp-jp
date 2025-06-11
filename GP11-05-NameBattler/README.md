@@ -4,6 +4,7 @@
 - feature
   - ability balancing
   - money
+  - dice
 
 ## ŠjS—VE—Ş•Ê
 

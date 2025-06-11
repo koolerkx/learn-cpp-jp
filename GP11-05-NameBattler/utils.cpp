@@ -20,8 +20,6 @@ namespace utils
 
     int random(const int lower_limit, const int upper_limit)
     {
-        srand(static_cast<unsigned>(time(nullptr)));
-
         return rand() % (upper_limit - lower_limit + 1) + lower_limit;
     }
 

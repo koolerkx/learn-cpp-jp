@@ -55,13 +55,16 @@ void Battle::execute_round()
 
     const Card* selected_card = handle_card_select(attacker);
 
-    int dice = utils::random(Battle::DICE_LOWER, Battle::DICE_UPPER);
-    float multiply = Battle::offset_dice_multiplier(dice);
+    // int dice = utils::random(dice::DICE_LOWER, dice::DICE_UPPER);
+    // float multiply = Battle::offset_dice_multiplier(dice);
+    dice::DiceResult dice_result = dice::draw_dice();
+    dice::DiceYakuResult yaku_result = dice::dice_multiply(dice_result);
 
-    const int power = selected_card->apply_card(attacker, defender, multiply);
+    const int power = selected_card->apply_card(attacker, defender, yaku_result.multiplier);
 
     view::flow::battle::action_description(attacker, selected_card);
-    view::flow::battle::dice_result(dice, multiply);
+    view::flow::battle::dice_result(dice_result, yaku_result);
+    view::format_line::blank();
 
     selected_card->result_message(attacker, defender, power);
 }
@@ -92,6 +95,9 @@ void Battle::end()
             view::flow::battle::show_level_up(level_after);
             view::format_line::blank();
         }
+        
+        view::message::press_any_key_continue();
+        std::cin.get();
     }
 }
 
@@ -101,8 +107,8 @@ float Battle::offset_dice_multiplier(int dice_value)
     static constexpr float MULTIPLIER_UPPER = 1.3f;
 
     return MULTIPLIER_LOWER +
-    (static_cast<float>(dice_value - DICE_LOWER) *
-        (MULTIPLIER_UPPER - MULTIPLIER_LOWER)) / static_cast<float>(DICE_UPPER - DICE_LOWER);
+    (static_cast<float>(dice_value - dice::DICE_LOWER) *
+        (MULTIPLIER_UPPER - MULTIPLIER_LOWER)) / static_cast<float>(dice::DICE_UPPER - dice::DICE_LOWER);
 }
 
 const Card* Battle::handle_card_select(const PlayerHero& ph)
@@ -110,4 +116,75 @@ const Card* Battle::handle_card_select(const PlayerHero& ph)
     view::flow::battle::battle_card_list(ph.get_available_cards());
 
     return ph.select_card();
+}
+
+namespace dice
+{
+    YakuSet yaku_sets[] = {
+        {
+            YAKU::PINZORO,
+            2.0f,
+            [](DiceResult r) { return r.dice_1 == 1 && r.dice_2 == 1 && r.dice_3 == 1; },
+        },
+        {
+            YAKU::ARASHI,
+            1.4f,
+            [](DiceResult r) { return r.dice_1 != 1 && r.dice_1 == r.dice_2 && r.dice_2 == r.dice_3; },
+        },
+        {
+            YAKU::SHIGORO,
+            1.1f,
+            [](DiceResult r) { return r.dice_1 == 4 && r.dice_2 == 5 && r.dice_3 == 6; },
+        },
+        {
+            YAKU::TUJYOU,
+            1.0f,
+            [](DiceResult r) { return r.dice_1 == r.dice_2 || r.dice_2 == r.dice_3; },
+        },
+        {
+            YAKU::HIFUMI,
+            0.0f,
+            [](DiceResult r) { return r.dice_1 == 1 && r.dice_2 == 2 && r.dice_3 == 3; },
+        },
+        {
+            YAKU::OTHER,
+            0.0f,
+            [](DiceResult) { return true; },
+        }
+    };
+    extern const int yaku_sets_count = std::size(yaku_sets);
+    
+    DiceResult draw_dice()
+    {
+        srand(static_cast<unsigned>(time(nullptr)));
+        return {
+            utils::random(dice::DICE_LOWER, dice::DICE_UPPER),
+            utils::random(dice::DICE_LOWER, dice::DICE_UPPER),
+            utils::random(dice::DICE_LOWER, dice::DICE_UPPER),
+        };
+    }
+
+    DiceYakuResult dice_multiply(DiceResult dice_state)
+    {
+        // HACK: ®—ñ
+        if (dice_state.dice_1 > dice_state.dice_3)
+        {
+            std::swap(dice_state.dice_1, dice_state.dice_3);
+        }
+        if (dice_state.dice_1 > dice_state.dice_2)
+        {
+            std::swap(dice_state.dice_1, dice_state.dice_2);
+        }
+
+        for (YakuSet yaku_set: yaku_sets)
+        {
+            if (yaku_set.test(dice_state))
+            {
+                DiceYakuResult result = {yaku_set.yaku, yaku_set.multiplier};
+                return result;
+            }
+        }
+
+        return { YAKU::OTHER, 0};
+    }
 }

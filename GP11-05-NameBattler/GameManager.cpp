@@ -173,6 +173,7 @@ void GameManager::handle_p2c_battle()
     Hero* p1_hero = select_hero(PLAYER_1_LABEL);
     PlayerHero p1 = PlayerHero(PLAYER_1_LABEL, p1_hero);
 
+    srand(static_cast<unsigned>(time(nullptr)));
     int com_selected = utils::random(1, get_heroes_count());
 
     Hero* com_hero = &get_heroes()[com_selected - 1];
@@ -180,7 +181,7 @@ void GameManager::handle_p2c_battle()
 
     Battle battle(&p1, &com);
     battle.run();
-    
+
     view::flow::battle::end_message();
     view::message::press_any_key_menu();
     std::cin.get();
@@ -199,7 +200,7 @@ void GameManager::handle_c2c_battle()
 
     Battle battle(&com1, &com2);
     battle.run();
-    
+
     view::flow::battle::end_message();
     view::message::press_any_key_menu();
     std::cin.get();
@@ -213,7 +214,7 @@ void GameManager::handle_battle_tower()
     Hero* p1_hero = select_hero(PLAYER_1_LABEL);
     PlayerHero p1 = PlayerHero(PLAYER_1_LABEL, p1_hero);
     view::format_line::blank();
-    
+
     bool is_continue = true;
     int tower_level = 1;
     constexpr int MAX_TOWER_LEVEL = 10;
@@ -221,7 +222,8 @@ void GameManager::handle_battle_tower()
     {
         view::flow::battle_tower::next_level_title(tower_level);
         view::format_line::blank();
-        
+
+        srand(static_cast<unsigned>(time(nullptr)));
         int com_selected = utils::random(1, get_heroes_count());
         Hero* com_hero = &get_heroes()[com_selected - 1];
         PlayerHeroAI com = PlayerHeroAI(PLAYER_COM_1_LABEL, com_hero);

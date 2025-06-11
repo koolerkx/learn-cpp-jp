@@ -286,10 +286,37 @@ namespace view
                 std::cout << "‘I‘ðF";
             }
 
-            void dice_result(int dice, const float multiply)
+            void dice_result(dice::DiceResult dice, dice::DiceYakuResult yaku)
             {
-                std::cout << "> " << " ƒTƒCƒRƒŒ‹‰Ê (1d" << Battle::DICE_UPPER << ")F" << dice << " (•â³”{—¦F" << multiply <<
-                    ")\n";
+                std::cout << "> " << " ƒTƒCƒRƒŒ‹‰Ê (3d" << dice::DICE_UPPER << ")F" << dice.dice_1 << " " << dice.dice_2 <<
+                    " " << dice.dice_3 << "\n";
+               
+                std::cout << "–ðF";
+                switch (yaku.yaku)
+                {
+                case dice::YAKU::PINZORO:
+                    std::cout << "ƒsƒ“ƒ]ƒi”{—¦F~" << yaku.multiplier << "j";
+                    break;
+                case dice::YAKU::ARASHI:
+                    std::cout << "ƒ]ƒ–Úi”{—¦F~" << yaku.multiplier << "j";
+                    break;
+                case dice::YAKU::SHIGORO:
+                    std::cout << "ƒVƒSƒi”{—¦F~" << yaku.multiplier << "j";
+                    break;
+                case dice::YAKU::TUJYOU:
+                    std::cout << "’Êí–ði”{—¦F~" << yaku.multiplier << "j";
+                    break;
+                case dice::YAKU::HIFUMI:
+                    std::cout << "ƒqƒtƒ~i”{—¦F~" << yaku.multiplier << "j";
+                    break;
+                case dice::YAKU::OTHER:
+                    std::cout << "–ð‚È‚µi”{—¦F~" << yaku.multiplier << "j";
+                    break;
+                default:
+                    std::cout << "•s–¾i”{—¦F~" << yaku.multiplier << "j";
+                    break;
+                }
+                format_line::blank();
             }
 
             void action_description(const PlayerHero& ph, const Card* card)
@@ -360,7 +387,7 @@ namespace view
                 std::cout << "  ÅŒã‚É“ž’B‚µ‚½‚Ì‚Í‘æ " << final_level << " ‘w‚¾‚Á‚½c\n";
                 std::cout << "==============================\n";
             }
-            
+
             void end_message_cleared(int final_level)
             {
                 std::cout << "==============================\n";
