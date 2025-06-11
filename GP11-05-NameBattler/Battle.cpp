@@ -77,7 +77,7 @@ void Battle::end()
 
     for (PlayerHero* hero : heroes_)
     {
-        if (hero->type == PLAYER_HERO_TYPE::COM) { break; }
+        if (hero->type == PLAYER_HERO_TYPE::COM) { continue; }
 
         int level_before = hero_level::get_level(hero->get_experience());
         int exp_to_gain = hero_level::get_expected_experience_for_battle(level_before);
