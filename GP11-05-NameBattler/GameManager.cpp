@@ -279,12 +279,14 @@ const Hero* GameManager::select_hero(const char* player_label) const
 struct SaveData
 {
     char hero_names[GameManager::MAX_HERO][Hero::NAME_MAX_LENGTH];
+    int experience[GameManager::MAX_HERO];
     int hero_count;
 };
 
 void GameManager::save() const
 {
     SaveData save_data{
+        {},
         {},
         get_heroes_count(),
     };
@@ -293,6 +295,7 @@ void GameManager::save() const
     for (uint i = 0; i < hero_.size(); i++)
     {
         strncpy_s(save_data.hero_names[i], Hero::NAME_MAX_LENGTH, heroes[i].get_name(), Hero::NAME_MAX_LENGTH);
+        save_data.experience[i] = heroes[i].get_experience();
     }
 
     std::ofstream ofs("save.dat", std::ios::binary);
@@ -314,9 +317,17 @@ void GameManager::load()
 
     SaveData save_data{};
     ifs.read(reinterpret_cast<char*>(&save_data), sizeof(SaveData));
+
+    // データのフォーマットが違う恐れがある
+    if (save_data.hero_count <= 0)
+    {
+        throw exception::io::FileInputFailedException();
+    }
+    
     for (int i = 0; i < save_data.hero_count; i++)
     {
         hero_.emplace_back(save_data.hero_names[i]); // Direct construction in vector
+        hero_[i].gain_experience(save_data.experience[i]);
     }
 
     ifs.close();

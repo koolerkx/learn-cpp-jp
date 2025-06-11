@@ -6,7 +6,6 @@
 #include "Battle.h"
 #include "Card.h"
 #include "Hero.h"
-#include "utils.h"
 
 namespace view
 {
@@ -14,15 +13,21 @@ namespace view
     {
         void show_profile(const Hero& hero)
         {
-            Ability ability = hero.get_ability();
+            int exp = hero.get_experience();
+            int level = hero_level::get_level(exp);
+            Ability ability = hero.get_scaled_ability();
 
             std::cout << " 名前 ： " << hero.get_name() << "\n";
             std::cout << "\n [ 能力値 ]\n";
             std::cout << "  体力　： " << ability.hp << "\n";
             std::cout << "  攻撃　： " << ability.attack << "\n";
             std::cout << "  防御　： " << ability.defense << "\n";
-            std::cout << "  速度　： " << ability.speed << "\n\n";
-
+            view::format_line::blank();
+            
+            std::cout << "  レベル： " << level << " (累計経験値：" << exp << ")\n";
+            std::cout << "  最大レベルの総評価： " << hero.get_rate() << "\n";
+            view::format_line::blank();
+            
             show_cards(hero.get_cards());
         }
 
