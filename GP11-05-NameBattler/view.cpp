@@ -202,6 +202,7 @@ namespace view
                 std::cout << "         二人対戦モード         \n";
                 std::cout << "==============================\n";
             }
+
             void player_select_hero(const char* label)
             {
                 std::cout << "\n" << label << "の選択\n";
@@ -224,15 +225,17 @@ namespace view
                 std::cout << "【ラウンド " << round << "】";
             }
 
-            void battle_round_hero_list(const std::vector<std::unique_ptr<PlayerHero>>& heroes)
+            void battle_round_hero_list(const std::vector<std::unique_ptr<PlayerHero>>& heroes, int from)
             {
                 std::cout << "行動順：\n";
-                for (int i = 0; i < heroes.size(); i++)
+                for (int i = from; i < from + heroes.size(); i++)
                 {
-                    std::cout << i + 1 << " : (" << heroes[i]->get_player_label() << ") ";
-                    std::cout << heroes[i]->get_name();
-                    std::cout << " (HP: " << heroes[i]->get_hp() << "/" << heroes[i]->get_max_hp() << ", 防御値: " <<
-                        heroes[i]->get_shield() << ")\n";
+                    int hero_idx = i % heroes.size();
+                    std::cout << hero_idx + 1 << " : (" << heroes[hero_idx]->get_player_label() << ") ";
+                    std::cout << heroes[hero_idx]->get_name();
+                    std::cout << " (HP: " << heroes[hero_idx]->get_hp() << "/" << heroes[hero_idx]->get_max_hp() <<
+                        ", 防御値: " <<
+                        heroes[hero_idx]->get_shield() << ")\n";
                 }
                 std::cout << "\n";
             }
@@ -264,7 +267,8 @@ namespace view
 
             void dice_result(int dice, const float multiply)
             {
-                std::cout << "> " << " サイコロ結果 (1d" << Battle::DICE_UPPER << ")：" << dice << " (補正倍率：" << multiply << ")\n";
+                std::cout << "> " << " サイコロ結果 (1d" << Battle::DICE_UPPER << ")：" << dice << " (補正倍率：" << multiply <<
+                    ")\n";
             }
 
             void action_description(const PlayerHero& ph, const Card* card)
@@ -327,14 +331,17 @@ namespace view
         {
             std::cout << "\n";
         }
+
         void block()
         {
             std::cout << "\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n";
         }
+
         void single_line()
         {
             std::cout << "\n------------------------------\n";
         }
+
         void double_line()
         {
             std::cout << "\n==============================\n";

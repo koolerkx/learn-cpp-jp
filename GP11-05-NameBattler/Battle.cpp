@@ -6,50 +6,70 @@
 
 Battle::Battle(std::unique_ptr<PlayerHero> p1, std::unique_ptr<PlayerHero> p2)
 {
-    hero_order_.emplace_back(std::move(p1));
-    hero_order_.emplace_back(std::move(p2));
+    heroes_.emplace_back(std::move(p1));
+    heroes_.emplace_back(std::move(p2));
+}
+
+void Battle::run()
+{
+    start();
+    while (update())
+    {
+        // TODO: extract
+        view::message::press_any_key_continue();
+        std::cin.get();
+        view::format_line::double_line();
+    }
+    end();
 }
 
 void Battle::start()
 {
     view::flow::battle::battle_start_title();
+}
 
-    int round = 1;
+bool Battle::update()
+{
+    advanced_round();
+    execute_round();
+    return is_continue_round();
+}
 
-    while (true)
-    {
-        view::flow::battle::battle_round(round++);
-        view::flow::battle::battle_round_hero_list(hero_order_);
+void Battle::advanced_round()
+{
+    view::flow::battle::battle_round(round_++);
+    view::flow::battle::battle_round_hero_list(heroes_, round_);
+    view::flow::battle::battle_round_hero(*heroes_[attacker_index()]);
+}
 
-        PlayerHero& attacker = *hero_order_[current_order];
-        current_order = (current_order + 1) % hero_order_.size();
-        PlayerHero& defender = *hero_order_[current_order];
-
-        view::flow::battle::battle_round_hero(attacker);
-        
-        const Card* selected_card = handle_card_select(attacker);
-        
-        int dice = utils::random(Battle::DICE_LOWER, Battle::DICE_UPPER);
-        float multiply = Battle::offset_dice_multiplier(dice);
+void Battle::execute_round()
+{
+    int attacker_i = attacker_index();
+    int defender_i = defender_index();
+    PlayerHero& attacker = *heroes_[attacker_i];
+    PlayerHero& defender = *heroes_[defender_i];
     
-        const int power = selected_card->apply_card(attacker, defender, multiply);
+    const Card* selected_card = handle_card_select(attacker);
 
-        view::flow::battle::action_description(attacker, selected_card);
-        view::flow::battle::dice_result(dice, multiply);
+    int dice = utils::random(Battle::DICE_LOWER, Battle::DICE_UPPER);
+    float multiply = Battle::offset_dice_multiplier(dice);
 
-        selected_card->result_message(attacker, defender, power);
+    const int power = selected_card->apply_card(attacker, defender, multiply);
 
-        if (defender.get_hp() <= 0)
-        {
-            view::flow::battle::defender_dead_message(defender);
-            break;
-        }
+    view::flow::battle::action_description(attacker, selected_card);
+    view::flow::battle::dice_result(dice, multiply);
 
-        view::message::press_any_key_continue();
-        std::cin.get();
-        view::format_line::double_line();
-    }
+    selected_card->result_message(attacker, defender, power);
+}
 
+bool Battle::is_continue_round()
+{
+    return heroes_[attacker_index()]->get_hp() > 0 && heroes_[defender_index()]->get_hp() > 0;
+}
+
+void Battle::end() {
+    view::flow::battle::defender_dead_message(*heroes_[defender_index()]);
+    
     view::flow::battle::end_message();
     view::message::press_any_key_menu();
     std::cin.get();
@@ -64,7 +84,6 @@ float Battle::offset_dice_multiplier(int dice_value)
 const Card* Battle::handle_card_select(const PlayerHero& ph)
 {
     view::flow::battle::battle_card_list(ph.get_available_cards());
-    
+
     return ph.select_card();
 }
-

@@ -154,7 +154,7 @@ void GameManager::handle_battle()
     std::unique_ptr<PlayerHero> p2 = std::make_unique<PlayerHero>(PLAYER_2_LABEL, p2_hero);
 
     Battle battle(std::move(p1), std::move(p2));
-    battle.start();
+    battle.run();
 }
 
 void GameManager::handle_ai_battle()
@@ -171,7 +171,7 @@ void GameManager::handle_ai_battle()
     std::unique_ptr<PlayerHeroAI> com = std::make_unique<PlayerHeroAI>(PLAYER_COM_LABEL, com_hero);
 
     Battle battle(std::move(p1), std::move(com));
-    battle.start();
+    battle.run();
 }
 
 void GameManager::handle_hero_list() const
