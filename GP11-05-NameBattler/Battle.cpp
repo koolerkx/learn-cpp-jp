@@ -4,10 +4,10 @@
 #include "view.h"
 #include "utils.h"
 
-Battle::Battle(std::unique_ptr<PlayerHero> p1, std::unique_ptr<PlayerHero> p2)
+Battle::Battle(PlayerHero* p1, PlayerHero* p2)
 {
-    heroes_.emplace_back(std::move(p1));
-    heroes_.emplace_back(std::move(p2));
+    heroes_[0] = p1;
+    heroes_[1] = p2;
 }
 
 void Battle::run()
@@ -30,12 +30,12 @@ void Battle::start()
 
 bool Battle::update()
 {
-    advanced_round();
+    advance_round();
     execute_round();
     return is_continue_round();
 }
 
-void Battle::advanced_round()
+void Battle::advance_round()
 {
     view::flow::battle::battle_round(round_++);
     view::flow::battle::battle_round_hero_list(heroes_, round_);

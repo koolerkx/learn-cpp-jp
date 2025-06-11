@@ -225,12 +225,12 @@ namespace view
                 std::cout << "yƒ‰ƒEƒ“ƒh " << round << "z";
             }
 
-            void battle_round_hero_list(const std::vector<std::unique_ptr<PlayerHero>>& heroes, int from)
+            void battle_round_hero_list(PlayerHero** heroes, int from)
             {
                 std::cout << "s“®‡F\n";
-                for (int i = from; i < from + heroes.size(); i++)
+                for (int i = from; i < from + BATTLE_HEROES; i++)
                 {
-                    int hero_idx = i % heroes.size();
+                    int hero_idx = i % BATTLE_HEROES;
                     std::cout << hero_idx + 1 << " : (" << heroes[hero_idx]->get_player_label() << ") ";
                     std::cout << heroes[hero_idx]->get_name();
                     std::cout << " (HP: " << heroes[hero_idx]->get_hp() << "/" << heroes[hero_idx]->get_max_hp() <<

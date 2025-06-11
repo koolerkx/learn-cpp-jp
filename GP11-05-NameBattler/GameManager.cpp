@@ -148,12 +148,12 @@ void GameManager::handle_battle()
     view::hero::show_list(get_heroes(), get_heroes_count());
 
     const Hero* p1_hero = select_hero(PLAYER_1_LABEL);
-    std::unique_ptr<PlayerHero> p1 = std::make_unique<PlayerHero>(PLAYER_1_LABEL, p1_hero);
+    PlayerHero p1 = PlayerHero(PLAYER_1_LABEL, p1_hero);
 
     const Hero* p2_hero = select_hero(PLAYER_2_LABEL);
-    std::unique_ptr<PlayerHero> p2 = std::make_unique<PlayerHero>(PLAYER_2_LABEL, p2_hero);
+    PlayerHero p2 = PlayerHero(PLAYER_2_LABEL, p2_hero);
 
-    Battle battle(std::move(p1), std::move(p2));
+    Battle battle(&p1, &p2);
     battle.run();
 }
 
@@ -163,14 +163,14 @@ void GameManager::handle_ai_battle()
     view::hero::show_list(get_heroes(), get_heroes_count());
 
     const Hero* p1_hero = select_hero(PLAYER_1_LABEL);
-    std::unique_ptr<PlayerHero> p1 = std::make_unique<PlayerHero>(PLAYER_1_LABEL, p1_hero);
+    PlayerHero p1 = PlayerHero(PLAYER_1_LABEL, p1_hero);
 
     int com_selected = utils::random(1, get_heroes_count());
 
     const Hero* com_hero = &get_heroes()[com_selected - 1];
-    std::unique_ptr<PlayerHeroAI> com = std::make_unique<PlayerHeroAI>(PLAYER_COM_LABEL, com_hero);
+    PlayerHeroAI com = PlayerHeroAI(PLAYER_COM_LABEL, com_hero);
 
-    Battle battle(std::move(p1), std::move(com));
+    Battle battle(&p1, &com);
     battle.run();
 }
 
