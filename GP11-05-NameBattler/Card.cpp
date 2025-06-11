@@ -62,10 +62,10 @@ void HealCard::result_message(PlayerHero& user, PlayerHero&, int power) const
 
 float DefenseCard::calculate_score(const PlayerHeroAI& ph) const
 {
-    float hp_percentage = static_cast<float>(ph.get_hp()) / static_cast<float>(ph.get_max_hp());
+    float hp_shield_percentage = static_cast<float>(ph.get_hp() + ph.get_shield()) / static_cast<float>(ph.get_max_hp());
     float power = static_cast<float>(ph.get_defense()) / 4 + static_cast<float>(power_);
     
-    return 100 * (1 - hp_percentage) * power;
+    return 100 * (1 - hp_shield_percentage) * power;
 }
 
 int DefenseCard::apply_card(PlayerHero& user, PlayerHero&, float multiply) const
