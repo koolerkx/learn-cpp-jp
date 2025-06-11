@@ -80,7 +80,7 @@ void Hero::generate_cards()
         {
         case CARD_TYPE::ATTACK:
             {
-                int power = (ability.attack / 4) + (rand() % 20) + 5;
+                int power = (ability.attack / 6) + (rand() % 20) + 5;
                 cards_.emplace_back(std::make_unique<AttackCard>(power));
                 break;
             }
