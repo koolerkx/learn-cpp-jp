@@ -60,6 +60,8 @@ void GameManager::start_loop()
             break;
         }
         view::format_line::block();
+
+        save();
     }
 
     view::flow::menu::game_end_message();
