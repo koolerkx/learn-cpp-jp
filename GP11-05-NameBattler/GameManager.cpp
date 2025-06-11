@@ -394,7 +394,7 @@ void GameManager::load()
     ifs.read(reinterpret_cast<char*>(&save_data), sizeof(SaveData));
 
     // データのフォーマットが違う恐れがある
-    if (save_data.hero_count <= 0)
+    if (save_data.hero_count <= 0 || save_data.hero_count > GameManager::MAX_HERO)
     {
         throw exception::io::FileInputFailedException();
     }
