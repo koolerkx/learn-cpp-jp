@@ -1,12 +1,7 @@
 # NameBattler
 
 ## roadmap
-- refactor
-  - battle class
-  - game flow
 - feature
-  - level
-  - battle tower
   - ability balancing
   - money
 
