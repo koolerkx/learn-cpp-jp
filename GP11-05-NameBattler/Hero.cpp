@@ -73,23 +73,25 @@ void Hero::generate_cards()
     {
         CARD_TYPE card_type = static_cast<CARD_TYPE>(rand() % 3);
 
+        Ability ability = get_scaled_ability();
+        
         switch (card_type)
         {
         case CARD_TYPE::ATTACK:
             {
-                int power = (ability_.attack / 4) + (rand() % 20) + 5;
+                int power = (ability.attack / 4) + (rand() % 20) + 5;
                 cards_.emplace_back(std::make_unique<AttackCard>(power));
                 break;
             }
         case CARD_TYPE::HEAL:
             {
-                int power = (ability_.hp / 8) + (rand() % 15) + 3;
+                int power = (ability.hp / 8) + (rand() % 15) + 3;
                 cards_.emplace_back(std::make_unique<HealCard>(power));
                 break;
             }
         case CARD_TYPE::DEFENSE:
             {
-                int power = (ability_.defense / 6) + (rand() % 12) + 2;
+                int power = (ability.defense / 6) + (rand() % 12) + 2;
                 cards_.emplace_back(std::make_unique<DefenseCard>(power));
                 break;
             }
