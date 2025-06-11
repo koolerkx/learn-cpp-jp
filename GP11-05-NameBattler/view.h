@@ -60,8 +60,10 @@ namespace view
 
         namespace battle
         {
-            void battle_title();
-            
+            void battle_p2p_title();
+            void battle_p2c_title();
+            void battle_c2c_title();
+
             void player_select_hero(const char* label);
             void select_hero_options();
 
@@ -75,14 +77,14 @@ namespace view
             void battle_card_list(const std::vector<const Card*>& cards);
 
             void dice_result(int dice, const float multiply);
-            
+
             void action_description(const PlayerHero& ph, const Card* card);
             void attack_action_description(const PlayerHero& from, const PlayerHero& to);
 
             void attack_result(const PlayerHero& to, const int power);
             void heal_result(const PlayerHero& to, const int power);
             void defense_result(const PlayerHero& to, const int power);
-            
+
             void defender_dead_message(const PlayerHero& hero);
 
             void show_experience_gain(int exp, int total_exp, int level, const char* name);

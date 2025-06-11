@@ -63,9 +63,10 @@ namespace view
                 std::cout << "==============================\n";
                 std::cout << "\n";
                 std::cout << " 1. 英雄召喚\n";
-                std::cout << " 2. 二人で遊ぶ\n";
-                std::cout << " 3. AI対戦\n";
-                std::cout << " 4. 英雄管理\n";
+                std::cout << " 2. 二人で対戦\n";
+                std::cout << " 3. COMと対戦\n";
+                std::cout << " 4. COM対戦シミュレーション\n";
+                std::cout << " 5. 英雄管理\n";
                 std::cout << " 9. ゲーム終了\n";
                 format_line::blank();
             }
@@ -201,10 +202,24 @@ namespace view
 
         namespace battle
         {
-            void battle_title()
+            void battle_p2p_title()
             {
                 std::cout << "==============================\n";
                 std::cout << "         二人対戦モード         \n";
+                std::cout << "==============================\n";
+            }
+
+            void battle_p2c_title()
+            {
+                std::cout << "==============================\n";
+                std::cout << "         COM対戦モード          \n";
+                std::cout << "==============================\n";
+            }
+
+            void battle_c2c_title()
+            {
+                std::cout << "==============================\n";
+                std::cout << "  　　COM対戦シミュレーション      \n";
                 std::cout << "==============================\n";
             }
 

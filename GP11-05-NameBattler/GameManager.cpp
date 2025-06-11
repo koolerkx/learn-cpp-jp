@@ -31,7 +31,7 @@ void GameManager::start_loop()
     while (is_continue)
     {
         view::flow::menu::show_main_menu();
-        constexpr int valid_options[] = {1, 2, 3, 4, 9};
+        constexpr int valid_options[] = {1, 2, 3, 4, 5, 9};
 
         int selected = utils::input::validated_input(
             utils::input::validator::is_in_list(valid_options, std::size(valid_options)),
@@ -45,12 +45,15 @@ void GameManager::start_loop()
             handle_hero_summon();
             break;
         case 2:
-            handle_battle();
+            handle_p2p_battle();
             break;
         case 3:
-            handle_ai_battle();
+            handle_p2c_battle();
             break;
         case 4:
+            handle_c2c_battle();
+            break;
+        case 5:
             handle_hero_management();
             break;
         case 9:
@@ -144,9 +147,9 @@ void GameManager::handle_hero_management()
     std::cin.get();
 }
 
-void GameManager::handle_battle()
+void GameManager::handle_p2p_battle()
 {
-    view::flow::battle::battle_title();
+    view::flow::battle::battle_p2p_title();
     view::hero::show_list(get_heroes(), get_heroes_count());
 
     Hero* p1_hero = select_hero(PLAYER_1_LABEL);
@@ -159,9 +162,9 @@ void GameManager::handle_battle()
     battle.run();
 }
 
-void GameManager::handle_ai_battle()
+void GameManager::handle_p2c_battle()
 {
-    view::flow::battle::battle_title();
+    view::flow::battle::battle_p2c_title();
     view::hero::show_list(get_heroes(), get_heroes_count());
 
     Hero* p1_hero = select_hero(PLAYER_1_LABEL);
@@ -170,9 +173,24 @@ void GameManager::handle_ai_battle()
     int com_selected = utils::random(1, get_heroes_count());
 
     Hero* com_hero = &get_heroes()[com_selected - 1];
-    PlayerHeroAI com = PlayerHeroAI(PLAYER_COM_LABEL, com_hero);
+    PlayerHeroAI com = PlayerHeroAI(PLAYER_COM_1_LABEL, com_hero);
 
     Battle battle(&p1, &com);
+    battle.run();
+}
+
+void GameManager::handle_c2c_battle()
+{
+    view::flow::battle::battle_c2c_title();
+    view::hero::show_list(get_heroes(), get_heroes_count());
+
+    Hero* com1_hero = select_hero(PLAYER_COM_1_LABEL);
+    PlayerHeroAI com1 = PlayerHeroAI(PLAYER_COM_1_LABEL, com1_hero);
+
+    Hero* com2_hero = select_hero(PLAYER_COM_2_LABEL);
+    PlayerHeroAI com2 = PlayerHeroAI(PLAYER_COM_2_LABEL, com2_hero);
+
+    Battle battle(&com1, &com2);
     battle.run();
 }
 
@@ -214,7 +232,7 @@ void GameManager::handle_hero_delete()
     save();
     view::flow::hero::hero_delete_result_message(hero_to_delete_name);
 }
- 
+
 Hero GameManager::make_hero() const
 {
     char name[Hero::NAME_MAX_LENGTH];
@@ -260,7 +278,7 @@ Hero* GameManager::get_heroes()
     return hero_.data();
 }
 
-const Hero* GameManager::get_heroes() const 
+const Hero* GameManager::get_heroes() const
 {
     return hero_.data();
 }
@@ -329,7 +347,7 @@ void GameManager::load()
     {
         throw exception::io::FileInputFailedException();
     }
-    
+
     for (int i = 0; i < save_data.hero_count; i++)
     {
         hero_.emplace_back(save_data.hero_names[i]); // Direct construction in vector

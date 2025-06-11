@@ -3,7 +3,8 @@
 
 constexpr const char* PLAYER_1_LABEL = "P1";
 constexpr const char* PLAYER_2_LABEL = "P2";
-constexpr const char* PLAYER_COM_LABEL = "COM";
+constexpr const char* PLAYER_COM_1_LABEL = "COM1";
+constexpr const char* PLAYER_COM_2_LABEL = "COM2";
 
 class GameManager
 {
@@ -23,8 +24,9 @@ private:
     // menu behaviour
     void handle_hero_summon();
     void handle_hero_management();
-    void handle_battle();
-    void handle_ai_battle();
+    void handle_p2p_battle();
+    void handle_p2c_battle();
+    void handle_c2c_battle();
 
     // Hero management
     void handle_hero_list() const;
