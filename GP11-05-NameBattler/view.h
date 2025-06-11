@@ -85,6 +85,9 @@ namespace view
             
             void defender_dead_message(const PlayerHero& hero);
 
+            void show_experience_gain(int exp, int total_exp, int level, const char* name);
+            void show_level_up(int new_level);
+
             void end_message();
         }
     }

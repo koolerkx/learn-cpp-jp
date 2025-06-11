@@ -8,7 +8,7 @@
 #include "utils.h"
 #include "view.h"
 
-PlayerHero::PlayerHero(const char* player_label, const Hero* hero)
+PlayerHero::PlayerHero(const char* player_label, Hero* hero, PLAYER_HERO_TYPE player_hero_type)
 {
     strncpy_s(
         player_label_, PLAYER_LABEL_NAME_MAX_LENGTH,
@@ -16,7 +16,8 @@ PlayerHero::PlayerHero(const char* player_label, const Hero* hero)
     );
     hero_ = hero;
 
-    hp_ = hero->get_ability().hp;
+    type = player_hero_type;
+    hp_ = hero->get_scaled_ability().hp;
 
     initialize_cards();
 }

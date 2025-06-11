@@ -301,6 +301,20 @@ namespace view
                 std::cout << "> " << hero.get_name() << " は 戦いの場に倒れた...\n\n";
             }
 
+            void show_experience_gain(int exp, int total_exp, int level, const char* name)
+            {
+                std::cout << "【" << name << "：経験値獲得】\n";
+                std::cout << "  + " << exp << " EXP を手に入れた！\n";
+                std::cout << "  累計 EXP： " << total_exp << "\n";
+                std::cout << "  現在のレベル：Lv " << level << "\n";
+            }
+            
+            void show_level_up(int new_level)
+            {
+                std::cout << "【レベルアップ！】\n";
+                std::cout << "  Lv " << new_level << " に到達！\n";
+            }
+
             void end_message()
             {
                 std::cout << "対戦終了\n";

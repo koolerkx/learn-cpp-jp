@@ -48,7 +48,7 @@ void Battle::execute_round()
     int defender_i = defender_index();
     PlayerHero& attacker = *heroes_[attacker_i];
     PlayerHero& defender = *heroes_[defender_i];
-    
+
     const Card* selected_card = handle_card_select(attacker);
 
     int dice = utils::random(Battle::DICE_LOWER, Battle::DICE_UPPER);
@@ -67,9 +67,29 @@ bool Battle::is_continue_round()
     return heroes_[attacker_index()]->get_hp() > 0 && heroes_[defender_index()]->get_hp() > 0;
 }
 
-void Battle::end() {
+void Battle::end()
+{
     view::flow::battle::defender_dead_message(*heroes_[defender_index()]);
-    
+
+    for (PlayerHero* hero : heroes_)
+    {
+        if (hero->type == PLAYER_HERO_TYPE::COM) { break; }
+
+        int level_before = hero_level::get_level(hero->get_experience());
+        int exp_to_gain = hero_level::get_expected_experience_for_battle(level_before);
+        hero->gain_experience(exp_to_gain);
+
+        int level_after = hero_level::get_level(hero->get_experience());
+        view::flow::battle::show_experience_gain(exp_to_gain, hero->get_experience(), level_after, hero->get_name());
+        view::format_line::blank();
+
+        if (level_after > level_before)
+        {
+            view::flow::battle::show_level_up(level_after);
+            view::format_line::blank();
+        }
+    }
+
     view::flow::battle::end_message();
     view::message::press_any_key_menu();
     std::cin.get();

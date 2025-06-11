@@ -147,10 +147,10 @@ void GameManager::handle_battle()
     view::flow::battle::battle_title();
     view::hero::show_list(get_heroes(), get_heroes_count());
 
-    const Hero* p1_hero = select_hero(PLAYER_1_LABEL);
+    Hero* p1_hero = select_hero(PLAYER_1_LABEL);
     PlayerHero p1 = PlayerHero(PLAYER_1_LABEL, p1_hero);
 
-    const Hero* p2_hero = select_hero(PLAYER_2_LABEL);
+    Hero* p2_hero = select_hero(PLAYER_2_LABEL);
     PlayerHero p2 = PlayerHero(PLAYER_2_LABEL, p2_hero);
 
     Battle battle(&p1, &p2);
@@ -162,12 +162,12 @@ void GameManager::handle_ai_battle()
     view::flow::battle::battle_title();
     view::hero::show_list(get_heroes(), get_heroes_count());
 
-    const Hero* p1_hero = select_hero(PLAYER_1_LABEL);
+    Hero* p1_hero = select_hero(PLAYER_1_LABEL);
     PlayerHero p1 = PlayerHero(PLAYER_1_LABEL, p1_hero);
 
     int com_selected = utils::random(1, get_heroes_count());
 
-    const Hero* com_hero = &get_heroes()[com_selected - 1];
+    Hero* com_hero = &get_heroes()[com_selected - 1];
     PlayerHeroAI com = PlayerHeroAI(PLAYER_COM_LABEL, com_hero);
 
     Battle battle(&p1, &com);
@@ -253,7 +253,12 @@ void GameManager::delete_hero(int index)
     hero_.erase(hero_.begin() + index);
 }
 
-const Hero* GameManager::get_heroes() const
+Hero* GameManager::get_heroes()
+{
+    return hero_.data();
+}
+
+const Hero* GameManager::get_heroes() const 
 {
     return hero_.data();
 }
@@ -263,7 +268,7 @@ int GameManager::get_heroes_count() const
     return static_cast<int>(hero_.size());
 }
 
-const Hero* GameManager::select_hero(const char* player_label) const
+Hero* GameManager::select_hero(const char* player_label)
 {
     view::flow::battle::player_select_hero(player_label);
     const int selected = utils::input::validated_input(
@@ -271,7 +276,6 @@ const Hero* GameManager::select_hero(const char* player_label) const
         view::flow::battle::select_hero_options
     );
     view::format_line::blank();
-    view::flow::battle::player_select_hero(PLAYER_COM_LABEL);
 
     return &get_heroes()[selected - 1];
 }

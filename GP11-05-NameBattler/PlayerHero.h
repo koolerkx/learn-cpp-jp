@@ -5,10 +5,17 @@
 
 constexpr int PLAYER_LABEL_NAME_MAX_LENGTH = 5;
 
+enum class PLAYER_HERO_TYPE: uint8_t
+{
+    PLAYER = 0,
+    COM = 1
+};
+
 class PlayerHero
 {
 public:
-    PlayerHero(const char* player_label, const Hero* hero);
+    PlayerHero(const char* player_label, Hero* hero, PLAYER_HERO_TYPE player_hero_type = PLAYER_HERO_TYPE::PLAYER);
+    PLAYER_HERO_TYPE type;
 
     // prevent memory leak
     PlayerHero(const PlayerHero&) = delete;
@@ -21,18 +28,21 @@ public:
 
     const char* get_name() const { return hero_->get_name(); }
     int get_hp() const { return hp_; }
-    int get_max_hp() const { return hero_->get_ability().hp; }
+    int get_max_hp() const { return hero_->get_scaled_ability().hp; }
     int get_shield() const { return shield_; }
 
     const std::vector<const Card*>& get_available_cards() const;
     const Card* get_card(const int index) const;
 
-    int get_attack() const { return (hero_->get_ability().attack); }
-    int get_defense() const { return (hero_->get_ability().defense); }
+    int get_attack() const { return (hero_->get_scaled_ability().attack); }
+    int get_defense() const { return (hero_->get_scaled_ability().defense); }
 
     void take_damage(int power);
     void take_heal(int power);
     void take_shield(int power);
+
+    int get_experience() const { return hero_->get_experience(); }
+    void gain_experience(int exp) const { hero_->gain_experience(exp); }
 
     constexpr static int MAX_SHIELD = 256;
 
@@ -40,7 +50,7 @@ public:
 
 protected:
     char player_label_[PLAYER_LABEL_NAME_MAX_LENGTH];
-    const Hero* hero_;
+    Hero* hero_;
 
     std::vector<const Card*> available_cards_;
 
@@ -53,7 +63,7 @@ protected:
 class PlayerHeroAI : public PlayerHero
 {
 public:
-    PlayerHeroAI(const char* player_label, const Hero* hero): PlayerHero(player_label, hero)
+    PlayerHeroAI(const char* player_label, Hero* hero): PlayerHero(player_label, hero, PLAYER_HERO_TYPE::COM)
     {
     }
 

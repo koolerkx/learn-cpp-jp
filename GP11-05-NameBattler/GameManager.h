@@ -38,11 +38,12 @@ private:
     void add_hero(Hero&& hero); // Accept by move
     void delete_hero(int index);
 
+    Hero* get_heroes();
     const Hero* get_heroes() const;
     int get_heroes_count() const;
 
     // Battle
-    const Hero* select_hero(const char* player_label) const;
+    Hero* select_hero(const char* player_label);
 
     // File SL
     void save() const;
