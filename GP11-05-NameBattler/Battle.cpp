@@ -10,7 +10,7 @@ Battle::Battle(PlayerHero* p1, PlayerHero* p2)
     heroes_[1] = p2;
 }
 
-void Battle::run()
+bool Battle::run()
 {
     start();
     while (update())
@@ -21,6 +21,10 @@ void Battle::run()
         view::format_line::double_line();
     }
     end();
+
+    // HACK: ¡‚ÌÝŒv‚ÅAŸŽÒ‚Í•K‚¸attacker‚Å‚ ‚é
+    // return is_win
+    return heroes_[attacker_index()]->type == PLAYER_HERO_TYPE::PLAYER;
 }
 
 void Battle::start()
@@ -89,10 +93,6 @@ void Battle::end()
             view::format_line::blank();
         }
     }
-
-    view::flow::battle::end_message();
-    view::message::press_any_key_menu();
-    std::cin.get();
 }
 
 float Battle::offset_dice_multiplier(int dice_value)

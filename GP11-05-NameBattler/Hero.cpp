@@ -3,6 +3,7 @@
 #include "Hero.h"
 
 #include <cmath>
+#include <iostream>
 
 #include "utils.h"
 #include <memory>
@@ -41,8 +42,8 @@ Ability Hero::get_scaled_ability() const
     float scaler = hero_level::get_ability_scaler(hero_level::get_level(experience_));
     Ability ability = {
         static_cast<int>(static_cast<float>(ability_.attack) * scaler),
-          static_cast<int>(static_cast<float>(ability_.defense) * scaler),
-          static_cast<int>(static_cast<float>(ability_.hp) * scaler)
+        static_cast<int>(static_cast<float>(ability_.defense) * scaler),
+        static_cast<int>(static_cast<float>(ability_.hp) * scaler)
     };
     return ability;
 }
@@ -74,7 +75,7 @@ void Hero::generate_cards()
         CARD_TYPE card_type = static_cast<CARD_TYPE>(rand() % 3);
 
         Ability ability = get_scaled_ability();
-        
+
         switch (card_type)
         {
         case CARD_TYPE::ATTACK:
@@ -132,7 +133,7 @@ namespace hero_level
         };
 
         return static_cast<int>(
-            std::ceil(0.08f * totalExp(level + 1) - totalExp(level))
+            std::ceil(0.08f * (totalExp(level + 1) - totalExp(level)))
         );
     }
 

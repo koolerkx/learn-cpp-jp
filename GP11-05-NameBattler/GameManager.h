@@ -27,6 +27,7 @@ private:
     void handle_p2p_battle();
     void handle_p2c_battle();
     void handle_c2c_battle();
+    void handle_battle_tower();
 
     // Hero management
     void handle_hero_list() const;

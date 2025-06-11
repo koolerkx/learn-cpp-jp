@@ -23,11 +23,11 @@ namespace view
             std::cout << "  攻撃　： " << ability.attack << "\n";
             std::cout << "  防御　： " << ability.defense << "\n";
             view::format_line::blank();
-            
+
             std::cout << "  レベル： " << level << " (累計経験値：" << exp << ")\n";
             std::cout << "  最大レベルの総評価： " << hero.get_rate() << "\n";
             view::format_line::blank();
-            
+
             show_cards(hero.get_cards());
         }
 
@@ -66,7 +66,8 @@ namespace view
                 std::cout << " 2. 二人で対戦\n";
                 std::cout << " 3. COMと対戦\n";
                 std::cout << " 4. COM対戦シミュレーション\n";
-                std::cout << " 5. 英雄管理\n";
+                std::cout << " 5. バトルタワー\n";
+                std::cout << " 6. 英雄管理\n";
                 std::cout << " 9. ゲーム終了\n";
                 format_line::blank();
             }
@@ -323,7 +324,7 @@ namespace view
                 std::cout << "  累計 EXP： " << total_exp << "\n";
                 std::cout << "  現在のレベル：Lv " << level << "\n";
             }
-            
+
             void show_level_up(int new_level)
             {
                 std::cout << "【レベルアップ！】\n";
@@ -334,6 +335,38 @@ namespace view
             {
                 std::cout << "対戦終了\n";
                 std::cout << "メニューに戻る\n";
+            }
+        }
+
+        namespace battle_tower
+        {
+            void title()
+            {
+                std::cout << "\n";
+                std::cout << "==============================\n";
+                std::cout << "      バトルタワー 挑戦開始！\n";
+                std::cout << "==============================\n";
+            }
+
+            void next_level_title(int next_level)
+            {
+                std::cout << "> 第 " << next_level << " 階へ進む...\n";
+            }
+
+            void end_message(int final_level)
+            {
+                std::cout << "==============================\n";
+                std::cout << "> 挑戦終了\n";
+                std::cout << "  最後に到達したのは第 " << final_level << " 層だった…\n";
+                std::cout << "==============================\n";
+            }
+            
+            void end_message_cleared(int final_level)
+            {
+                std::cout << "==============================\n";
+                std::cout << "   バトルタワー制覇！全 " << final_level << " 層を突破！\n";
+                std::cout << "   君の名は、伝説となるだろう！\n";
+                std::cout << "==============================\n";
             }
         }
     }

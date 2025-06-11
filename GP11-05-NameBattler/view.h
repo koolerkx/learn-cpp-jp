@@ -92,6 +92,14 @@ namespace view
 
             void end_message();
         }
+
+        namespace battle_tower
+        {
+            void title();
+            void next_level_title(int next_level);
+            void end_message(int final_level);
+            void end_message_cleared(int final_level);
+        }
     }
 
     // text output for info user

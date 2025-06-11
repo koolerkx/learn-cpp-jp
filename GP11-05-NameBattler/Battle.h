@@ -9,7 +9,7 @@ class Battle
 public:
     Battle(PlayerHero* p1, PlayerHero* p2);
     
-    void run();
+    bool run(); // return is_win
 
     static constexpr int DICE_LOWER = 1;
     static constexpr int DICE_UPPER = 6;

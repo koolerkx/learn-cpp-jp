@@ -31,7 +31,7 @@ void GameManager::start_loop()
     while (is_continue)
     {
         view::flow::menu::show_main_menu();
-        constexpr int valid_options[] = {1, 2, 3, 4, 5, 9};
+        constexpr int valid_options[] = {1, 2, 3, 4, 5, 6, 9};
 
         int selected = utils::input::validated_input(
             utils::input::validator::is_in_list(valid_options, std::size(valid_options)),
@@ -54,6 +54,9 @@ void GameManager::start_loop()
             handle_c2c_battle();
             break;
         case 5:
+            handle_battle_tower();
+            break;
+        case 6:
             handle_hero_management();
             break;
         case 9:
@@ -177,6 +180,10 @@ void GameManager::handle_p2c_battle()
 
     Battle battle(&p1, &com);
     battle.run();
+    
+    view::flow::battle::end_message();
+    view::message::press_any_key_menu();
+    std::cin.get();
 }
 
 void GameManager::handle_c2c_battle()
@@ -192,6 +199,50 @@ void GameManager::handle_c2c_battle()
 
     Battle battle(&com1, &com2);
     battle.run();
+    
+    view::flow::battle::end_message();
+    view::message::press_any_key_menu();
+    std::cin.get();
+}
+
+void GameManager::handle_battle_tower()
+{
+    view::flow::battle_tower::title();
+    view::hero::show_list(get_heroes(), get_heroes_count());
+
+    Hero* p1_hero = select_hero(PLAYER_1_LABEL);
+    PlayerHero p1 = PlayerHero(PLAYER_1_LABEL, p1_hero);
+    view::format_line::blank();
+    
+    bool is_continue = true;
+    int tower_level = 1;
+    constexpr int MAX_TOWER_LEVEL = 10;
+    do
+    {
+        view::flow::battle_tower::next_level_title(tower_level);
+        view::format_line::blank();
+        
+        int com_selected = utils::random(1, get_heroes_count());
+        Hero* com_hero = &get_heroes()[com_selected - 1];
+        PlayerHeroAI com = PlayerHeroAI(PLAYER_COM_1_LABEL, com_hero);
+        Battle battle(&p1, &com);
+
+        is_continue = battle.run();
+        tower_level++;
+    }
+    while (is_continue && tower_level <= MAX_TOWER_LEVEL);
+
+    if (tower_level > MAX_TOWER_LEVEL)
+    {
+        view::flow::battle_tower::end_message_cleared(tower_level - 1);
+    }
+    else
+    {
+        view::flow::battle_tower::end_message(tower_level - 1);
+    }
+    view::format_line::blank();
+    view::message::press_any_key_menu();
+    std::cin.get();
 }
 
 void GameManager::handle_hero_list() const
