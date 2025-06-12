@@ -293,9 +293,9 @@ void GameManager::handle_hero_delete()
     view::format_line::blank();
 
     const char* hero_to_delete_name = get_heroes()[selected_hero - 1].get_name();
+    view::flow::hero::hero_delete_result_message(hero_to_delete_name);
     delete_hero(selected_hero - 1);
     save();
-    view::flow::hero::hero_delete_result_message(hero_to_delete_name);
 }
 
 Hero GameManager::make_hero() const
