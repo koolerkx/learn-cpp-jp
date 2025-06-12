@@ -86,7 +86,7 @@ namespace view
             void game_end_message()
             {
                 std::cout << "‚Ü‚½‚¢‚Á‚µ‚å‚É—V‚Ú‚¤I\n";
-                std::cout << "ìŽÒF\n";
+                std::cout << "ìŽÒFKOOLER FAN\n";
             }
         }
 
