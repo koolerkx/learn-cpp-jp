@@ -60,8 +60,7 @@ namespace dice
         std::function<bool(DiceResult)> test;
     };
 
-    extern YakuSet yaku_sets[];
-    extern const int yaku_sets_count;
+    YakuSet yaku_sets[];
     
     struct DiceYakuResult
     {
@@ -70,7 +69,7 @@ namespace dice
     };
 
     static DiceResult draw_dice();
-    static DiceYakuResult dice_multiply(DiceResult dice_state);
+    static DiceYakuResult dice_multiply(DiceResult& dice_state);
 
     static constexpr int DICE_LOWER = 1;
     static constexpr int DICE_UPPER = 6;

@@ -152,7 +152,6 @@ namespace dice
             [](DiceResult) { return true; },
         }
     };
-    extern const int yaku_sets_count = std::size(yaku_sets);
     
     DiceResult draw_dice()
     {
@@ -164,7 +163,7 @@ namespace dice
         };
     }
 
-    DiceYakuResult dice_multiply(DiceResult dice_state)
+    DiceYakuResult dice_multiply(DiceResult& dice_state)
     {
         // HACK: ®—ñ
         if (dice_state.dice_1 > dice_state.dice_3)

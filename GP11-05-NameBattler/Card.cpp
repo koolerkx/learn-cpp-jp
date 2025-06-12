@@ -17,7 +17,7 @@ float AttackCard::calculate_score(const PlayerHeroAI& ph) const
     return 100 * hp_percentage * power;
 }
 
-int AttackCard::apply_card(PlayerHero& user, PlayerHero& target, float multiply) const
+int AttackCard::apply_card(PlayerHero&, PlayerHero& target, float multiply) const
 {
     int power = static_cast<int>(static_cast<float>(power_) * multiply);
     target.take_damage(power);
