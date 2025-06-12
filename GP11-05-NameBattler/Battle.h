@@ -40,12 +40,12 @@ namespace dice
 {
     enum class YAKU: uint8_t
     {
-        PINZORO, // 2x, ピンゾロ 0.46%
-        ARASHI, // 1.4x, ぞろ目 2.31%
-        SHIGORO, // 1.1x, シゴロ 2.78%
+        PINZORO, // 3x, ピンゾロ 0.46%
+        ARASHI, // 2x, ぞろ目 2.31%
+        SHIGORO, // 1.5x, シゴロ 2.78%
         TUJYOU, // 1x, 通常役 41.67%
         HIFUMI, // 0x, ヒフミ 2.78%
-        OTHER // 0x, 役なし 52.78%
+        OTHER // 0.8x, 役なし 52.78%
     };
 
     struct DiceResult

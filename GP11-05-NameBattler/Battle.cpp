@@ -71,7 +71,7 @@ void Battle::execute_round()
 
 bool Battle::is_continue_round()
 {
-    return (heroes_[attacker_index()]->get_hp() > 0 && heroes_[defender_index()]->get_hp() > 0) || round_ >= MAX_ROUND;
+    return (heroes_[attacker_index()]->get_hp() > 0 && heroes_[defender_index()]->get_hp() > 0) && round_ < MAX_ROUND;
 }
 
 void Battle::end()
@@ -129,17 +129,17 @@ namespace dice
     YakuSet yaku_sets[] = {
         {
             YAKU::PINZORO,
-            2.0f,
+            3.0f,
             [](DiceResult r) { return r.dice_1 == 1 && r.dice_2 == 1 && r.dice_3 == 1; },
         },
         {
             YAKU::ARASHI,
-            1.4f,
+            2.0f,
             [](DiceResult r) { return r.dice_1 != 1 && r.dice_1 == r.dice_2 && r.dice_2 == r.dice_3; },
         },
         {
             YAKU::SHIGORO,
-            1.1f,
+            1.5f,
             [](DiceResult r) { return r.dice_1 == 4 && r.dice_2 == 5 && r.dice_3 == 6; },
         },
         {
@@ -154,7 +154,7 @@ namespace dice
         },
         {
             YAKU::OTHER,
-            0.0f,
+            0.8f,
             [](DiceResult) { return true; },
         }
     };
