@@ -1,4 +1,13 @@
-#pragma once
+/**
+ * @file    exception.h
+ * @brief   例外クラスの定義
+ * @author  KOOLER FAN
+ * @date    2025-06-12
+ */
+
+#ifndef EXCEPTION_H
+#define EXCEPTION_H
+
 #include <exception>
 
 using Exception = std::exception;
@@ -46,3 +55,5 @@ namespace exception {
         };
     }
 }
+
+#endif // EXCEPTION_H

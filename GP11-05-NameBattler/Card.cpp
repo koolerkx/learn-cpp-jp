@@ -1,3 +1,9 @@
+/**
+ * @file    Card.cpp
+ * @author  KOOLER FAN
+ * @date    2025-06-12
+ */
+
 #include "Card.h"
 #include "Battle.h"
 #include "view.h"

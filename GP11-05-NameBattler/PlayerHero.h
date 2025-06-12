@@ -1,4 +1,13 @@
-#pragma once
+/**
+ * @file    PlayerHero.h
+ * @brief   プレイヤーとCOMの英雄制御
+ * @author  KOOLER FAN
+ * @date    2025-06-12
+ */
+
+#ifndef PlayerHero_H
+#define PlayerHero_H
+
 #include "Card.h"
 #include "Hero.h"
 #include <vector>
@@ -11,6 +20,12 @@ enum class PLAYER_HERO_TYPE: uint8_t
     COM = 1
 };
 
+/**
+ * @class   PlayerHero
+ * @brief   バトル用の一時的な英雄ラッパー
+ * 固有ステータス（経験値）以外の数値はPlayerHeroで処理する
+ * 設計上、Heroのデータの変更は適当ではない・予想していない
+ */
 class PlayerHero
 {
 public:
@@ -22,7 +37,7 @@ public:
     PlayerHero& operator=(const PlayerHero&) = delete;
     PlayerHero(PlayerHero&&) noexcept = default;
     PlayerHero& operator=(PlayerHero&&) noexcept = default;
-    virtual ~PlayerHero() = default;    
+    virtual ~PlayerHero() = default;
 
     const char* get_player_label() const { return player_label_; }
 
@@ -60,6 +75,11 @@ protected:
     void initialize_cards();
 };
 
+/**
+ * @class   PlayerHeroAI
+ * @brief   COMプレイヤーの実装
+ * バトルの行動が自動にできるように
+ */
 class PlayerHeroAI : public PlayerHero
 {
 public:
@@ -69,3 +89,5 @@ public:
 
     const Card* select_card() const override;
 };
+
+#endif // PlayerHero_H

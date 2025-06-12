@@ -1,4 +1,13 @@
-#pragma once
+/**
+ * @file    Hero.h
+ * @brief   英雄キャラクターの管理
+ * @author  KOOLER FAN
+ * @date    2025-06-12
+ */
+
+#ifndef HERO_H
+#define HERO_H
+
 #include "Card.h"
 #include <vector>
 #include <memory>
@@ -10,6 +19,10 @@ struct Ability
     int defense;
 };
 
+/**
+ * @class   Hero
+ * @brief   プレイヤーが持っているキャラクターのデータ構造
+ */
 class Hero
 {
 public:
@@ -49,6 +62,10 @@ private:
     void generate_cards();
 };
 
+/**
+ * @namespace   hero_level
+ * @brief       レベルに関係ある数学の式がまとまった所
+ */
 namespace hero_level
 {
     // レベルアップ曲線の定数
@@ -65,3 +82,5 @@ namespace hero_level
     int get_expected_experience_for_battle(int level);
     float get_ability_scaler(int level);
 }
+
+#endif // HERO_H

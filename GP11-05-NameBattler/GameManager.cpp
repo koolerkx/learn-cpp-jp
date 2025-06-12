@@ -1,3 +1,9 @@
+/**
+ * @file    GameManager.cpp
+ * @author  KOOLER FAN
+ * @date    2025-06-12
+ */
+
 #include "GameManager.h"
 
 #include <iostream>

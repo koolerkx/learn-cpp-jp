@@ -1,4 +1,13 @@
-#pragma once
+/**
+ * @file    GameManager.h
+ * @brief   ゲームの進行
+ * @author  KOOLER FAN
+ * @date    2025-06-12
+ */
+
+#ifndef GAME_MANAGER_H
+#define GAME_MANAGER_H
+
 #include "Hero.h"
 
 constexpr const char* PLAYER_1_LABEL = "P1";
@@ -6,6 +15,10 @@ constexpr const char* PLAYER_2_LABEL = "P2";
 constexpr const char* PLAYER_COM_1_LABEL = "COM1";
 constexpr const char* PLAYER_COM_2_LABEL = "COM2";
 
+/**
+ * @class   GameManager
+ * @brief   ゲームの進行、状態、プレイヤーのデータを管理する
+ */
 class GameManager
 {
 public:
@@ -52,3 +65,5 @@ private:
     void save() const;
     void load();
 };
+
+#endif // GAME_MANAGER_H

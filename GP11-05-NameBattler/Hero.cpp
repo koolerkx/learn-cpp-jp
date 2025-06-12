@@ -1,9 +1,14 @@
+/**
+ * @file    Hero.cpp
+ * @author  KOOLER FAN
+ * @date    2025-06-12
+ */
+
 #include <cstdlib>
 #include "cstring"
 #include "Hero.h"
 
 #include <cmath>
-#include <iostream>
 
 #include "utils.h"
 #include <memory>

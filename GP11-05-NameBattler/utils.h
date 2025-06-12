@@ -1,7 +1,21 @@
-#pragma once
+/**
+ * @file    utils.h
+ * @brief   汎用ユーティリティ関数
+ * @author  KOOLER FAN
+ * @date    2025-06-12
+ */
+
+#ifndef UTILS_H
+#define UTILS_H
+
 #include <functional>
 
 using uint = unsigned int;
+
+/**
+ * @namespace utils
+ * @brief     入力検証とランダム数値生成
+ */
 
 namespace utils
 {
@@ -24,3 +38,5 @@ namespace utils
         }
     }
 }
+
+#endif // UTILS_H

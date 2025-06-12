@@ -1,10 +1,22 @@
-#pragma once
+/**
+ * @file    view.h
+ * @brief   画面表示と出力管理
+ * @author  KOOLER FAN
+ * @date    2025-06-12
+ */
+
+#ifndef VIEW_H
+#define VIEW_H
 #include <vector>
 
 #include "Battle.h"
 #include "Card.h"
 #include "Hero.h"
 
+/**
+ * @namespace    view
+ * @brief        出力メッセージ
+ */
 namespace view
 {
     namespace hero
@@ -123,3 +135,5 @@ namespace view
         void double_line();
     }
 }
+
+#endif // VIEW_H

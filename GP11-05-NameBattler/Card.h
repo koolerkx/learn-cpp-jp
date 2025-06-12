@@ -1,4 +1,14 @@
-#pragma once
+/**
+ * @file    Card.h
+ * @brief   カードの基本クラスと派生クラス
+ * カードは英雄に生成された固有スキルで、バトルの時使うもの
+ * @author  KOOLER FAN
+ * @date    2025-06-12
+ */
+
+#ifndef CARD_H
+#define CARD_H
+
 #include <cstdint>
 
 class PlayerHero;
@@ -73,3 +83,5 @@ public:
     int apply_card(PlayerHero& user, PlayerHero& target, float multiply) const override;
     void result_message(PlayerHero& user, PlayerHero& target, int power) const override;
 };
+
+#endif // CARD_H

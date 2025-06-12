@@ -1,4 +1,12 @@
-#pragma once
+/**
+ * @file    Battle.h
+ * @brief   バトルシステムの実装
+ * @author  KOOLER FAN
+ * @date    2025-06-12
+ */
+
+#ifndef BATTLE_H
+#define BATTLE_H
 
 #include <functional>
 
@@ -6,6 +14,10 @@
 
 constexpr int BATTLE_HEROES = 2;
 
+/**
+ * @class    Battle
+ * @brief   バトルシステム
+ */
 class Battle
 {
 public:
@@ -14,7 +26,7 @@ public:
     bool run(); // return is_win
 
     static constexpr int MAX_ROUND = 20;
-    
+
 private:
     int round_ = 1;
 
@@ -36,6 +48,10 @@ private:
     int defender_index() const { return (round_ + 1) % BATTLE_HEROES; }
 };
 
+/**
+ * @namespace dice
+ * @brief   バトルシステムに使われるサイコロの実装
+ */
 namespace dice
 {
     enum class YAKU: uint8_t
@@ -63,7 +79,7 @@ namespace dice
     };
 
     YakuSet yaku_sets[];
-    
+
     struct DiceYakuResult
     {
         YAKU yaku;
@@ -77,3 +93,5 @@ namespace dice
     static constexpr int DICE_UPPER = 6;
     static constexpr int DICE_BASE = (DICE_LOWER + DICE_UPPER) / 2;
 };
+
+#endif // BATTLE_H
