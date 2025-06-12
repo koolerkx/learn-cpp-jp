@@ -80,7 +80,7 @@ namespace view
 
             void option_message()
             {
-                std::cout << "選択してください（1/2/3/4/9）: ";
+                std::cout << "選択してください（1/2/3/4/5/6/9）: ";
             }
 
             void game_end_message()
