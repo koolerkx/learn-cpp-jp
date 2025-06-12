@@ -1,6 +1,7 @@
 /**
  * @file    GameManager.h
  * @brief   ゲームの進行
+ * ゲームの進入点
  * @author  KOOLER FAN
  * @date    2025-06-12
  */
@@ -14,6 +15,8 @@ constexpr const char* PLAYER_1_LABEL = "P1";
 constexpr const char* PLAYER_2_LABEL = "P2";
 constexpr const char* PLAYER_COM_1_LABEL = "COM1";
 constexpr const char* PLAYER_COM_2_LABEL = "COM2";
+
+constexpr const char* SAVE_DATA_FILENAME = "save.dat";
 
 /**
  * @class   GameManager

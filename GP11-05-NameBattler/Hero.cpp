@@ -1,7 +1,9 @@
 /**
  * @file    Hero.cpp
+ * @brief   英雄キャラクターの管理
  * @author  KOOLER FAN
  * @date    2025-06-12
+ * @note 英雄は経験値以外、生成されたもの故に、変更すべきではない、唯一性を保つ為、コピー操作は禁止です
  */
 
 #include <cstdlib>
@@ -52,7 +54,6 @@ Ability Hero::get_scaled_ability() const
     };
     return ability;
 }
-
 
 const std::vector<std::unique_ptr<Card>>& Hero::get_cards() const
 {
@@ -115,7 +116,10 @@ void Hero::gain_experience(int exp)
     experience_ += exp;
 }
 
-
+/**
+ * @namespace   hero_level
+ * @brief       レベルに関係ある数学の式がまとまった所
+ */
 namespace hero_level
 {
     int get_level(int exp)

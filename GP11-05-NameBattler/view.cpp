@@ -1,5 +1,6 @@
 /**
  * @file    view.cpp
+ * @brief   ‰æ–Ê•\¦‚Æo—ÍŠÇ—
  * @author  KOOLER FAN
  * @date    2025-06-12
  */

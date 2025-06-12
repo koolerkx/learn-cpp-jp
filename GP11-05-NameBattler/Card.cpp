@@ -1,7 +1,10 @@
 /**
  * @file    Card.cpp
+ * @brief   カードの基本クラスと派生クラス
+ * @details カードは英雄に生成された固有スキルで、バトルの時使うもの
  * @author  KOOLER FAN
  * @date    2025-06-12
+ * @note 設計上英雄から生成したものなので、唯一性を保つため、カードはコピー操作禁止です
  */
 
 #include "Card.h"
@@ -23,6 +26,9 @@ float AttackCard::calculate_score(const PlayerHeroAI& ph) const
     return 100 * hp_percentage * power;
 }
 
+/**
+ * @return 効いた影響の値
+ */
 int AttackCard::apply_card(PlayerHero&, PlayerHero& target, float multiply) const
 {
     int power = static_cast<int>(static_cast<float>(power_) * multiply);
@@ -45,6 +51,9 @@ float HealCard::calculate_score(const PlayerHeroAI& ph) const
     return 100 * (1 - hp_percentage) * power;
 }
 
+/**
+ * @return 効いた影響の値
+ */
 int HealCard::apply_card(PlayerHero& user, PlayerHero&, float multiply) const
 {
     int power = static_cast<int>(static_cast<float>(power_) * multiply);
@@ -66,6 +75,9 @@ float DefenseCard::calculate_score(const PlayerHeroAI& ph) const
     return 100 * (1 - hp_shield_percentage) * power;
 }
 
+/**
+ * @return 効いた影響の値
+ */
 int DefenseCard::apply_card(PlayerHero& user, PlayerHero&, float multiply) const
 {
     int power = static_cast<int>(static_cast<float>(power_) * multiply);

@@ -1,7 +1,14 @@
 /**
  * @file    GameManager.cpp
+ * @brief   ゲームの進行
+ * @details ゲームの進入点
  * @author  KOOLER FAN
  * @date    2025-06-12
+ * 
+ * @code
+ * GameManager& gm = GameManager::get_instance();
+ * gm.start_loop();
+ * @endcode 
  */
 
 #include "GameManager.h"
@@ -47,25 +54,25 @@ void GameManager::start_loop()
 
         switch (selected)
         {
-        case 1:
+        case 1: // 英雄召喚
             handle_hero_summon();
             break;
-        case 2:
+        case 2: // 二人対戦
             handle_p2p_battle();
             break;
-        case 3:
+        case 3: // COM対戦
             handle_p2c_battle();
             break;
-        case 4:
+        case 4: // COM同士対戦
             handle_c2c_battle();
             break;
-        case 5:
+        case 5: // バトルタワー、連続COM対戦
             handle_battle_tower();
             break;
-        case 6:
+        case 6: // 英雄管理
             handle_hero_management();
             break;
-        case 9:
+        case 9: // ゲームを終える
             is_continue = false;
             break;
         default:
@@ -237,6 +244,7 @@ void GameManager::handle_battle_tower()
 
         srand(static_cast<unsigned>(time(nullptr)));
         int com_selected = utils::random(1, get_heroes_count());
+        
         Hero* com_hero = &get_heroes()[com_selected - 1];
         PlayerHeroAI com = PlayerHeroAI(PLAYER_COM_1_LABEL, com_hero);
         Battle battle(&p1, &com);
@@ -298,6 +306,10 @@ void GameManager::handle_hero_delete()
     save();
 }
 
+/**
+ * @brief プレイヤーに入力を求め、入力した文字列によって英雄を生成する
+ * @return 生成した英雄
+ */
 Hero GameManager::make_hero() const
 {
     char name[Hero::NAME_MAX_LENGTH];
@@ -353,6 +365,11 @@ int GameManager::get_heroes_count() const
     return static_cast<int>(hero_.size());
 }
 
+/**
+ * @brief プレイヤーに英雄を選択させる
+ * @return 選択した英雄のポインタ
+ * @note 設計上、英雄は変更しちゃいけないものであり、コピー操作は禁止なので、ポインタで操作する
+ */
 Hero* GameManager::select_hero(const char* player_label)
 {
     view::flow::battle::player_select_hero(player_label);
@@ -387,7 +404,7 @@ void GameManager::save() const
         save_data.experience[i] = heroes[i].get_experience();
     }
 
-    std::ofstream ofs("save.dat", std::ios::binary);
+    std::ofstream ofs(SAVE_DATA_FILENAME, std::ios::binary);
     if (!ofs.is_open())
     {
         throw exception::io::FileOutputFailedException();
@@ -398,7 +415,7 @@ void GameManager::save() const
 
 void GameManager::load()
 {
-    std::ifstream ifs("save.dat", std::ios::binary);
+    std::ifstream ifs(SAVE_DATA_FILENAME, std::ios::binary);
     if (!ifs.is_open())
     {
         throw exception::io::FileInputFailedException();

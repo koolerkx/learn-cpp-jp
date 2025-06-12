@@ -1,5 +1,6 @@
 /**
  * @file    PlayerHero.cpp
+ * @brief   プレイヤーとCOMの英雄制御
  * @author  KOOLER FAN
  * @date    2025-06-12
  */
@@ -87,6 +88,11 @@ const Card* PlayerHero::select_card() const
     return get_card(selected - 1);
 }
 
+
+/**
+ * @brief COM AIのカード戦闘ストラテジー
+* @details カード効果の期待結果+ランダム因子
+ */
 const Card* PlayerHeroAI::select_card() const
 {
     view::format_line::blank();
@@ -103,7 +109,9 @@ const Card* PlayerHeroAI::select_card() const
 
         // random factor from -30% to +30%
         srand(static_cast<unsigned>(time(nullptr)));
-        score *= (1.0f + static_cast<float>(utils::random(0, 60) - 20) / 100.0f);
+        const float RANDOM_FACTOR = static_cast<float>(utils::random(0, 60) - 20) / 100.0f;
+
+        score *= (1.0f + RANDOM_FACTOR);
 
         cards_score.push_back(score);
 

@@ -1,5 +1,6 @@
 /**
  * @file    Battle.cpp
+ * @brief   バトルシステムの実装
  * @author  KOOLER FAN
  * @date    2025-06-12
  */
@@ -16,12 +17,15 @@ Battle::Battle(PlayerHero* p1, PlayerHero* p2)
     heroes_[1] = p2;
 }
 
+/**
+ * @brief バトルのゲームループ
+ * @return プレイヤーが勝ったかどうか、二人対戦の対応しません
+ */
 bool Battle::run()
 {
     start();
     while (update())
     {
-        // TODO: extract
         view::message::press_any_key_continue();
         std::cin.get();
         view::format_line::double_line();
@@ -29,7 +33,6 @@ bool Battle::run()
     end();
 
     // HACK: 今の設計で、勝者は必ずattackerである
-    // return is_win
     return heroes_[attacker_index()]->type == PLAYER_HERO_TYPE::PLAYER;
 }
 
@@ -61,8 +64,6 @@ void Battle::execute_round()
 
     const Card* selected_card = handle_card_select(attacker);
 
-    // int dice = utils::random(dice::DICE_LOWER, dice::DICE_UPPER);
-    // float multiply = Battle::offset_dice_multiplier(dice);
     dice::DiceResult dice_result = dice::draw_dice();
     dice::DiceYakuResult yaku_result = dice::dice_multiply(dice_result);
 
@@ -87,7 +88,7 @@ void Battle::end()
         view::flow::battle::round_exceed();
         return;
     }
-    
+
     view::flow::battle::defender_dead_message(*heroes_[defender_index()]);
 
     for (PlayerHero* hero : heroes_)
@@ -107,7 +108,7 @@ void Battle::end()
             view::flow::battle::show_level_up(level_after);
             view::format_line::blank();
         }
-        
+
         view::message::press_any_key_continue();
         std::cin.get();
     }
@@ -130,6 +131,10 @@ const Card* Battle::handle_card_select(const PlayerHero& ph)
     return ph.select_card();
 }
 
+/**
+ * @namespace dice
+ * @brief   バトルシステムに使われるサイコロの実装
+ */
 namespace dice
 {
     YakuSet yaku_sets[] = {
@@ -164,7 +169,7 @@ namespace dice
             [](DiceResult) { return true; },
         }
     };
-    
+
     DiceResult draw_dice()
     {
         srand(static_cast<unsigned>(time(nullptr)));
@@ -177,7 +182,7 @@ namespace dice
 
     DiceYakuResult dice_multiply(DiceResult& dice_state)
     {
-        // HACK: 整列
+        // HACK: 整列、コントロールの環境でハードコードします
         if (dice_state.dice_1 > dice_state.dice_3)
         {
             std::swap(dice_state.dice_1, dice_state.dice_3);
@@ -187,7 +192,7 @@ namespace dice
             std::swap(dice_state.dice_1, dice_state.dice_2);
         }
 
-        for (YakuSet yaku_set: yaku_sets)
+        for (YakuSet yaku_set : yaku_sets)
         {
             if (yaku_set.test(dice_state))
             {
@@ -196,6 +201,6 @@ namespace dice
             }
         }
 
-        return { YAKU::OTHER, 0};
+        return {YAKU::OTHER, 0};
     }
 }
