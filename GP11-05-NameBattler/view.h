@@ -44,6 +44,8 @@ namespace view
             void saving_menu();
             void saving_menu_option_message();
             void result_message(const char* name);
+
+            void hero_count_exceed();
         }
 
         namespace initialize_save

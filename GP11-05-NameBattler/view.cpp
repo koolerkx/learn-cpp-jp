@@ -127,6 +127,11 @@ namespace view
             {
                 std::cout << "結果：『" << name << "』が成功に召喚された！\n";
             }
+
+            void hero_count_exceed()
+            {
+                std::cout << "英雄もうたくさんいる、それ以上召喚できない";
+            }
         }
 
         namespace initialize_save

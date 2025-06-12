@@ -117,8 +117,14 @@ void GameManager::save_hero(Hero&& hero)
 
 void GameManager::handle_hero_summon()
 {
-    Hero hero = make_hero();
-    save_hero(std::move(hero));
+    if (get_heroes_count() >= MAX_HERO)
+    {
+        view::flow::summon::hero_count_exceed();
+    } else
+    {
+        Hero hero = make_hero();
+        save_hero(std::move(hero));
+    }
 
     view::format_line::blank();
     view::message::press_any_key_menu();
