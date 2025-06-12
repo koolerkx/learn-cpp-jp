@@ -71,11 +71,17 @@ void Battle::execute_round()
 
 bool Battle::is_continue_round()
 {
-    return heroes_[attacker_index()]->get_hp() > 0 && heroes_[defender_index()]->get_hp() > 0;
+    return (heroes_[attacker_index()]->get_hp() > 0 && heroes_[defender_index()]->get_hp() > 0) || round_ >= MAX_ROUND;
 }
 
 void Battle::end()
 {
+    if (round_ >= MAX_ROUND)
+    {
+        view::flow::battle::round_exceed();
+        return;
+    }
+    
     view::flow::battle::defender_dead_message(*heroes_[defender_index()]);
 
     for (PlayerHero* hero : heroes_)

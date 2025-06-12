@@ -344,6 +344,11 @@ namespace view
                 std::cout << "> " << hero.get_name() << " ‚Í í‚¢‚Ìê‚É“|‚ê‚½...\n\n";
             }
 
+            void round_exceed()
+            {
+                std::cout << "> " << "Ÿ•‰–¢’è\n\n";
+            }
+
             void show_experience_gain(int exp, int total_exp, int level, const char* name)
             {
                 std::cout << "y" << name << "FŒoŒ±’lŠl“¾z\n";

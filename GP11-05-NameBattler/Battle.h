@@ -13,6 +13,8 @@ public:
 
     bool run(); // return is_win
 
+    static constexpr int MAX_ROUND = 20;
+    
 private:
     int round_ = 1;
 

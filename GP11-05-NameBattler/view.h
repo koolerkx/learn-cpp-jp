@@ -86,6 +86,7 @@ namespace view
             void defense_result(const PlayerHero& to, const int power);
 
             void defender_dead_message(const PlayerHero& hero);
+            void round_exceed();
 
             void show_experience_gain(int exp, int total_exp, int level, const char* name);
             void show_level_up(int new_level);
